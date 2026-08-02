@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v1";
+  const BANK_KEY = "vietnamese-step-bank-v2";
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const app = document.querySelector("#app");
 
@@ -65,11 +65,19 @@
     return bank.levels.flatMap((level) => level.groups);
   }
 
+  function isLevelUnlocked(level) {
+    if (!level.requires) return true;
+    if (progress[level.requires]?.completed) return true;
+    return level.groups.some((group) => Boolean(progress[group.id]));
+  }
+
   function isUnlocked(level, index) {
+    if (!isLevelUnlocked(level)) return false;
     return index === 0 || Boolean(progress[level.groups[index - 1]?.id]?.completed);
   }
 
   function typeLabel(question) {
+    if (question.type === "typing") return "タイピング";
     if (question.type === "meaning-choice") return "単語・選択";
     if (question.type === "blank-choice") return "空欄・選択";
     if (question.type === "blank-input") return "空欄・入力";
@@ -77,6 +85,7 @@
   }
 
   function instruction(question) {
+    if (question.type === "typing") return "表示されたベトナム語を、そのまま入力してください。";
     if (question.type === "meaning-choice") {
       return question.direction === "vi-ja" ? "ベトナム語の意味を選んでください。" : "日本語に合うベトナム語を選んでください。";
     }
@@ -87,6 +96,7 @@
 
   function hasVietnamesePrompt(question) {
     return (
+      question.type === "typing" ||
       question.type.startsWith("blank-") ||
       (question.type === "meaning-choice" && question.direction === "vi-ja") ||
       (question.type === "translation" && question.direction === "vi-ja")
@@ -138,7 +148,7 @@
           <div>
             <span class="eyebrow">VIỆT NGỮ · MỖI NGÀY MỘT CHÚT</span>
             <h1>今日も、<br><em>10問</em>だけ進もう。</h1>
-            <p>日本語を手がかりに、ベトナム語の単語・空欄補充・翻訳を練習します。声調記号の違いも見逃さず、全問正解で次のグループへ進めます。</p>
+            <p>タイピングから始めて、ベトナム語の単語・空欄補充・翻訳へ進みます。声調記号の違いも見逃さず、全問正解で次のグループへ進めます。</p>
           </div>
           <div class="stats" aria-label="学習状況">
             <div><strong>${completed}</strong><span>クリア</span></div>
@@ -152,13 +162,17 @@
             <span class="save">この端末に自動保存</span>
           </div>
           <div class="tabs" role="tablist">
-            ${bank.levels.map((item) => `
-              <button class="tab ${item.id === level.id ? "active" : ""}" data-level="${esc(item.id)}" role="tab" aria-selected="${item.id === level.id}">
+            ${bank.levels.map((item) => {
+              const unlocked = isLevelUnlocked(item);
+              return `
+              <button class="tab ${item.id === level.id ? "active" : ""} ${unlocked ? "" : "locked"}" data-level="${esc(item.id)}" role="tab" aria-selected="${item.id === level.id}" ${unlocked ? "" : "disabled"}>
                 <span class="tab-code">${esc(item.label)}</span>
-                <span class="tab-copy"><strong>${esc(item.name)}</strong><small>${esc(item.description)}</small></span>
+                <span class="tab-copy"><strong>${esc(item.name)}</strong><small>${esc(item.description)}${unlocked ? "" : "・前のコース修了で解放"}</small></span>
               </button>
-            `).join("")}
+            `;
+            }).join("")}
           </div>
+          ${level.id === "typing" ? `<div class="course-note"><strong>スマホではベトナム語キーボードを使います。</strong><span>このコースは練習のため、文字と声調記号まで正しく入力すると正解になります。</span></div>` : ""}
           <div class="groups">
             ${level.groups.map((group, index) => {
               const unlocked = isUnlocked(level, index);
@@ -233,9 +247,13 @@
   }
 
   function feedbackPanel(question) {
-    const title = toneIssue ? "✓ 正解です。声調記号を確認しましょう" : correct ? "✓ 正解です！" : "もう一歩です";
+    const title = toneIssue
+      ? correct ? "✓ 正解です。声調記号を確認しましょう" : "声調記号まで入力しましょう"
+      : correct ? "✓ 正解です！" : "もう一歩です";
     const explanation = toneIssue
-      ? "ローマ字の綴りが合っているため正解です。声調が変わると意味も変わるので、正しい表記も確認しておきましょう。"
+      ? correct
+        ? "ローマ字の綴りが合っているため正解です。声調が変わると意味も変わるので、正しい表記も確認しておきましょう。"
+        : "タイピングコースでは、文字と声調記号が見本と同じになるまで練習します。"
       : question.explanation;
     return `
       <div class="feedback ${correct ? "ok" : ""} ${toneIssue ? "tone" : ""}">
@@ -344,7 +362,7 @@
             </article>
           </div>
           <div class="data-note">
-            問題形式は <code>meaning-choice</code>、<code>blank-choice</code>、<code>blank-input</code>、<code>translation</code> の4種類です。翻訳は正解候補との自動照合と、自分で判定する方式の両方に対応します。
+            問題形式は <code>typing</code>、<code>meaning-choice</code>、<code>blank-choice</code>、<code>blank-input</code>、<code>translation</code> の5種類です。タイピングでは声調記号まで一致させ、翻訳では正解候補との自動照合と自分で判定する方式の両方に対応します。
           </div>
           <div class="reset-row"><button class="text-button" data-action="reset-defaults">最初の問題集に戻す</button></div>
         </section>
@@ -387,7 +405,7 @@
       const plain = stripVietnameseMarks(answer);
       toneIssue = answers.some((item) => stripVietnameseMarks(item) === plain);
     }
-    if (toneIssue) correct = true;
+    if (toneIssue && !question.strictTone) correct = true;
     checked = true;
     if (correct) score += 1;
   }

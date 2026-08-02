@@ -1,13 +1,73 @@
 window.defaultQuestionBank = {
-  version: 1,
+  version: 2,
   language: "vi",
   title: "Vietnamese Step",
   levels: [
+    {
+      id: "typing",
+      label: "⌨",
+      name: "タイピング",
+      description: "文字と声調を入力",
+      groups: [
+        {
+          id: "typing-1",
+          title: "GROUP 01",
+          description: "ベトナム語固有の文字",
+          questions: [
+            { id: "t1-01", type: "typing", prompt: "ă", answers: ["ă"], explanation: "ă は短く発音する a です。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-02", type: "typing", prompt: "â", answers: ["â"], explanation: "â はベトナム語でよく使う母音です。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-03", type: "typing", prompt: "ê", answers: ["ê"], explanation: "ê は e と区別して入力します。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-04", type: "typing", prompt: "ô", answers: ["ô"], explanation: "ô は o と区別して入力します。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-05", type: "typing", prompt: "ơ", answers: ["ơ"], explanation: "ơ は角のような記号が付く母音です。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-06", type: "typing", prompt: "ư", answers: ["ư"], explanation: "ư は u と区別して入力します。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-07", type: "typing", prompt: "đ", answers: ["đ"], explanation: "đ は d に横線が付いた別の文字です。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-08", type: "typing", prompt: "ă â", answers: ["ă â"], explanation: "2つの a 系母音を続けて入力します。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-09", type: "typing", prompt: "ơ ư", answers: ["ơ ư"], explanation: "ơ と ư の記号の位置を確認しましょう。", answerLanguage: "vi", strictTone: true },
+            { id: "t1-10", type: "typing", prompt: "đê", answers: ["đê"], explanation: "đ と ê を組み合わせて入力します。", answerLanguage: "vi", strictTone: true }
+          ]
+        },
+        {
+          id: "typing-2",
+          title: "GROUP 02",
+          description: "6つの声調",
+          questions: [
+            { id: "t2-01", type: "typing", prompt: "a", answers: ["a"], explanation: "記号なしは ngang（平らな声調）です。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-02", type: "typing", prompt: "á", answers: ["á"], explanation: "á は sắc（上がる声調）です。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-03", type: "typing", prompt: "à", answers: ["à"], explanation: "à は huyền（下がる声調）です。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-04", type: "typing", prompt: "ả", answers: ["ả"], explanation: "ả は hỏi（問いかけるような声調）です。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-05", type: "typing", prompt: "ã", answers: ["ã"], explanation: "ã は ngã（途中で上がる声調）です。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-06", type: "typing", prompt: "ạ", answers: ["ạ"], explanation: "ạ は nặng（重く短い声調）です。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-07", type: "typing", prompt: "má", answers: ["má"], explanation: "母音 a に sắc を付けます。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-08", type: "typing", prompt: "mà", answers: ["mà"], explanation: "母音 a に huyền を付けます。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-09", type: "typing", prompt: "mả", answers: ["mả"], explanation: "母音 a に hỏi を付けます。", answerLanguage: "vi", strictTone: true },
+            { id: "t2-10", type: "typing", prompt: "mạ", answers: ["mạ"], explanation: "母音 a に nặng を付けます。", answerLanguage: "vi", strictTone: true }
+          ]
+        },
+        {
+          id: "typing-3",
+          title: "GROUP 03",
+          description: "基本単語と短い表現",
+          questions: [
+            { id: "t3-01", type: "typing", prompt: "tôi", answers: ["tôi"], explanation: "tôi は「私」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-02", type: "typing", prompt: "bạn", answers: ["bạn"], explanation: "bạn は「友達・あなた」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-03", type: "typing", prompt: "nước", answers: ["nước"], explanation: "nước は「水・国」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-04", type: "typing", prompt: "khỏe", answers: ["khỏe"], explanation: "khỏe は「元気な・健康な」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-05", type: "typing", prompt: "hiểu", answers: ["hiểu"], explanation: "hiểu は「分かる」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-06", type: "typing", prompt: "rất", answers: ["rất"], explanation: "rất は「とても」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-07", type: "typing", prompt: "nhỏ", answers: ["nhỏ"], explanation: "nhỏ は「小さい」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-08", type: "typing", prompt: "xin chào", answers: ["xin chào"], explanation: "xin chào は「こんにちは」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-09", type: "typing", prompt: "cảm ơn", answers: ["cảm ơn"], explanation: "cảm ơn は「ありがとう」です。", answerLanguage: "vi", strictTone: true },
+            { id: "t3-10", type: "typing", prompt: "tiếng Việt", answers: ["tiếng Việt"], explanation: "tiếng Việt は「ベトナム語」です。", answerLanguage: "vi", strictTone: true }
+          ]
+        }
+      ]
+    },
     {
       id: "starter",
       label: "A1",
       name: "入門",
       description: "基本単語とあいさつ",
+      requires: "typing-3",
       groups: [
         {
           id: "starter-1",
@@ -50,6 +110,7 @@ window.defaultQuestionBank = {
       label: "A1+",
       name: "初級",
       description: "日常表現と翻訳",
+      requires: "starter-2",
       groups: [
         {
           id: "elementary-1",
