@@ -268,8 +268,11 @@
           <p class="instruction">${esc(instruction(question))}</p>
           <div class="prompt-row">
             <h1 class="sentence" lang="${question.direction === "ja-vi" ? "ja" : "vi"}">${esc(promptText(question))}</h1>
-            ${hasVietnamesePrompt(question) ? `<button class="speak" data-action="speak" aria-label="ベトナム語音声を再生" title="ベトナム語音声を再生">越音声</button>` : ""}
+            ${hasVietnamesePrompt(question) ? `<button class="speak" data-action="speak" aria-label="ベトナム語音声を再生" title="ベトナム語音声を再生">音声</button>` : ""}
           </div>
+          ${question.type.startsWith("blank-") && question.translation ? `
+            <p class="prompt-translation"><span>日本語訳</span>${esc(question.translation)}</p>
+          ` : ""}
           ${audioNotice ? `<div class="audio-notice" role="status">${esc(audioNotice)}</div>` : ""}
           ${answerArea(question)}
           ${selfReview ? reviewPanel(question) : checked ? feedbackPanel(question) : `

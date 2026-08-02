@@ -130,6 +130,8 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 .prompt-row { display: flex; align-items: center; gap: 16px; }
 .sentence { flex: 1; min-height: 120px; margin: 0; display: flex; align-items: center; font-family: "Segoe UI","Noto Sans",Arial,"Yu Gothic",sans-serif; font-size: clamp(2rem,5vw,3.25rem); font-weight: 520; line-height: 1.35; letter-spacing: -.015em; font-feature-settings: "mark" 1,"mkmk" 1; }
 .speak { flex: 0 0 auto; min-width: 55px; min-height: 42px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--forest); cursor: pointer; font-size: .72rem; font-weight: 800; }
+.prompt-translation { display: flex; align-items: baseline; gap: 11px; margin: -3px 0 20px; color: #4f4944; font-size: .95rem; line-height: 1.7; }
+.prompt-translation span { flex: 0 0 auto; padding: 3px 7px; border-radius: 6px; background: var(--sage); color: var(--forest); font-size: .66rem; font-weight: 800; letter-spacing: .05em; }
 .audio-notice { margin: -2px 0 18px; padding: 11px 14px; border: 1px solid #dec890; border-radius: 10px; background: #fff6dc; color: #6b521b; font-size: .76rem; line-height: 1.6; }
 .choices { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin: 18px 0 24px; }
 .choice { min-height: 66px; display: flex; align-items: center; gap: 13px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; background: #fff; cursor: pointer; font-family: "Segoe UI","Noto Sans",Arial,"Yu Gothic",sans-serif; font-size: 1.05rem; font-feature-settings: "mark" 1,"mkmk" 1; }
