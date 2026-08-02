@@ -11,6 +11,9 @@
   let levelId = bank.levels[0]?.id || "";
   let activeLevel = null;
   let activeGroup = null;
+  let quizQuestions = [];
+  let remainingQuestions = new Set();
+  let roundNumber = 1;
   let questionIndex = 0;
   let answer = "";
   let checked = false;
@@ -148,7 +151,7 @@
           <div>
             <span class="eyebrow">VIỆT NGỮ · MỖI NGÀY MỘT CHÚT</span>
             <h1>今日も、<br><em>10問</em>だけ進もう。</h1>
-            <p>タイピングから始めて、ベトナム語の単語・空欄補充・翻訳へ進みます。声調記号の違いも見逃さず、全問正解で次のグループへ進めます。</p>
+            <p>タイピングから始めて、ベトナム語の単語・空欄補充・翻訳へ進みます。間違えた問題だけを正解するまで復習し、すべて習得すると次のグループへ進めます。</p>
           </div>
           <div class="stats" aria-label="学習状況">
             <div><strong>${completed}</strong><span>クリア</span></div>
@@ -262,20 +265,20 @@
         <p>${esc(explanation)}</p>
         ${toneIssue && question.explanation ? `<small>${esc(question.explanation)}</small>` : ""}
         ${question.translation ? `<small>${esc(question.translation)}</small>` : ""}
-        <button class="primary wide" data-action="next">${questionIndex === activeGroup.questions.length - 1 ? "結果を見る" : "次の問題へ"} →</button>
+        <button class="primary wide" data-action="next">${questionIndex === quizQuestions.length - 1 ? "結果を見る" : "次の問題へ"} →</button>
       </div>
     `;
   }
 
   function renderQuiz() {
-    const question = activeGroup.questions[questionIndex];
-    const percentage = ((questionIndex + 1) / activeGroup.questions.length) * 100;
+    const question = quizQuestions[questionIndex];
+    const percentage = ((questionIndex + 1) / quizQuestions.length) * 100;
     app.innerHTML = `
       <main class="shell quiz">
         <header class="quiz-head">
           <button class="back" data-action="home">← 学習一覧</button>
-          <div class="quiz-title"><span>${esc(activeLevel.label)}・${esc(activeGroup.title)}</span><strong>${esc(activeGroup.description)}</strong></div>
-          <span class="counter">${questionIndex + 1} / ${activeGroup.questions.length}</span>
+          <div class="quiz-title"><span>${esc(activeLevel.label)}・${esc(activeGroup.title)}${roundNumber > 1 ? `・復習 ${roundNumber - 1}` : ""}</span><strong>${esc(activeGroup.description)}</strong></div>
+          <span class="counter">${questionIndex + 1} / ${quizQuestions.length}</span>
         </header>
         <div class="track"><span style="width:${percentage}%"></span></div>
         <section class="question">
@@ -309,17 +312,18 @@
   }
 
   function renderResult() {
-    const passed = score === activeGroup.questions.length;
+    const passed = remainingQuestions.size === 0;
+    const remaining = remainingQuestions.size;
     app.innerHTML = `
       <main class="result-wrap">
         <section class="result ${passed ? "passed" : ""}">
           <div class="emblem">${passed ? "✓" : score}</div>
           <span class="eyebrow">${esc(activeLevel.label)}・${esc(activeGroup.title)}</span>
-          <h1>${passed ? "グループクリア！" : "あと少しです"}</h1>
+          <h1>${passed ? "グループクリア！" : `残り ${remaining} 問です`}</h1>
           <p class="score"><strong>${score}</strong> / ${activeGroup.questions.length} 正解</p>
-          <p>${passed ? "全問正解です。次のグループがある場合は解放されました。" : "次へ進むには全問正解が必要です。声調や訳し方を確認して、もう一度挑戦しましょう。"}</p>
+          <p>${passed ? "すべての問題を正解しました。次のグループがある場合は解放されました。" : `次は間違えた ${remaining} 問だけを出題します。正解済みの問題をやり直す必要はありません。`}</p>
           <div class="result-actions">
-            ${passed ? "" : `<button class="primary" data-action="retry">もう一度挑戦</button>`}
+            ${passed ? "" : `<button class="primary" data-action="retry-missed">間違えた ${remaining} 問に再挑戦</button>`}
             <button class="${passed ? "primary" : "secondary"}" data-action="home">学習一覧へ</button>
           </div>
         </section>
@@ -381,6 +385,9 @@
   function startGroup(level, group) {
     activeLevel = level;
     activeGroup = group;
+    quizQuestions = [...group.questions];
+    remainingQuestions = new Set(group.questions);
+    roundNumber = 1;
     questionIndex = 0;
     score = 0;
     resetQuestion();
@@ -407,11 +414,17 @@
     }
     if (toneIssue && !question.strictTone) correct = true;
     checked = true;
-    if (correct) score += 1;
+    if (correct) remainingQuestions.delete(question);
+    score = activeGroup.questions.length - remainingQuestions.size;
   }
 
   function finishGroup() {
-    const passed = score === activeGroup.questions.length;
+    const passed = remainingQuestions.size === 0;
+    if (!passed) {
+      screen = "result";
+      render();
+      return;
+    }
     const old = progress[activeGroup.id] || {};
     progress[activeGroup.id] = {
       attempts: Number(old.attempts || 0) + 1,
@@ -421,6 +434,15 @@
     };
     save();
     screen = "result";
+    render();
+  }
+
+  function retryMissed() {
+    quizQuestions = activeGroup.questions.filter((question) => remainingQuestions.has(question));
+    roundNumber += 1;
+    questionIndex = 0;
+    resetQuestion();
+    screen = "quiz";
     render();
   }
 
@@ -539,9 +561,9 @@
       screen = "data";
       render();
     } else if (action === "speak") {
-      speakVietnamese(activeGroup.questions[questionIndex]);
+      speakVietnamese(quizQuestions[questionIndex]);
     } else if (action === "check") {
-      const question = activeGroup.questions[questionIndex];
+      const question = quizQuestions[questionIndex];
       if (!answer.trim()) return;
       if (question.type === "translation" && question.grading === "self") selfReview = true;
       else evaluate(question);
@@ -550,17 +572,18 @@
       correct = action === "self-correct";
       checked = true;
       selfReview = false;
-      if (correct) score += 1;
+      if (correct) remainingQuestions.delete(quizQuestions[questionIndex]);
+      score = activeGroup.questions.length - remainingQuestions.size;
       renderQuiz();
     } else if (action === "next") {
-      if (questionIndex === activeGroup.questions.length - 1) finishGroup();
+      if (questionIndex === quizQuestions.length - 1) finishGroup();
       else {
         questionIndex += 1;
         resetQuestion();
         renderQuiz();
       }
-    } else if (action === "retry") {
-      startGroup(activeLevel, activeGroup);
+    } else if (action === "retry-missed") {
+      retryMissed();
     } else if (action === "import-questions") {
       document.querySelector("#questions-file")?.click();
     } else if (action === "export-questions") {
