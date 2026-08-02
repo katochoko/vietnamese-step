@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v2";
+  const BANK_KEY = "vietnamese-step-bank-v3";
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const app = document.querySelector("#app");
 
