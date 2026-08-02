@@ -128,16 +128,17 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 .format { padding: 6px 9px; border-radius: 999px; background: var(--sage); color: var(--forest); font-size: .69rem; font-weight: 700; }
 .instruction { margin: 34px 0 6px; color: var(--muted); font-size: .8rem; }
 .prompt-row { display: flex; align-items: center; gap: 16px; }
-.sentence { flex: 1; min-height: 120px; margin: 0; display: flex; align-items: center; font: 500 clamp(2rem,5vw,3.25rem)/1.3 Georgia,"Times New Roman","Yu Mincho",serif; letter-spacing: -.035em; }
+.sentence { flex: 1; min-height: 120px; margin: 0; display: flex; align-items: center; font-family: "Segoe UI","Noto Sans",Arial,"Yu Gothic",sans-serif; font-size: clamp(2rem,5vw,3.25rem); font-weight: 520; line-height: 1.35; letter-spacing: -.015em; font-feature-settings: "mark" 1,"mkmk" 1; }
 .speak { flex: 0 0 auto; min-width: 55px; min-height: 42px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--forest); cursor: pointer; font-size: .72rem; font-weight: 800; }
+.audio-notice { margin: -2px 0 18px; padding: 11px 14px; border: 1px solid #dec890; border-radius: 10px; background: #fff6dc; color: #6b521b; font-size: .76rem; line-height: 1.6; }
 .choices { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin: 18px 0 24px; }
-.choice { min-height: 66px; display: flex; align-items: center; gap: 13px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; background: #fff; cursor: pointer; font: 1.05rem Georgia,serif; }
+.choice { min-height: 66px; display: flex; align-items: center; gap: 13px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; background: #fff; cursor: pointer; font-family: "Segoe UI","Noto Sans",Arial,"Yu Gothic",sans-serif; font-size: 1.05rem; font-feature-settings: "mark" 1,"mkmk" 1; }
 .choice span { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 8px; background: #efeee8; color: var(--muted); font: 800 .68rem Arial,sans-serif; }
 .choice.selected { border-color: var(--forest); background: #eff5ee; }
 .choice.selected span { background: var(--forest); color: #fff; }
 .answer { display: grid; gap: 8px; margin: 20px 0 24px; }
 .answer span { color: var(--muted); font-size: .73rem; font-weight: 700; }
-.answer textarea { width: 100%; min-height: 94px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; background: #fff; font: 1.15rem/1.65 Georgia,"Times New Roman","Yu Mincho",serif; }
+.answer textarea { width: 100%; min-height: 94px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; background: #fff; font-family: "Segoe UI","Noto Sans",Arial,"Yu Gothic",sans-serif; font-size: 1.15rem; line-height: 1.65; font-feature-settings: "mark" 1,"mkmk" 1; }
 .feedback { margin-top: 24px; padding: 20px; border-radius: 14px; background: #f8e9e4; color: #753d2d; }
 .feedback.ok { background: #e2eee8; color: #174638; }
 .feedback.tone { border: 1px solid #e1b657; background: #fff3ce; color: #6b4b14; }

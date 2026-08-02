@@ -17,6 +17,7 @@
   let correct = false;
   let toneIssue = false;
   let selfReview = false;
+  let audioNotice = "";
   let score = 0;
   let notice = "";
 
@@ -36,6 +37,7 @@
 
   function esc(value) {
     return String(value ?? "")
+      .normalize("NFC")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
@@ -83,12 +85,20 @@
     return question.partial ? "示された部分をベトナム語にしてください。" : "ベトナム語に訳してください。";
   }
 
-  function canSpeak(question) {
-    return "speechSynthesis" in window && (
+  function hasVietnamesePrompt(question) {
+    return (
       question.type.startsWith("blank-") ||
       (question.type === "meaning-choice" && question.direction === "vi-ja") ||
       (question.type === "translation" && question.direction === "vi-ja")
     );
+  }
+
+  function vietnameseVoice() {
+    if (!("speechSynthesis" in window)) return null;
+    return window.speechSynthesis.getVoices().find((voice) => {
+      const language = String(voice.lang || "").toLocaleLowerCase().replaceAll("_", "-");
+      return language === "vi" || language.startsWith("vi-");
+    }) || null;
   }
 
   function promptText(question) {
@@ -223,14 +233,14 @@
   }
 
   function feedbackPanel(question) {
-    const title = correct ? "✓ 正解です！" : toneIssue ? "声調記号を確認しましょう" : "もう一歩です";
+    const title = toneIssue ? "✓ 正解です。声調記号を確認しましょう" : correct ? "✓ 正解です！" : "もう一歩です";
     const explanation = toneIssue
-      ? "意味と綴りの骨格は合っています。ベトナム語では声調が変わると意味も変わるため、記号まで含めて正解にしています。"
+      ? "ローマ字の綴りが合っているため正解です。声調が変わると意味も変わるので、正しい表記も確認しておきましょう。"
       : question.explanation;
     return `
       <div class="feedback ${correct ? "ok" : ""} ${toneIssue ? "tone" : ""}">
         <h3>${title}</h3>
-        ${correct ? "" : `<p><strong>正解例：</strong>${esc(question.modelAnswer || question.answers?.join(" / "))}</p>`}
+        ${!correct || toneIssue ? `<p><strong>正しい表記：</strong>${esc(question.modelAnswer || question.answers?.join(" / "))}</p>` : ""}
         <p>${esc(explanation)}</p>
         ${toneIssue && question.explanation ? `<small>${esc(question.explanation)}</small>` : ""}
         ${question.translation ? `<small>${esc(question.translation)}</small>` : ""}
@@ -258,8 +268,9 @@
           <p class="instruction">${esc(instruction(question))}</p>
           <div class="prompt-row">
             <h1 class="sentence" lang="${question.direction === "ja-vi" ? "ja" : "vi"}">${esc(promptText(question))}</h1>
-            ${canSpeak(question) ? `<button class="speak" data-action="speak" aria-label="ベトナム語を読み上げる" title="ベトナム語を読み上げる">音声</button>` : ""}
+            ${hasVietnamesePrompt(question) ? `<button class="speak" data-action="speak" aria-label="ベトナム語音声を再生" title="ベトナム語音声を再生">越音声</button>` : ""}
           </div>
+          ${audioNotice ? `<div class="audio-notice" role="status">${esc(audioNotice)}</div>` : ""}
           ${answerArea(question)}
           ${selfReview ? reviewPanel(question) : checked ? feedbackPanel(question) : `
             <button class="primary wide" data-action="check" ${answer.trim() ? "" : "disabled"}>
@@ -362,6 +373,7 @@
     correct = false;
     toneIssue = false;
     selfReview = false;
+    audioNotice = "";
   }
 
   function evaluate(question) {
@@ -372,6 +384,7 @@
       const plain = stripVietnameseMarks(answer);
       toneIssue = answers.some((item) => stripVietnameseMarks(item) === plain);
     }
+    if (toneIssue) correct = true;
     checked = true;
     if (correct) score += 1;
   }
@@ -436,11 +449,24 @@
   }
 
   function speakVietnamese(question) {
-    speechSynthesis.cancel();
+    if (!("speechSynthesis" in window)) {
+      audioNotice = "このブラウザは音声再生に対応していません。";
+      renderQuiz();
+      return;
+    }
+    const voice = vietnameseVoice();
+    if (!voice) {
+      audioNotice = "この端末にベトナム語音声がありません。端末の音声設定で「ベトナム語」を追加すると再生できます。";
+      renderQuiz();
+      return;
+    }
+    audioNotice = "";
+    window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(promptText(question).replace("___", question.answers?.[0] || ""));
-    utterance.lang = "vi-VN";
-    utterance.rate = 0.82;
-    speechSynthesis.speak(utterance);
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+    utterance.rate = 0.78;
+    window.speechSynthesis.speak(utterance);
   }
 
   app.addEventListener("input", (event) => {
