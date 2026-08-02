@@ -102,6 +102,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .group-title h3 { margin: 4px 0 0; font: 600 1.18rem Georgia,"Yu Mincho",serif; }
 .badge { padding: 7px 10px; border-radius: 999px; background: #dbe9e2; color: var(--jade); font-size: .63rem; font-weight: 800; letter-spacing: .1em; }
 .badge.lock { background: #e9e8e3; color: #858983; }
+.badge.progress { background: #fff0c2; color: #795512; }
 .details { display: flex; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: .72rem; }
 .details span { padding-right: 8px; border-right: 1px solid var(--line); }
 .details span:last-child { border: 0; }

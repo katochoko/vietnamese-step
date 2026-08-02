@@ -180,6 +180,9 @@
             ${level.groups.map((group, index) => {
               const unlocked = isUnlocked(level, index);
               const result = progress[group.id];
+              const pendingCount = !result?.completed && Array.isArray(result?.pendingQuestionIds)
+                ? result.pendingQuestionIds.length
+                : 0;
               const formats = [...new Set(group.questions.map(typeLabel))].join("・");
               return `
                 <article class="group ${result?.completed ? "clear" : ""} ${unlocked ? "" : "locked"}">
@@ -187,16 +190,17 @@
                   <div class="group-body">
                     <div class="group-top">
                       <div class="group-title"><small>${esc(group.title)}</small><h3>${esc(group.description)}</h3></div>
-                      ${result?.completed ? `<span class="badge">✓ CLEAR</span>` : !unlocked ? `<span class="badge lock">🔒 LOCKED</span>` : ""}
+                      ${result?.completed ? `<span class="badge">✓ CLEAR</span>` : pendingCount ? `<span class="badge progress">↻ 続きから</span>` : !unlocked ? `<span class="badge lock">🔒 LOCKED</span>` : ""}
                     </div>
                     <div class="group-bottom">
                       <div class="details">
                         <span>${group.questions.length}問</span><span>${esc(formats)}</span>
+                        ${pendingCount ? `<span>残り ${pendingCount}問</span>` : ""}
                         ${result ? `<span>最高 ${result.bestScore}/${group.questions.length}</span>` : ""}
                       </div>
                       <button class="${result?.completed ? "secondary" : "primary"}" ${unlocked ? "" : "disabled"}
                         data-start="${esc(group.id)}" data-level-id="${esc(level.id)}">
-                        ${result?.completed ? "復習する" : "挑戦する"} →
+                        ${result?.completed ? "復習する" : pendingCount ? `残り ${pendingCount}問を解く` : "挑戦する"} →
                       </button>
                     </div>
                   </div>
@@ -382,14 +386,46 @@
     else renderHome();
   }
 
+  function questionKey(group, question, index) {
+    return typeof question.id === "string" ? question.id : `${group.id}-${index}`;
+  }
+
+  function questionsFromIds(group, ids) {
+    const wanted = new Set(ids);
+    return group.questions.filter((question, index) => wanted.has(questionKey(group, question, index)));
+  }
+
+  function remainingQuestionIds() {
+    return activeGroup.questions.flatMap((question, index) =>
+      remainingQuestions.has(question) ? [questionKey(activeGroup, question, index)] : []
+    );
+  }
+
+  function savePartialProgress() {
+    const old = progress[activeGroup.id] || {};
+    if (old.completed) return;
+    progress[activeGroup.id] = {
+      attempts: Number(old.attempts || 0),
+      bestScore: Math.max(Number(old.bestScore || 0), score),
+      completed: false,
+      pendingQuestionIds: remainingQuestionIds(),
+      lastPlayedAt: new Date().toISOString()
+    };
+    save();
+  }
+
   function startGroup(level, group) {
     activeLevel = level;
     activeGroup = group;
-    quizQuestions = [...group.questions];
-    remainingQuestions = new Set(group.questions);
+    const saved = progress[group.id];
+    const savedQuestions = !saved?.completed && Array.isArray(saved?.pendingQuestionIds)
+      ? questionsFromIds(group, saved.pendingQuestionIds)
+      : [];
+    quizQuestions = savedQuestions.length ? savedQuestions : [...group.questions];
+    remainingQuestions = new Set(quizQuestions);
     roundNumber = 1;
     questionIndex = 0;
-    score = 0;
+    score = group.questions.length - remainingQuestions.size;
     resetQuestion();
     screen = "quiz";
     render();
@@ -416,6 +452,7 @@
     checked = true;
     if (correct) remainingQuestions.delete(question);
     score = activeGroup.questions.length - remainingQuestions.size;
+    savePartialProgress();
   }
 
   function finishGroup() {
@@ -574,6 +611,7 @@
       selfReview = false;
       if (correct) remainingQuestions.delete(quizQuestions[questionIndex]);
       score = activeGroup.questions.length - remainingQuestions.size;
+      savePartialProgress();
       renderQuiz();
     } else if (action === "next") {
       if (questionIndex === quizQuestions.length - 1) finishGroup();
