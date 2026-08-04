@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v3";
+  const BANK_KEY = "vietnamese-step-bank-v4";
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const app = document.querySelector("#app");
 
@@ -49,12 +49,16 @@
   }
 
   function normalize(value) {
-    return String(value ?? "")
+    const normalized = String(value ?? "")
       .normalize("NFKC")
+      .replace(/[\u200B-\u200D\u2060\uFEFF]/gu, "")
       .trim()
       .toLocaleLowerCase()
       .replace(/[.!?。！？、，,]+$/u, "")
       .replace(/\s+/g, " ");
+    return /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(normalized)
+      ? normalized.replace(/\s+/g, "")
+      : normalized;
   }
 
   function stripVietnameseMarks(value) {
@@ -262,6 +266,7 @@
         ? "ローマ字の綴りが合っているため正解です。声調が変わると意味も変わるので、正しい表記も確認しておきましょう。"
         : "タイピングコースでは、文字と声調記号が見本と同じになるまで練習します。"
       : question.explanation;
+    const canAcceptTranslation = !correct && question.type === "translation";
     return `
       <div class="feedback ${correct ? "ok" : ""} ${toneIssue ? "tone" : ""}">
         <h3>${title}</h3>
@@ -269,6 +274,12 @@
         <p>${esc(explanation)}</p>
         ${toneIssue && question.explanation ? `<small>${esc(question.explanation)}</small>` : ""}
         ${question.translation ? `<small>${esc(question.translation)}</small>` : ""}
+        ${canAcceptTranslation ? `
+          <div class="translation-override">
+            <p>翻訳には別の正しい言い方もあります。意味が合っている場合は、この回答を正解候補としてこの端末に保存できます。</p>
+            <button class="secondary wide" data-action="accept-translation">この回答も正解として登録</button>
+          </div>
+        ` : ""}
         <button class="primary wide" data-action="next">${questionIndex === quizQuestions.length - 1 ? "結果を見る" : "次の問題へ"} →</button>
       </div>
     `;
@@ -612,6 +623,20 @@
       if (correct) remainingQuestions.delete(quizQuestions[questionIndex]);
       score = activeGroup.questions.length - remainingQuestions.size;
       savePartialProgress();
+      renderQuiz();
+    } else if (action === "accept-translation") {
+      const question = quizQuestions[questionIndex];
+      if (question.type !== "translation" || correct || !answer.trim()) return;
+      const accepted = Array.isArray(question.answers) ? question.answers : [];
+      if (!accepted.some((item) => normalize(item) === normalize(answer))) {
+        question.answers = [...accepted, answer.normalize("NFC").trim()];
+      }
+      correct = true;
+      toneIssue = false;
+      remainingQuestions.delete(question);
+      score = activeGroup.questions.length - remainingQuestions.size;
+      savePartialProgress();
+      save();
       renderQuiz();
     } else if (action === "next") {
       if (questionIndex === quizQuestions.length - 1) finishGroup();

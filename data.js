@@ -1,5 +1,5 @@
 window.defaultQuestionBank = {
-  version: 3,
+  version: 4,
   language: "vi",
   title: "Vietnamese Step",
   levels: [
@@ -100,7 +100,7 @@ window.defaultQuestionBank = {
             { id: "s2-07", type: "blank-choice", sentence: "Hẹn gặp ___.", choices: ["lại", "đi", "đây", "này"], answers: ["lại"], explanation: "Hẹn gặp lại. は「また会いましょう」。", translation: "また会いましょう。", answerLanguage: "vi" },
             { id: "s2-08", type: "blank-input", sentence: "Xin ___.", answers: ["lỗi"], explanation: "Xin lỗi. は「すみません・ごめんなさい」。", translation: "すみません。", answerLanguage: "vi" },
             { id: "s2-09", type: "blank-choice", sentence: "Tôi không ___.", choices: ["hiểu", "khỏe", "tên", "lại"], answers: ["hiểu"], explanation: "không hiểu で「分かりません」。", translation: "私は分かりません。", answerLanguage: "vi" },
-            { id: "s2-10", type: "blank-input", sentence: "___, cảm ơn.", answers: ["Vâng", "vâng"], explanation: "vâng は丁寧な「はい」です。", translation: "はい、ありがとうございます。", answerLanguage: "vi" }
+            { id: "s2-10", type: "blank-input", sentence: "___, cảm ơn.", answers: ["vâng", "dạ"], explanation: "vâng と dạ は、どちらも丁寧な「はい」として使えます。地域や相手との関係によって使い方が異なります。", translation: "はい、ありがとうございます。", answerLanguage: "vi" }
           ]
         }
       ]
@@ -245,7 +245,7 @@ window.defaultQuestionBank = {
         { id: "e5-04", type: "blank-input", sentence: "Bạn có muốn đi ___ tôi không?", answers: ["với", "cùng"], translation: "私と一緒に行きたいですか。", explanation: "đi với／đi cùng は「〜と行く」です。", answerLanguage: "vi" },
         { id: "e5-05", type: "meaning-choice", direction: "vi-ja", prompt: "bận", choices: ["忙しい", "暇な", "楽しい", "難しい"], answers: ["忙しい"], explanation: "bận は「忙しい」です。" },
         { id: "e5-06", type: "meaning-choice", direction: "ja-vi", prompt: "会う約束・予約", choices: ["cuộc hẹn", "kế hoạch", "ý kiến", "câu hỏi"], answers: ["cuộc hẹn"], explanation: "cuộc hẹn は「会う約束・予約」です。", answerLanguage: "vi" },
-        { id: "e5-07", type: "translation", direction: "vi-ja", prompt: "Tối nay bạn có rảnh không?", answers: ["今夜は暇ですか", "今晩空いていますか", "今夜空いていますか"], modelAnswer: "今夜は空いていますか？", grading: "accepted", explanation: "rảnh は「暇な・時間がある」です。" },
+        { id: "e5-07", type: "translation", direction: "vi-ja", prompt: "Tối nay bạn có rảnh không?", answers: ["今夜は空いていますか", "今夜は暇ですか", "今晩は空いていますか", "今晩は暇ですか", "今夜空いていますか", "今夜暇ですか", "今晩空いていますか", "今晩暇ですか", "今夜は時間がありますか", "今晩は時間がありますか"], modelAnswer: "今夜は空いていますか？", grading: "accepted", explanation: "rảnh は「暇な・時間がある」です。" },
         { id: "e5-08", type: "translation", direction: "ja-vi", prompt: "土曜日に会いましょう。", answers: ["Chúng ta gặp nhau vào thứ Bảy nhé.", "Hẹn gặp bạn vào thứ Bảy."], modelAnswer: "Chúng ta gặp nhau vào thứ Bảy nhé.", grading: "accepted", answerLanguage: "vi", explanation: "nhé は親しい提案を柔らかくします。" },
         { id: "e5-09", type: "blank-choice", sentence: "Tôi muốn đi, ___ tôi phải làm việc.", choices: ["nhưng", "vì", "nên", "nếu"], answers: ["nhưng"], translation: "行きたいですが、仕事をしなければなりません。", explanation: "nhưng は「しかし」です。", answerLanguage: "vi" },
         { id: "e5-10", type: "translation", direction: "vi-ja", prompt: "Hãy gọi cho tôi trước khi bạn đến.", modelAnswer: "来る前に私へ電話してください。", grading: "self", explanation: "trước khi は「〜する前に」です。" }
