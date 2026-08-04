@@ -1,5 +1,5 @@
 window.defaultQuestionBank = {
-  version: 4,
+  version: 5,
   language: "vi",
   title: "Vietnamese Step",
   levels: [
@@ -58,6 +58,185 @@ window.defaultQuestionBank = {
             { id: "t3-08", type: "typing", prompt: "xin chào", answers: ["xin chào"], explanation: "xin chào は「こんにちは」です。", answerLanguage: "vi", strictTone: true },
             { id: "t3-09", type: "typing", prompt: "cảm ơn", answers: ["cảm ơn"], explanation: "cảm ơn は「ありがとう」です。", answerLanguage: "vi", strictTone: true },
             { id: "t3-10", type: "typing", prompt: "tiếng Việt", answers: ["tiếng Việt"], explanation: "tiếng Việt は「ベトナム語」です。", answerLanguage: "vi", strictTone: true }
+          ]
+        }
+      ]
+    },
+    {
+      id: "vocabulary",
+      label: "語",
+      name: "語彙",
+      description: "単語・表現を集中練習",
+      requires: "typing-3",
+      groups: [
+        {
+          id: "vocabulary-1",
+          title: "GROUP 01",
+          description: "初級・基本動詞",
+          questions: [
+            { id: "v1-01", type: "meaning-choice", direction: "vi-ja", prompt: "ăn", choices: ["食べる", "飲む", "眠る", "歩く"], answers: ["食べる"], explanation: "ăn は「食べる」です。" },
+            { id: "v1-02", type: "meaning-choice", direction: "ja-vi", prompt: "飲む", choices: ["uống", "ăn", "ngủ", "đọc"], answers: ["uống"], explanation: "uống は「飲む」です。", answerLanguage: "vi" },
+            { id: "v1-03", type: "meaning-input", direction: "vi-ja", prompt: "đi", answers: ["行く"], modelAnswer: "行く", explanation: "đi は「行く」です。" },
+            { id: "v1-04", type: "meaning-input", direction: "ja-vi", prompt: "来る", answers: ["đến", "tới"], modelAnswer: "đến", explanation: "đến と tới は、どちらも「来る・到着する」の意味で使えます。", answerLanguage: "vi" },
+            { id: "v1-05", type: "meaning-choice", direction: "vi-ja", prompt: "ngủ", choices: ["寝る", "起きる", "働く", "話す"], answers: ["寝る"], explanation: "ngủ は「寝る・眠る」です。" },
+            { id: "v1-06", type: "meaning-choice", direction: "ja-vi", prompt: "起きる", choices: ["thức dậy", "đi ngủ", "ngồi", "đứng"], answers: ["thức dậy"], explanation: "thức dậy は「起きる・目を覚ます」です。", answerLanguage: "vi" },
+            { id: "v1-07", type: "meaning-input", direction: "vi-ja", prompt: "làm", answers: ["する", "働く", "作る"], modelAnswer: "する／働く", explanation: "làm は文脈によって「する・働く・作る」などを表します。" },
+            { id: "v1-08", type: "meaning-input", direction: "ja-vi", prompt: "見る", answers: ["xem"], modelAnswer: "xem", explanation: "xem は「見る」です。", answerLanguage: "vi" },
+            { id: "v1-09", type: "meaning-choice", direction: "vi-ja", prompt: "nói", choices: ["話す", "聞く", "読む", "書く"], answers: ["話す"], explanation: "nói は「話す・言う」です。" },
+            { id: "v1-10", type: "meaning-choice", direction: "ja-vi", prompt: "聞く", choices: ["nghe", "nói", "xem", "viết"], answers: ["nghe"], explanation: "nghe は「聞く」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-2",
+          title: "GROUP 02",
+          description: "初級・人と家族",
+          questions: [
+            { id: "v2-01", type: "meaning-choice", direction: "vi-ja", prompt: "người", choices: ["人", "家", "名前", "国"], answers: ["人"], explanation: "người は「人」です。" },
+            { id: "v2-02", type: "meaning-choice", direction: "ja-vi", prompt: "家族", choices: ["gia đình", "bạn bè", "hàng xóm", "trẻ em"], answers: ["gia đình"], explanation: "gia đình は「家族」です。", answerLanguage: "vi" },
+            { id: "v2-03", type: "meaning-input", direction: "vi-ja", prompt: "mẹ", answers: ["母", "お母さん"], modelAnswer: "母", explanation: "mẹ は「母・お母さん」です。" },
+            { id: "v2-04", type: "meaning-input", direction: "ja-vi", prompt: "父", answers: ["bố", "ba"], modelAnswer: "bố／ba", explanation: "bố は主に北部、ba は主に南部で使われる「父」です。", answerLanguage: "vi" },
+            { id: "v2-05", type: "meaning-choice", direction: "vi-ja", prompt: "anh trai", choices: ["兄", "姉", "弟", "妹"], answers: ["兄"], explanation: "anh trai は「兄」です。" },
+            { id: "v2-06", type: "meaning-choice", direction: "ja-vi", prompt: "姉", choices: ["chị gái", "anh trai", "em gái", "em trai"], answers: ["chị gái"], explanation: "chị gái は「姉」です。", answerLanguage: "vi" },
+            { id: "v2-07", type: "meaning-input", direction: "vi-ja", prompt: "em", answers: ["弟", "妹", "年下の人"], modelAnswer: "弟／妹／年下の人", explanation: "em は「弟・妹」や、自分より年下の相手への呼び方です。" },
+            { id: "v2-08", type: "meaning-input", direction: "ja-vi", prompt: "友達", answers: ["bạn", "bạn bè"], modelAnswer: "bạn", explanation: "bạn は一人の友達、bạn bè は友達全般を表せます。", answerLanguage: "vi" },
+            { id: "v2-09", type: "meaning-choice", direction: "vi-ja", prompt: "con cái", choices: ["子どもたち", "両親", "夫婦", "親戚"], answers: ["子どもたち"], explanation: "con cái は集合的な「子どもたち」です。" },
+            { id: "v2-10", type: "meaning-choice", direction: "ja-vi", prompt: "夫", choices: ["chồng", "vợ", "con trai", "bố"], answers: ["chồng"], explanation: "chồng は「夫」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-3",
+          title: "GROUP 03",
+          description: "初級・食事と買い物",
+          questions: [
+            { id: "v3-01", type: "meaning-choice", direction: "vi-ja", prompt: "cơm", choices: ["ご飯", "麺", "肉", "魚"], answers: ["ご飯"], explanation: "cơm は「ご飯・食事」です。" },
+            { id: "v3-02", type: "meaning-choice", direction: "ja-vi", prompt: "フォー", choices: ["phở", "cơm", "bánh mì", "cháo"], answers: ["phở"], explanation: "phở は米麺を使ったベトナム料理です。", answerLanguage: "vi" },
+            { id: "v3-03", type: "meaning-input", direction: "vi-ja", prompt: "rau", answers: ["野菜"], modelAnswer: "野菜", explanation: "rau は「野菜」です。" },
+            { id: "v3-04", type: "meaning-input", direction: "ja-vi", prompt: "肉", answers: ["thịt"], modelAnswer: "thịt", explanation: "thịt は「肉」です。", answerLanguage: "vi" },
+            { id: "v3-05", type: "meaning-choice", direction: "vi-ja", prompt: "trái cây", choices: ["果物", "野菜", "飲み物", "お菓子"], answers: ["果物"], explanation: "trái cây は主に南部で使われる「果物」です。北部では hoa quả もよく使います。" },
+            { id: "v3-06", type: "meaning-choice", direction: "ja-vi", prompt: "水", choices: ["nước", "sữa", "trà", "cà phê"], answers: ["nước"], explanation: "nước はここでは「水」です。", answerLanguage: "vi" },
+            { id: "v3-07", type: "meaning-input", direction: "vi-ja", prompt: "giá", answers: ["値段", "価格"], modelAnswer: "値段", explanation: "giá は「値段・価格」です。" },
+            { id: "v3-08", type: "meaning-input", direction: "ja-vi", prompt: "安い", answers: ["rẻ"], modelAnswer: "rẻ", explanation: "rẻ は「安い」です。", answerLanguage: "vi" },
+            { id: "v3-09", type: "meaning-choice", direction: "vi-ja", prompt: "đắt", choices: ["高い", "安い", "重い", "軽い"], answers: ["高い"], explanation: "đắt は「値段が高い」です。" },
+            { id: "v3-10", type: "meaning-choice", direction: "ja-vi", prompt: "値引き", choices: ["giảm giá", "tăng giá", "trả tiền", "tiền thừa"], answers: ["giảm giá"], explanation: "giảm giá は「値引き・割引」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-4",
+          title: "GROUP 04",
+          description: "初級・場所と移動",
+          questions: [
+            { id: "v4-01", type: "meaning-choice", direction: "vi-ja", prompt: "nhà", choices: ["家", "学校", "店", "会社"], answers: ["家"], explanation: "nhà は「家」です。" },
+            { id: "v4-02", type: "meaning-choice", direction: "ja-vi", prompt: "学校", choices: ["trường học", "bệnh viện", "nhà hàng", "khách sạn"], answers: ["trường học"], explanation: "trường học は「学校」です。", answerLanguage: "vi" },
+            { id: "v4-03", type: "meaning-input", direction: "vi-ja", prompt: "bệnh viện", answers: ["病院"], modelAnswer: "病院", explanation: "bệnh viện は「病院」です。" },
+            { id: "v4-04", type: "meaning-input", direction: "ja-vi", prompt: "市場", answers: ["chợ"], modelAnswer: "chợ", explanation: "chợ は「市場」です。", answerLanguage: "vi" },
+            { id: "v4-05", type: "meaning-choice", direction: "vi-ja", prompt: "sân bay", choices: ["空港", "駅", "港", "駐車場"], answers: ["空港"], explanation: "sân bay は「空港」です。" },
+            { id: "v4-06", type: "meaning-choice", direction: "ja-vi", prompt: "駅", choices: ["nhà ga", "sân bay", "bến xe", "bưu điện"], answers: ["nhà ga"], explanation: "nhà ga は「駅」です。", answerLanguage: "vi" },
+            { id: "v4-07", type: "meaning-input", direction: "vi-ja", prompt: "xe buýt", answers: ["バス"], modelAnswer: "バス", explanation: "xe buýt は「バス」です。" },
+            { id: "v4-08", type: "meaning-input", direction: "ja-vi", prompt: "バイク", answers: ["xe máy"], modelAnswer: "xe máy", explanation: "xe máy は「オートバイ・バイク」です。", answerLanguage: "vi" },
+            { id: "v4-09", type: "meaning-choice", direction: "vi-ja", prompt: "đường", choices: ["道", "橋", "川", "建物"], answers: ["道"], explanation: "đường は「道・道路」です。文脈によって「砂糖」の意味にもなります。" },
+            { id: "v4-10", type: "meaning-choice", direction: "ja-vi", prompt: "交差点", choices: ["ngã tư", "vỉa hè", "cầu", "đường hầm"], answers: ["ngã tư"], explanation: "ngã tư は「交差点・四つ角」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-5",
+          title: "GROUP 05",
+          description: "初級・時間と日常",
+          questions: [
+            { id: "v5-01", type: "meaning-choice", direction: "vi-ja", prompt: "hôm nay", choices: ["今日", "昨日", "明日", "毎日"], answers: ["今日"], explanation: "hôm nay は「今日」です。" },
+            { id: "v5-02", type: "meaning-choice", direction: "ja-vi", prompt: "明日", choices: ["ngày mai", "hôm qua", "hôm nay", "ngày kia"], answers: ["ngày mai"], explanation: "ngày mai は「明日」です。", answerLanguage: "vi" },
+            { id: "v5-03", type: "meaning-input", direction: "vi-ja", prompt: "hôm qua", answers: ["昨日"], modelAnswer: "昨日", explanation: "hôm qua は「昨日」です。" },
+            { id: "v5-04", type: "meaning-input", direction: "ja-vi", prompt: "朝", answers: ["buổi sáng", "sáng"], modelAnswer: "buổi sáng", explanation: "buổi sáng は「朝・午前」です。", answerLanguage: "vi" },
+            { id: "v5-05", type: "meaning-choice", direction: "vi-ja", prompt: "buổi tối", choices: ["夜", "朝", "昼", "午後"], answers: ["夜"], explanation: "buổi tối は「夜・晩」です。" },
+            { id: "v5-06", type: "meaning-choice", direction: "ja-vi", prompt: "週", choices: ["tuần", "tháng", "năm", "ngày"], answers: ["tuần"], explanation: "tuần は「週」です。", answerLanguage: "vi" },
+            { id: "v5-07", type: "meaning-input", direction: "vi-ja", prompt: "tháng", answers: ["月", "か月", "月間"], modelAnswer: "月／か月", explanation: "tháng は暦の「月」や期間の「〜か月」です。" },
+            { id: "v5-08", type: "meaning-input", direction: "ja-vi", prompt: "年", answers: ["năm"], modelAnswer: "năm", explanation: "năm は「年」です。文脈によって数字の「五」にもなります。", answerLanguage: "vi" },
+            { id: "v5-09", type: "meaning-choice", direction: "vi-ja", prompt: "thường xuyên", choices: ["頻繁に", "時々", "めったに〜ない", "突然"], answers: ["頻繁に"], explanation: "thường xuyên は「頻繁に・定期的に」です。" },
+            { id: "v5-10", type: "meaning-choice", direction: "ja-vi", prompt: "時々", choices: ["thỉnh thoảng", "luôn luôn", "chưa bao giờ", "ngay lập tức"], answers: ["thỉnh thoảng"], explanation: "thỉnh thoảng は「時々」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-6",
+          title: "GROUP 06",
+          description: "初中級・感情と状態",
+          questions: [
+            { id: "v6-01", type: "meaning-choice", direction: "vi-ja", prompt: "vui", choices: ["うれしい", "悲しい", "心配な", "怒った"], answers: ["うれしい"], explanation: "vui は「うれしい・楽しい」です。" },
+            { id: "v6-02", type: "meaning-choice", direction: "ja-vi", prompt: "悲しい", choices: ["buồn", "vui", "mệt", "khỏe"], answers: ["buồn"], explanation: "buồn は「悲しい」です。", answerLanguage: "vi" },
+            { id: "v6-03", type: "meaning-input", direction: "vi-ja", prompt: "lo lắng", answers: ["心配する", "心配な", "不安な"], modelAnswer: "心配する／不安な", explanation: "lo lắng は「心配する・不安に思う」です。" },
+            { id: "v6-04", type: "meaning-input", direction: "ja-vi", prompt: "疲れた", answers: ["mệt", "mệt mỏi"], modelAnswer: "mệt", explanation: "mệt は「疲れた」です。", answerLanguage: "vi" },
+            { id: "v6-05", type: "meaning-choice", direction: "vi-ja", prompt: "đói", choices: ["空腹な", "喉が渇いた", "眠い", "痛い"], answers: ["空腹な"], explanation: "đói は「お腹が空いた」です。" },
+            { id: "v6-06", type: "meaning-choice", direction: "ja-vi", prompt: "喉が渇いた", choices: ["khát", "đói", "mệt", "buồn ngủ"], answers: ["khát"], explanation: "khát は「喉が渇いた」です。", answerLanguage: "vi" },
+            { id: "v6-07", type: "meaning-input", direction: "vi-ja", prompt: "khỏe", answers: ["元気な", "健康な", "丈夫な"], modelAnswer: "元気な／健康な", explanation: "khỏe は「元気な・健康な」です。" },
+            { id: "v6-08", type: "meaning-input", direction: "ja-vi", prompt: "忙しい", answers: ["bận"], modelAnswer: "bận", explanation: "bận は「忙しい」です。", answerLanguage: "vi" },
+            { id: "v6-09", type: "meaning-choice", direction: "vi-ja", prompt: "rảnh", choices: ["暇な", "忙しい", "難しい", "簡単な"], answers: ["暇な"], explanation: "rảnh は「暇な・時間がある」です。" },
+            { id: "v6-10", type: "meaning-choice", direction: "ja-vi", prompt: "驚いた", choices: ["ngạc nhiên", "thất vọng", "hài lòng", "tự hào"], answers: ["ngạc nhiên"], explanation: "ngạc nhiên は「驚いた・驚く」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-7",
+          title: "GROUP 07",
+          description: "中級・学習と仕事",
+          questions: [
+            { id: "v7-01", type: "meaning-choice", direction: "vi-ja", prompt: "học", choices: ["学ぶ", "教える", "働く", "休む"], answers: ["学ぶ"], explanation: "học は「学ぶ・勉強する」です。" },
+            { id: "v7-02", type: "meaning-choice", direction: "ja-vi", prompt: "教える", choices: ["dạy", "học", "hỏi", "trả lời"], answers: ["dạy"], explanation: "dạy は「教える」です。", answerLanguage: "vi" },
+            { id: "v7-03", type: "meaning-input", direction: "vi-ja", prompt: "giáo viên", answers: ["教師", "先生"], modelAnswer: "教師／先生", explanation: "giáo viên は「教師・先生」です。" },
+            { id: "v7-04", type: "meaning-input", direction: "ja-vi", prompt: "学生・生徒", answers: ["học sinh", "sinh viên"], modelAnswer: "học sinh／sinh viên", explanation: "học sinh は児童・生徒、sinh viên は大学生を表します。", answerLanguage: "vi" },
+            { id: "v7-05", type: "meaning-choice", direction: "vi-ja", prompt: "công việc", choices: ["仕事", "休暇", "趣味", "授業"], answers: ["仕事"], explanation: "công việc は「仕事・作業」です。" },
+            { id: "v7-06", type: "meaning-choice", direction: "ja-vi", prompt: "同僚", choices: ["đồng nghiệp", "khách hàng", "quản lý", "đối tác"], answers: ["đồng nghiệp"], explanation: "đồng nghiệp は「同僚」です。", answerLanguage: "vi" },
+            { id: "v7-07", type: "meaning-input", direction: "vi-ja", prompt: "cuộc họp", answers: ["会議", "ミーティング"], modelAnswer: "会議", explanation: "cuộc họp は「会議」です。" },
+            { id: "v7-08", type: "meaning-input", direction: "ja-vi", prompt: "報告・報告書", answers: ["báo cáo"], modelAnswer: "báo cáo", explanation: "báo cáo は名詞の「報告・報告書」、動詞の「報告する」です。", answerLanguage: "vi" },
+            { id: "v7-09", type: "meaning-choice", direction: "vi-ja", prompt: "kinh nghiệm", choices: ["経験", "知識", "責任", "資格"], answers: ["経験"], explanation: "kinh nghiệm は「経験」です。" },
+            { id: "v7-10", type: "meaning-choice", direction: "ja-vi", prompt: "技能・スキル", choices: ["kỹ năng", "kinh nghiệm", "kiến thức", "thói quen"], answers: ["kỹ năng"], explanation: "kỹ năng は「技能・スキル」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-8",
+          title: "GROUP 08",
+          description: "中級・社会と環境",
+          questions: [
+            { id: "v8-01", type: "meaning-choice", direction: "vi-ja", prompt: "môi trường", choices: ["環境", "社会", "経済", "政治"], answers: ["環境"], explanation: "môi trường は「環境」です。" },
+            { id: "v8-02", type: "meaning-choice", direction: "ja-vi", prompt: "汚染", choices: ["ô nhiễm", "khí hậu", "thiên nhiên", "rác thải"], answers: ["ô nhiễm"], explanation: "ô nhiễm は「汚染」です。", answerLanguage: "vi" },
+            { id: "v8-03", type: "meaning-input", direction: "vi-ja", prompt: "giao thông công cộng", answers: ["公共交通", "公共交通機関"], modelAnswer: "公共交通機関", explanation: "giao thông công cộng は「公共交通・公共交通機関」です。" },
+            { id: "v8-04", type: "meaning-input", direction: "ja-vi", prompt: "リサイクルする", answers: ["tái chế"], modelAnswer: "tái chế", explanation: "tái chế は「リサイクルする・再生利用する」です。", answerLanguage: "vi" },
+            { id: "v8-05", type: "meaning-choice", direction: "vi-ja", prompt: "tiết kiệm", choices: ["節約する", "浪費する", "消費する", "生産する"], answers: ["節約する"], explanation: "tiết kiệm は「節約する」です。" },
+            { id: "v8-06", type: "meaning-choice", direction: "ja-vi", prompt: "地域社会", choices: ["cộng đồng", "dân số", "chính phủ", "tổ chức"], answers: ["cộng đồng"], explanation: "cộng đồng は「共同体・地域社会」です。", answerLanguage: "vi" },
+            { id: "v8-07", type: "meaning-input", direction: "vi-ja", prompt: "văn hóa", answers: ["文化"], modelAnswer: "文化", explanation: "văn hóa は「文化」です。" },
+            { id: "v8-08", type: "meaning-input", direction: "ja-vi", prompt: "経済", answers: ["kinh tế"], modelAnswer: "kinh tế", explanation: "kinh tế は「経済」です。", answerLanguage: "vi" },
+            { id: "v8-09", type: "meaning-choice", direction: "vi-ja", prompt: "giáo dục", choices: ["教育", "医療", "法律", "科学"], answers: ["教育"], explanation: "giáo dục は「教育」です。" },
+            { id: "v8-10", type: "meaning-choice", direction: "ja-vi", prompt: "健康", choices: ["sức khỏe", "an toàn", "hạnh phúc", "đời sống"], answers: ["sức khỏe"], explanation: "sức khỏe は「健康」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-9",
+          title: "GROUP 09",
+          description: "中上級・抽象的な語彙",
+          questions: [
+            { id: "v9-01", type: "meaning-choice", direction: "vi-ja", prompt: "ý kiến", choices: ["意見", "理由", "目的", "結果"], answers: ["意見"], explanation: "ý kiến は「意見」です。" },
+            { id: "v9-02", type: "meaning-choice", direction: "ja-vi", prompt: "理由", choices: ["lý do", "kết quả", "mục tiêu", "cơ hội"], answers: ["lý do"], explanation: "lý do は「理由」です。", answerLanguage: "vi" },
+            { id: "v9-03", type: "meaning-input", direction: "vi-ja", prompt: "mục tiêu", answers: ["目標", "目的"], modelAnswer: "目標／目的", explanation: "mục tiêu は「目標・目的」です。" },
+            { id: "v9-04", type: "meaning-input", direction: "ja-vi", prompt: "結果", answers: ["kết quả"], modelAnswer: "kết quả", explanation: "kết quả は「結果」です。", answerLanguage: "vi" },
+            { id: "v9-05", type: "meaning-choice", direction: "vi-ja", prompt: "cơ hội", choices: ["機会", "危険", "責任", "選択"], answers: ["機会"], explanation: "cơ hội は「機会・チャンス」です。" },
+            { id: "v9-06", type: "meaning-choice", direction: "ja-vi", prompt: "責任", choices: ["trách nhiệm", "quyền lợi", "nghĩa vụ", "kinh nghiệm"], answers: ["trách nhiệm"], explanation: "trách nhiệm は「責任」です。", answerLanguage: "vi" },
+            { id: "v9-07", type: "meaning-input", direction: "vi-ja", prompt: "thay đổi", answers: ["変化", "変更", "変える", "変わる"], modelAnswer: "変化／変更する", explanation: "thay đổi は名詞の「変化」、動詞の「変える・変わる」です。" },
+            { id: "v9-08", type: "meaning-input", direction: "ja-vi", prompt: "発展する・開発する", answers: ["phát triển"], modelAnswer: "phát triển", explanation: "phát triển は「発展する・開発する」です。", answerLanguage: "vi" },
+            { id: "v9-09", type: "meaning-choice", direction: "vi-ja", prompt: "giải pháp", choices: ["解決策", "問題", "条件", "方法論"], answers: ["解決策"], explanation: "giải pháp は「解決策」です。" },
+            { id: "v9-10", type: "meaning-choice", direction: "ja-vi", prompt: "影響", choices: ["ảnh hưởng", "thay đổi", "phát triển", "quan hệ"], answers: ["ảnh hưởng"], explanation: "ảnh hưởng は「影響」、または「影響を与える」です。", answerLanguage: "vi" }
+          ]
+        },
+        {
+          id: "vocabulary-10",
+          title: "GROUP 10",
+          description: "上級・表現とイディオム",
+          questions: [
+            { id: "v10-01", type: "meaning-choice", direction: "vi-ja", prompt: "cố gắng", choices: ["努力する", "諦める", "注意する", "決定する"], answers: ["努力する"], explanation: "cố gắng は「努力する・頑張る」です。" },
+            { id: "v10-02", type: "meaning-choice", direction: "ja-vi", prompt: "注意する", choices: ["chú ý", "đồng ý", "phản đối", "giải thích"], answers: ["chú ý"], explanation: "chú ý は「注意する・注目する」です。", answerLanguage: "vi" },
+            { id: "v10-03", type: "meaning-input", direction: "vi-ja", prompt: "quen với", answers: ["慣れている", "〜に慣れている", "慣れる"], modelAnswer: "〜に慣れている", explanation: "quen với は「〜に慣れている」です。" },
+            { id: "v10-04", type: "meaning-input", direction: "ja-vi", prompt: "決定する", answers: ["quyết định"], modelAnswer: "quyết định", explanation: "quyết định は「決定する」、または名詞の「決定」です。", answerLanguage: "vi" },
+            { id: "v10-05", type: "meaning-choice", direction: "vi-ja", prompt: "phụ thuộc vào", choices: ["〜に依存する", "〜に反対する", "〜に参加する", "〜を避ける"], answers: ["〜に依存する"], explanation: "phụ thuộc vào は「〜に依存する・〜次第である」です。" },
+            { id: "v10-06", type: "meaning-choice", direction: "ja-vi", prompt: "一般的に", choices: ["nói chung", "đặc biệt", "trái lại", "cuối cùng"], answers: ["nói chung"], explanation: "nói chung は「一般的に・概して」です。", answerLanguage: "vi" },
+            { id: "v10-07", type: "meaning-input", direction: "vi-ja", prompt: "một công đôi việc", answers: ["一石二鳥", "一つの仕事で二つの成果を得る"], modelAnswer: "一石二鳥", explanation: "một công đôi việc は、一つの行動で二つの成果を得ることを表す慣用表現です。" },
+            { id: "v10-08", type: "meaning-input", direction: "ja-vi", prompt: "隣の芝生は青い・目移りする", answers: ["đứng núi này trông núi nọ"], modelAnswer: "đứng núi này trông núi nọ", explanation: "đứng núi này trông núi nọ は、今あるものに満足せず他をよく思うことを表します。", answerLanguage: "vi" },
+            { id: "v10-09", type: "meaning-choice", direction: "vi-ja", prompt: "nước đến chân mới nhảy", choices: ["切羽詰まるまで行動しない", "急がば回れ", "念には念を入れる", "失敗から学ぶ"], answers: ["切羽詰まるまで行動しない"], explanation: "nước đến chân mới nhảy は、事態が差し迫ってから初めて行動することを表します。" },
+            { id: "v10-10", type: "meaning-choice", direction: "ja-vi", prompt: "努力を続ければ成功する", choices: ["có công mài sắt, có ngày nên kim", "nước đến chân mới nhảy", "một công đôi việc", "đứng núi này trông núi nọ"], answers: ["có công mài sắt, có ngày nên kim"], explanation: "có công mài sắt, có ngày nên kim は、努力を続ければいつか成功するということわざです。", answerLanguage: "vi" }
           ]
         }
       ]

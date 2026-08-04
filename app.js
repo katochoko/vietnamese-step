@@ -1,11 +1,12 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v4";
+  const BANK_KEY = "vietnamese-step-bank-v5";
+  const PREVIOUS_BANK_KEY = "vietnamese-step-bank-v4";
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const app = document.querySelector("#app");
 
-  let bank = load(BANK_KEY, window.defaultQuestionBank);
+  let bank = loadBank();
   let progress = load(PROGRESS_KEY, {});
   let screen = "home";
   let levelId = bank.levels[0]?.id || "";
@@ -31,6 +32,24 @@
     } catch {
       return fallback;
     }
+  }
+
+  function loadBank() {
+    const saved = load(BANK_KEY, null);
+    if (saved) return saved;
+    const fresh = JSON.parse(JSON.stringify(window.defaultQuestionBank));
+    const previous = load(PREVIOUS_BANK_KEY, null);
+    if (!previous?.levels) return fresh;
+    const previousQuestions = new Map(
+      previous.levels.flatMap((level) => level.groups || []).flatMap((group) => group.questions || []).map((question) => [question.id, question])
+    );
+    fresh.levels.flatMap((level) => level.groups).flatMap((group) => group.questions).forEach((question) => {
+      const oldQuestion = previousQuestions.get(question.id);
+      if (!Array.isArray(oldQuestion?.answers)) return;
+      const merged = [...(question.answers || []), ...oldQuestion.answers];
+      question.answers = merged.filter((item, index) => merged.findIndex((candidate) => normalize(candidate) === normalize(item)) === index);
+    });
+    return fresh;
   }
 
   function save() {
@@ -86,6 +105,7 @@
   function typeLabel(question) {
     if (question.type === "typing") return "タイピング";
     if (question.type === "meaning-choice") return "単語・選択";
+    if (question.type === "meaning-input") return "単語・入力";
     if (question.type === "blank-choice") return "空欄・選択";
     if (question.type === "blank-input") return "空欄・入力";
     return question.partial ? "部分翻訳" : "翻訳・入力";
@@ -95,6 +115,9 @@
     if (question.type === "typing") return "表示されたベトナム語を、そのまま入力してください。";
     if (question.type === "meaning-choice") {
       return question.direction === "vi-ja" ? "ベトナム語の意味を選んでください。" : "日本語に合うベトナム語を選んでください。";
+    }
+    if (question.type === "meaning-input") {
+      return question.direction === "vi-ja" ? "ベトナム語の意味を日本語で入力してください。" : "日本語に合うベトナム語を入力してください。";
     }
     if (question.type === "blank-choice" || question.type === "blank-input") return "空欄に入る言葉を答えてください。";
     if (question.direction === "vi-ja") return question.partial ? "示された部分を日本語にしてください。" : "日本語に訳してください。";
@@ -106,6 +129,7 @@
       question.type === "typing" ||
       question.type.startsWith("blank-") ||
       (question.type === "meaning-choice" && question.direction === "vi-ja") ||
+      (question.type === "meaning-input" && question.direction === "vi-ja") ||
       (question.type === "translation" && question.direction === "vi-ja")
     );
   }
@@ -155,7 +179,7 @@
           <div>
             <span class="eyebrow">VIỆT NGỮ · MỖI NGÀY MỘT CHÚT</span>
             <h1>今日も、<br><em>10問</em>だけ進もう。</h1>
-            <p>タイピングから始めて、ベトナム語の単語・空欄補充・翻訳へ進みます。間違えた問題だけを正解するまで復習し、すべて習得すると次のグループへ進めます。</p>
+            <p>タイピングから始めて、独立した語彙コースとA1以降の総合問題へ進みます。間違えた問題だけを正解するまで復習し、すべて習得すると次のグループへ進めます。</p>
           </div>
           <div class="stats" aria-label="学習状況">
             <div><strong>${completed}</strong><span>クリア</span></div>
@@ -180,6 +204,7 @@
             }).join("")}
           </div>
           ${level.id === "typing" ? `<div class="course-note"><strong>スマホではベトナム語キーボードを使います。</strong><span>このコースは練習のため、文字と声調記号まで正しく入力すると正解になります。</span></div>` : ""}
+          ${level.id === "vocabulary" ? `<div class="course-note"><strong>語彙だけを初級から上級まで練習します。</strong><span>このコースの進み具合は、A1以降の解放条件には影響しません。</span></div>` : ""}
           <div class="groups">
             ${level.groups.map((group, index) => {
               const unlocked = isUnlocked(level, index);
@@ -266,7 +291,7 @@
         ? "ローマ字の綴りが合っているため正解です。声調が変わると意味も変わるので、正しい表記も確認しておきましょう。"
         : "タイピングコースでは、文字と声調記号が見本と同じになるまで練習します。"
       : question.explanation;
-    const canAcceptTranslation = !correct && question.type === "translation";
+    const canRegisterAlternative = !correct && ["translation", "meaning-input"].includes(question.type);
     return `
       <div class="feedback ${correct ? "ok" : ""} ${toneIssue ? "tone" : ""}">
         <h3>${title}</h3>
@@ -274,10 +299,10 @@
         <p>${esc(explanation)}</p>
         ${toneIssue && question.explanation ? `<small>${esc(question.explanation)}</small>` : ""}
         ${question.translation ? `<small>${esc(question.translation)}</small>` : ""}
-        ${canAcceptTranslation ? `
+        ${canRegisterAlternative ? `
           <div class="translation-override">
-            <p>翻訳には別の正しい言い方もあります。意味が合っている場合は、この回答を正解候補としてこの端末に保存できます。</p>
-            <button class="secondary wide" data-action="accept-translation">この回答も正解として登録</button>
+            <p>正解候補にない別の言い方もあります。意味が合っている場合は、この回答を正解候補としてこの端末に保存できます。</p>
+            <button class="secondary wide" data-action="accept-answer">この回答も正解として登録</button>
           </div>
         ` : ""}
         <button class="primary wide" data-action="next">${questionIndex === quizQuestions.length - 1 ? "結果を見る" : "次の問題へ"} →</button>
@@ -381,7 +406,7 @@
             </article>
           </div>
           <div class="data-note">
-            問題形式は <code>typing</code>、<code>meaning-choice</code>、<code>blank-choice</code>、<code>blank-input</code>、<code>translation</code> の5種類です。タイピングでは声調記号まで一致させ、翻訳では正解候補との自動照合と自分で判定する方式の両方に対応します。
+            問題形式は <code>typing</code>、<code>meaning-choice</code>、<code>meaning-input</code>、<code>blank-choice</code>、<code>blank-input</code>、<code>translation</code> の6種類です。タイピングでは声調記号まで一致させ、語彙入力と翻訳では複数の正解候補を照合できます。
           </div>
           <div class="reset-row"><button class="text-button" data-action="reset-defaults">最初の問題集に戻す</button></div>
         </section>
@@ -624,9 +649,9 @@
       score = activeGroup.questions.length - remainingQuestions.size;
       savePartialProgress();
       renderQuiz();
-    } else if (action === "accept-translation") {
+    } else if (action === "accept-answer") {
       const question = quizQuestions[questionIndex];
-      if (question.type !== "translation" || correct || !answer.trim()) return;
+      if (!["translation", "meaning-input"].includes(question.type) || correct || !answer.trim()) return;
       const accepted = Array.isArray(question.answers) ? question.answers : [];
       if (!accepted.some((item) => normalize(item) === normalize(answer))) {
         question.answers = [...accepted, answer.normalize("NFC").trim()];
