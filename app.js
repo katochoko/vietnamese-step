@@ -8,6 +8,7 @@
   const app = document.querySelector("#app");
 
   let bank = loadBank();
+  harmonizeQuestionMix(bank);
   let progress = load(PROGRESS_KEY, {});
   let screen = "home";
   let levelId = load(LAST_LEVEL_KEY, bank.levels[0]?.id || "");
@@ -52,6 +53,51 @@
       question.answers = merged.filter((item, index) => merged.findIndex((candidate) => normalize(candidate) === normalize(item)) === index);
     });
     return fresh;
+  }
+
+  function harmonizeQuestionMix(questionBank) {
+    questionBank.levels.forEach((level) => {
+      if (level.id === "typing") return;
+      level.groups.forEach((group) => {
+        const choiceQuestions = group.questions.filter((question) => question.type.endsWith("-choice"));
+        const translationCount = group.questions.filter((question) => question.type === "translation").length;
+        const vocabularyOnly = translationCount === 0 && level.id.startsWith("vocabulary");
+        const targetChoiceCount = vocabularyOnly ? 5 : translationCount >= 3 ? 3 : translationCount > 0 ? 4 : choiceQuestions.length;
+        choiceQuestions.slice(targetChoiceCount).forEach((question) => {
+          question.type = question.type.replace("-choice", "-input");
+          question.modelAnswer ||= question.answers?.[0] || "";
+          delete question.choices;
+        });
+      });
+    });
+  }
+
+  function shuffle(items) {
+    const result = [...items];
+    for (let index = result.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [result[index], result[swapIndex]] = [result[swapIndex], result[index]];
+    }
+    return result;
+  }
+
+  function questionStage(question) {
+    if (question.type === "typing") return 0;
+    if (question.type.endsWith("-choice")) return 1;
+    if (question.type === "translation") return 3;
+    return 2;
+  }
+
+  function orderQuestions(questions, randomizeWithinStages) {
+    const stages = new Map();
+    questions.forEach((question) => {
+      const stage = questionStage(question);
+      if (!stages.has(stage)) stages.set(stage, []);
+      stages.get(stage).push(question);
+    });
+    return [...stages.keys()].sort((a, b) => a - b).flatMap((stage) =>
+      randomizeWithinStages ? shuffle(stages.get(stage)) : stages.get(stage)
+    );
   }
 
   function save() {
@@ -492,7 +538,9 @@
     const savedQuestions = !saved?.completed && Array.isArray(saved?.pendingQuestionIds)
       ? questionsFromIds(group, saved.pendingQuestionIds)
       : [];
-    quizQuestions = savedQuestions.length ? savedQuestions : [...group.questions];
+    quizQuestions = savedQuestions.length
+      ? orderQuestions(savedQuestions, false)
+      : orderQuestions(group.questions, activeLevel.id !== "typing");
     remainingQuestions = new Set(quizQuestions);
     roundNumber = 1;
     questionIndex = 0;
@@ -553,7 +601,10 @@
   }
 
   function retryMissed() {
-    quizQuestions = activeGroup.questions.filter((question) => remainingQuestions.has(question));
+    quizQuestions = orderQuestions(
+      activeGroup.questions.filter((question) => remainingQuestions.has(question)),
+      false
+    );
     roundNumber += 1;
     questionIndex = 0;
     resetQuestion();
@@ -589,6 +640,7 @@
         if (kind === "bank") {
           if (!validateBank(value)) throw new Error("問題データの形式が違います。");
           bank = value;
+          harmonizeQuestionMix(bank);
           levelId = bank.levels[0].id;
           localStorage.setItem(LAST_LEVEL_KEY, levelId);
           notice = "問題データを読み込みました。";
@@ -727,6 +779,7 @@
     } else if (action === "reset-defaults") {
       if (window.confirm("問題集を最初の内容に戻しますか？ 学習記録は残ります。")) {
         bank = window.defaultQuestionBank;
+        harmonizeQuestionMix(bank);
         levelId = bank.levels[0]?.id || "";
         localStorage.setItem(LAST_LEVEL_KEY, levelId);
         notice = "最初の問題集に戻しました。";
