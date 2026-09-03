@@ -20,6 +20,7 @@
   let checked = false;
   let correct = false;
   let toneIssue = false;
+  let characterIssue = false;
   let selfReview = false;
   let audioNotice = "";
   let score = 0;
@@ -85,6 +86,17 @@
       .normalize("NFD")
       .replace(/\p{M}/gu, "")
       .replaceAll("đ", "d");
+  }
+
+  function stripVietnameseTones(value) {
+    return normalize(value)
+      .normalize("NFD")
+      .replace(/[\u0300\u0301\u0303\u0309\u0323]/gu, "")
+      .normalize("NFC");
+  }
+
+  function requiresVietnameseLetters() {
+    return activeLevel?.id === "vocabulary-b" || activeLevel?.id === "b1";
   }
 
   function allGroups() {
@@ -204,8 +216,8 @@
             }).join("")}
           </div>
           ${level.id === "typing" ? `<div class="course-note"><strong>スマホではベトナム語キーボードを使います。</strong><span>このコースは練習のため、文字と声調記号まで正しく入力すると正解になります。</span></div>` : ""}
-          ${level.id === "vocabulary" ? `<div class="course-note"><strong>Aレベルの語彙を集中して練習します。</strong><span>タイピング修了後、A1と同時に開きます。A1〜A2の学習と並行して進められます。</span></div>` : ""}
-          ${level.id === "vocabulary-b" ? `<div class="course-note"><strong>Bレベルで使う語彙と表現を先に練習します。</strong><span>A2修了後に開き、この4グループをすべて終えるとB1へ進めます。</span></div>` : ""}
+          ${level.id === "vocabulary" ? `<div class="course-note"><strong>Aレベルの語彙を集中して練習します。</strong><span>タイピング修了後、A1と同時に開きます。Aレベルでは、ベトナム語の文字や声調記号がなくても英字のつづりが合っていれば正解です。</span></div>` : ""}
+          ${level.id === "vocabulary-b" ? `<div class="course-note"><strong>Bレベルで使う語彙と表現を先に練習します。</strong><span>A2修了後に開き、この4グループを終えるとB1へ進めます。Bレベルでは固有の文字を区別し、声調だけの違いは正解として確認メッセージを表示します。</span></div>` : ""}
           <div class="groups">
             ${level.groups.map((group, index) => {
               const unlocked = isUnlocked(level, index);
@@ -284,21 +296,29 @@
   }
 
   function feedbackPanel(question) {
-    const title = toneIssue
+    const title = characterIssue
+      ? correct ? "✓ 正解です。ベトナム語の文字と声調を確認しましょう" : "ベトナム語の文字を正しく入力しましょう"
+      : toneIssue
       ? correct ? "✓ 正解です。声調記号を確認しましょう" : "声調記号まで入力しましょう"
       : correct ? "✓ 正解です！" : "もう一歩です";
-    const explanation = toneIssue
+    const explanation = characterIssue
+      ? correct
+        ? "Aレベルでは英字のつづりが合っているため正解です。ă・â・ê・ô・ơ・ư・đ と声調を含む正しい表記も確認しておきましょう。"
+        : question.type === "typing"
+          ? "タイピングコースでは、ベトナム語固有の文字と声調記号が見本と同じになるまで練習します。"
+          : "Bレベルでは、ă・â・ê・ô・ơ・ư・đ を正しく区別して入力します。声調だけの違いは正解扱いになります。"
+      : toneIssue
       ? correct
         ? "ローマ字の綴りが合っているため正解です。声調が変わると意味も変わるので、正しい表記も確認しておきましょう。"
         : "タイピングコースでは、文字と声調記号が見本と同じになるまで練習します。"
       : question.explanation;
     const canRegisterAlternative = !correct && ["translation", "meaning-input"].includes(question.type);
     return `
-      <div class="feedback ${correct ? "ok" : ""} ${toneIssue ? "tone" : ""}">
+      <div class="feedback ${correct ? "ok" : ""} ${toneIssue || characterIssue ? "tone" : ""}">
         <h3>${title}</h3>
-        ${!correct || toneIssue ? `<p><strong>正しい表記：</strong>${esc(question.modelAnswer || question.answers?.join(" / "))}</p>` : ""}
+        ${!correct || toneIssue || characterIssue ? `<p><strong>正しい表記：</strong>${esc(question.modelAnswer || question.answers?.join(" / "))}</p>` : ""}
         <p>${esc(explanation)}</p>
-        ${toneIssue && question.explanation ? `<small>${esc(question.explanation)}</small>` : ""}
+        ${(toneIssue || characterIssue) && question.explanation ? `<small>${esc(question.explanation)}</small>` : ""}
         ${question.translation ? `<small>${esc(question.translation)}</small>` : ""}
         ${canRegisterAlternative ? `
           <div class="translation-override">
@@ -473,6 +493,7 @@
     checked = false;
     correct = false;
     toneIssue = false;
+    characterIssue = false;
     selfReview = false;
     audioNotice = "";
   }
@@ -481,11 +502,17 @@
     const answers = Array.isArray(question.answers) ? question.answers : [];
     correct = answers.some((item) => normalize(item) === normalize(answer));
     toneIssue = false;
+    characterIssue = false;
     if (!correct && question.answerLanguage === "vi" && answers.length) {
-      const plain = stripVietnameseMarks(answer);
-      toneIssue = answers.some((item) => stripVietnameseMarks(item) === plain);
+      const tonePlain = stripVietnameseTones(answer);
+      toneIssue = answers.some((item) => stripVietnameseTones(item) === tonePlain);
+      if (!toneIssue) {
+        const plain = stripVietnameseMarks(answer);
+        characterIssue = answers.some((item) => stripVietnameseMarks(item) === plain);
+      }
     }
     if (toneIssue && !question.strictTone) correct = true;
+    if (characterIssue && !question.strictTone && !requiresVietnameseLetters()) correct = true;
     checked = true;
     if (correct) remainingQuestions.delete(question);
     score = activeGroup.questions.length - remainingQuestions.size;
@@ -659,6 +686,7 @@
       }
       correct = true;
       toneIssue = false;
+      characterIssue = false;
       remainingQuestions.delete(question);
       score = activeGroup.questions.length - remainingQuestions.size;
       savePartialProgress();
