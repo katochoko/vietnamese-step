@@ -126,6 +126,16 @@
     localStorage.setItem(LAST_LEVEL_KEY, level.id);
   }
 
+  function centerActiveLevelTab() {
+    requestAnimationFrame(() => {
+      const tabs = document.querySelector(".tabs");
+      const activeTab = tabs?.querySelector(".tab.active");
+      if (!tabs || !activeTab) return;
+      const left = activeTab.offsetLeft - (tabs.clientWidth - activeTab.offsetWidth) / 2;
+      tabs.scrollTo({ left: Math.max(0, left), behavior: "auto" });
+    });
+  }
+
   function esc(value) {
     return String(value ?? "")
       .normalize("NFC")
@@ -328,6 +338,7 @@
         ${footer()}
       </main>
     `;
+    centerActiveLevelTab();
   }
 
   function answerArea(question) {
