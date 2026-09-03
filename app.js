@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v5";
-  const PREVIOUS_BANK_KEY = "vietnamese-step-bank-v4";
+  const BANK_KEY = "vietnamese-step-bank-v6";
+  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const app = document.querySelector("#app");
 
@@ -38,7 +38,7 @@
     const saved = load(BANK_KEY, null);
     if (saved) return saved;
     const fresh = JSON.parse(JSON.stringify(window.defaultQuestionBank));
-    const previous = load(PREVIOUS_BANK_KEY, null);
+    const previous = PREVIOUS_BANK_KEYS.map((key) => load(key, null)).find((item) => item?.levels);
     if (!previous?.levels) return fresh;
     const previousQuestions = new Map(
       previous.levels.flatMap((level) => level.groups || []).flatMap((group) => group.questions || []).map((question) => [question.id, question])
@@ -179,7 +179,7 @@
           <div>
             <span class="eyebrow">VIỆT NGỮ · MỖI NGÀY MỘT CHÚT</span>
             <h1>今日も、<br><em>10問</em>だけ進もう。</h1>
-            <p>タイピングから始めて、独立した語彙コースとA1以降の総合問題へ進みます。間違えた問題だけを正解するまで復習し、すべて習得すると次のグループへ進めます。</p>
+            <p>タイピングのあとにAレベルの語彙を学び、A1〜A2へ進みます。A2を終えるとBレベルの語彙が開き、その修了後にB1へ進めます。</p>
           </div>
           <div class="stats" aria-label="学習状況">
             <div><strong>${completed}</strong><span>クリア</span></div>
@@ -204,7 +204,8 @@
             }).join("")}
           </div>
           ${level.id === "typing" ? `<div class="course-note"><strong>スマホではベトナム語キーボードを使います。</strong><span>このコースは練習のため、文字と声調記号まで正しく入力すると正解になります。</span></div>` : ""}
-          ${level.id === "vocabulary" ? `<div class="course-note"><strong>語彙だけを初級から上級まで練習します。</strong><span>このコースの進み具合は、A1以降の解放条件には影響しません。</span></div>` : ""}
+          ${level.id === "vocabulary" ? `<div class="course-note"><strong>Aレベルの語彙を集中して練習します。</strong><span>タイピング修了後、A1と同時に開きます。A1〜A2の学習と並行して進められます。</span></div>` : ""}
+          ${level.id === "vocabulary-b" ? `<div class="course-note"><strong>Bレベルで使う語彙と表現を先に練習します。</strong><span>A2修了後に開き、この4グループをすべて終えるとB1へ進めます。</span></div>` : ""}
           <div class="groups">
             ${level.groups.map((group, index) => {
               const unlocked = isUnlocked(level, index);

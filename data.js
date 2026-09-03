@@ -1,5 +1,5 @@
 window.defaultQuestionBank = {
-  version: 5,
+  version: 6,
   language: "vi",
   title: "Vietnamese Step",
   levels: [
@@ -64,9 +64,9 @@ window.defaultQuestionBank = {
     },
     {
       id: "vocabulary",
-      label: "語",
-      name: "語彙",
-      description: "単語・表現を集中練習",
+      label: "A語",
+      name: "A語彙",
+      description: "Aレベルの単語・表現",
       requires: "typing-3",
       groups: [
         {
@@ -594,4 +594,24 @@ window.defaultQuestionBank = {
       ]
     }
   );
+
+  // 語彙100問をAレベル60問とBレベル40問に分割します。
+  // グループIDと問題IDは維持し、既存の学習記録をそのまま引き継ぎます。
+  const vocabulary = levels.find((level) => level.id === "vocabulary");
+  const b1 = levels.find((level) => level.id === "b1");
+  const bVocabularyGroups = vocabulary.groups.splice(6);
+  bVocabularyGroups.forEach((group, index) => {
+    group.title = `GROUP ${String(index + 1).padStart(2, "0")}`;
+    group.description = group.description.replace(/^初中級・|^中上級・|^中級・|^上級・/, "Bレベル・");
+  });
+  const bVocabulary = {
+    id: "vocabulary-b",
+    label: "B語",
+    name: "B語彙",
+    description: "Bレベルの単語・表現",
+    requires: "a2-5",
+    groups: bVocabularyGroups
+  };
+  levels.splice(levels.indexOf(b1), 0, bVocabulary);
+  b1.requires = "vocabulary-10";
 })();
