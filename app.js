@@ -59,10 +59,25 @@
     questionBank.levels.forEach((level) => {
       if (level.id === "typing") return;
       level.groups.forEach((group) => {
+        if (level.id.startsWith("vocabulary")) {
+          group.questions.forEach((question) => {
+            if (question.type === "meaning-input") {
+              const accepted = new Set((question.answers || []).map(normalize));
+              const distractors = group.questions
+                .filter((candidate) => candidate !== question && candidate.direction === question.direction)
+                .map((candidate) => candidate.answers?.[0])
+                .filter((candidate) => candidate && !accepted.has(normalize(candidate)));
+              question.type = "meaning-choice";
+              question.choices = shuffle([question.answers?.[0], ...shuffle([...new Set(distractors)]).slice(0, 3)]);
+            } else if (Array.isArray(question.choices)) {
+              question.choices = shuffle(question.choices);
+            }
+          });
+          return;
+        }
         const choiceQuestions = group.questions.filter((question) => question.type.endsWith("-choice"));
         const translationCount = group.questions.filter((question) => question.type === "translation").length;
-        const vocabularyOnly = translationCount === 0 && level.id.startsWith("vocabulary");
-        const targetChoiceCount = vocabularyOnly ? 5 : translationCount >= 3 ? 3 : translationCount > 0 ? 4 : choiceQuestions.length;
+        const targetChoiceCount = translationCount >= 3 ? 3 : translationCount > 0 ? 4 : choiceQuestions.length;
         choiceQuestions.slice(targetChoiceCount).forEach((question) => {
           question.type = question.type.replace("-choice", "-input");
           question.modelAnswer ||= question.answers?.[0] || "";
@@ -274,8 +289,8 @@
             }).join("")}
           </div>
           ${level.id === "typing" ? `<div class="course-note"><strong>スマホではベトナム語キーボードを使います。</strong><span>このコースは練習のため、文字と声調記号まで正しく入力すると正解になります。</span></div>` : ""}
-          ${level.id === "vocabulary" ? `<div class="course-note"><strong>Aレベルの語彙を集中して練習します。</strong><span>タイピング修了後、A1と同時に開きます。Aレベルでは、ベトナム語の文字や声調記号がなくても英字のつづりが合っていれば正解です。</span></div>` : ""}
-          ${level.id === "vocabulary-b" ? `<div class="course-note"><strong>Bレベルで使う語彙と表現を先に練習します。</strong><span>A2修了後に開き、この4グループを終えるとB1へ進めます。Bレベルでは固有の文字を区別し、声調だけの違いは正解として確認メッセージを表示します。</span></div>` : ""}
+          ${level.id === "vocabulary" ? `<div class="course-note"><strong>Aレベルの語彙を選択式で練習します。</strong><span>10問すべて選択式です。タイピング修了後、A1と同時に開きます。</span></div>` : ""}
+          ${level.id === "vocabulary-b" ? `<div class="course-note"><strong>Bレベルの語彙と表現を選択式で練習します。</strong><span>10問すべて選択式です。A2修了後に開き、この4グループを終えるとB1へ進めます。</span></div>` : ""}
           <div class="groups">
             ${level.groups.map((group, index) => {
               const unlocked = isUnlocked(level, index);
