@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v7";
-  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v6", "vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
+  const BANK_KEY = "vietnamese-step-bank-v8";
+  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v7", "vietnamese-step-bank-v6", "vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const LAST_LEVEL_KEY = "vietnamese-step-last-level-v1";
   const app = document.querySelector("#app");
@@ -174,7 +174,7 @@
   }
 
   function requiresVietnameseLetters() {
-    return activeLevel?.id === "vocabulary-b" || activeLevel?.id === "b1";
+    return ["vocabulary-b", "b1", "b1-plus"].includes(activeLevel?.id);
   }
 
   function allGroups() {
@@ -274,7 +274,7 @@
           <div>
             <span class="eyebrow">VIỆT NGỮ · MỖI NGÀY MỘT CHÚT</span>
             <h1>今日も、<br><em>10問</em>だけ進もう。</h1>
-            <p>タイピングのあとにAレベルの語彙を学び、A1〜A2へ進みます。A2を終えるとBレベルの語彙が開き、その修了後にB1へ進めます。</p>
+            <p>タイピングのあとにAレベルの語彙を学び、A1〜A2＋へ進みます。Bレベルの語彙を終えるとB1・B1＋へ進めます。</p>
           </div>
           <div class="stats" aria-label="学習状況">
             <div><strong>${completed}</strong><span>クリア</span></div>
@@ -300,7 +300,7 @@
           </div>
           ${level.id === "typing" ? `<div class="course-note"><strong>スマホではベトナム語キーボードを使います。</strong><span>このコースは練習のため、文字と声調記号まで正しく入力すると正解になります。</span></div>` : ""}
           ${level.id === "vocabulary" ? `<div class="course-note"><strong>Aレベルの語彙を選択式で練習します。</strong><span>10問すべて選択式です。タイピング修了後、A1と同時に開きます。</span></div>` : ""}
-          ${level.id === "vocabulary-b" ? `<div class="course-note"><strong>Bレベルの語彙と表現を選択式で練習します。</strong><span>10問すべて選択式です。A2修了後に開き、この4グループを終えるとB1へ進めます。</span></div>` : ""}
+          ${level.id === "vocabulary-b" ? `<div class="course-note"><strong>Bレベルの語彙と表現を選択式で練習します。</strong><span>10問すべて選択式です。A2＋修了後に開き、この6グループを終えるとB1へ進めます。</span></div>` : ""}
           <div class="groups">
             ${level.groups.map((group, index) => {
               const unlocked = isUnlocked(level, index);

@@ -1,5 +1,5 @@
 window.defaultQuestionBank = {
-  version: 7,
+  version: 8,
   language: "vi",
   title: "Vietnamese Step",
   levels: [
@@ -812,4 +812,298 @@ window.defaultQuestionBank = {
     ]
   }]);
   renumber(b1);
+
+  bVocabulary.groups.push(
+    {
+      id: "vocabulary-11", title: "", description: "Bレベル・情報とコミュニケーション",
+      questions: [
+        { id: "v11-01", type: "meaning-choice", direction: "vi-ja", prompt: "tin tức", choices: ["ニュース・報道", "広告", "小説", "契約"], answers: ["ニュース・報道"], explanation: "tin tức は「ニュース・報道」です。" },
+        { id: "v11-02", type: "meaning-choice", direction: "ja-vi", prompt: "メディア・情報伝達", choices: ["truyền thông", "giao thông", "môi trường", "thị trường"], answers: ["truyền thông"], explanation: "truyền thông はメディアや情報伝達を表します。", answerLanguage: "vi" },
+        { id: "v11-03", type: "meaning-choice", direction: "vi-ja", prompt: "nội dung", choices: ["内容", "形式", "題名", "結果"], answers: ["内容"], explanation: "nội dung は文章・番組などの「内容」です。" },
+        { id: "v11-04", type: "meaning-choice", direction: "ja-vi", prompt: "情報源", choices: ["nguồn tin", "tin đồn", "dữ liệu", "bình luận"], answers: ["nguồn tin"], explanation: "nguồn tin は「情報源・ニュースの出所」です。", answerLanguage: "vi" },
+        { id: "v11-05", type: "meaning-choice", direction: "vi-ja", prompt: "cập nhật", choices: ["更新する", "削除する", "印刷する", "保存する"], answers: ["更新する"], explanation: "cập nhật は情報などを「更新する」です。" },
+        { id: "v11-06", type: "meaning-choice", direction: "ja-vi", prompt: "共有する", choices: ["chia sẻ", "che giấu", "xác nhận", "từ chối"], answers: ["chia sẻ"], explanation: "chia sẻ は情報や経験を「共有する」です。", answerLanguage: "vi" },
+        { id: "v11-07", type: "meaning-choice", direction: "vi-ja", prompt: "phản hồi", choices: ["反応・返答", "質問", "命令", "約束"], answers: ["反応・返答"], explanation: "phản hồi は「反応・フィードバック・返答」です。" },
+        { id: "v11-08", type: "meaning-choice", direction: "ja-vi", prompt: "通知・知らせ", choices: ["thông báo", "thảo luận", "thuyết phục", "giải thích"], answers: ["thông báo"], explanation: "thông báo は名詞の「通知」、動詞の「知らせる」です。", answerLanguage: "vi" },
+        { id: "v11-09", type: "meaning-choice", direction: "vi-ja", prompt: "dư luận", choices: ["世論", "習慣", "法律", "予算"], answers: ["世論"], explanation: "dư luận は社会の「世論」です。" },
+        { id: "v11-10", type: "meaning-choice", direction: "ja-vi", prompt: "信頼できる", choices: ["đáng tin cậy", "phổ biến", "chính xác", "bí mật"], answers: ["đáng tin cậy"], explanation: "đáng tin cậy は「信頼できる」です。", answerLanguage: "vi" }
+      ]
+    },
+    {
+      id: "vocabulary-12", title: "", description: "Bレベル・問題解決と変化",
+      questions: [
+        { id: "v12-01", type: "meaning-choice", direction: "vi-ja", prompt: "giải pháp", choices: ["解決策", "原因", "影響", "条件"], answers: ["解決策"], explanation: "giải pháp は問題に対する「解決策」です。" },
+        { id: "v12-02", type: "meaning-choice", direction: "ja-vi", prompt: "原因", choices: ["nguyên nhân", "hậu quả", "mục tiêu", "tiến độ"], answers: ["nguyên nhân"], explanation: "nguyên nhân は「原因」です。", answerLanguage: "vi" },
+        { id: "v12-03", type: "meaning-choice", direction: "vi-ja", prompt: "hậu quả", choices: ["結果・悪影響", "方法", "機会", "目的"], answers: ["結果・悪影響"], explanation: "hậu quả は多くの場合、好ましくない「結果・影響」です。" },
+        { id: "v12-04", type: "meaning-choice", direction: "ja-vi", prompt: "改善する", choices: ["cải thiện", "duy trì", "hạn chế", "tăng cường"], answers: ["cải thiện"], explanation: "cải thiện は状態や品質を「改善する」です。", answerLanguage: "vi" },
+        { id: "v12-05", type: "meaning-choice", direction: "vi-ja", prompt: "điều chỉnh", choices: ["調整する", "中止する", "完成する", "繰り返す"], answers: ["調整する"], explanation: "điều chỉnh は計画・設定などを「調整する」です。" },
+        { id: "v12-06", type: "meaning-choice", direction: "ja-vi", prompt: "取り替える・代える", choices: ["thay thế", "khắc phục", "phát triển", "đánh giá"], answers: ["thay thế"], explanation: "thay thế は人や物を「取り替える・代替する」です。", answerLanguage: "vi" },
+        { id: "v12-07", type: "meaning-choice", direction: "vi-ja", prompt: "khắc phục", choices: ["克服・是正する", "予測する", "比較する", "延期する"], answers: ["克服・是正する"], explanation: "khắc phục は問題や欠点を「克服・是正する」です。" },
+        { id: "v12-08", type: "meaning-choice", direction: "ja-vi", prompt: "効果的な", choices: ["hiệu quả", "phức tạp", "tạm thời", "phù hợp"], answers: ["hiệu quả"], explanation: "hiệu quả は「効果・効率」、または「効果的な」です。", answerLanguage: "vi" },
+        { id: "v12-09", type: "meaning-choice", direction: "vi-ja", prompt: "ưu tiên", choices: ["優先する・優先事項", "反対する", "確認する", "責任を負う"], answers: ["優先する・優先事項"], explanation: "ưu tiên は「優先する・優先事項」です。" },
+        { id: "v12-10", type: "meaning-choice", direction: "ja-vi", prompt: "進捗", choices: ["tiến độ", "thái độ", "mức độ", "chế độ"], answers: ["tiến độ"], explanation: "tiến độ は仕事や計画の「進み具合・進捗」です。", answerLanguage: "vi" }
+      ]
+    }
+  );
+  renumber(bVocabulary);
+  b1.requires = "vocabulary-12";
+
+  const a2Plus = {
+    id: "a2-plus", label: "A2+", name: "中級準備", description: "目的・伝達・変化", requires: "a2-5",
+    groups: [
+      {
+        id: "a2-plus-1", title: "GROUP 01", description: "目的・方法・代わりの表現",
+        questions: [
+          { id: "a2p1-01", type: "meaning-choice", direction: "vi-ja", prompt: "để + 動詞", choices: ["〜するために", "〜した後で", "〜にもかかわらず", "〜するたびに"], answers: ["〜するために"], explanation: "để は行動の目的を示します。" },
+          { id: "a2p1-02", type: "meaning-choice", direction: "vi-ja", prompt: "thay vì", choices: ["〜する代わりに", "〜のおかげで", "〜について", "〜しない限り"], answers: ["〜する代わりに"], explanation: "thay vì は選ばなかった行動を示し「〜する代わりに」です。" },
+          { id: "a2p1-03", type: "blank-choice", sentence: "Tôi ghi chú ___ không quên.", choices: ["để", "vì", "mặc dù", "sau khi"], answers: ["để"], translation: "忘れないようにメモします。", explanation: "để + 否定で「〜しないように」という目的も表せます。", answerLanguage: "vi" },
+          { id: "a2p1-04", type: "blank-input", sentence: "Tôi học từ mới bằng ___ viết ví dụ.", answers: ["cách"], translation: "私は例文を書くことによって新しい単語を学びます。", explanation: "bằng cách + 動詞で方法を示します。", answerLanguage: "vi" },
+          { id: "a2p1-05", type: "blank-input", sentence: "___ vì đi taxi, chúng tôi đi xe buýt.", answers: ["Thay", "thay"], translation: "タクシーに乗る代わりに、私たちはバスで行きます。", explanation: "thay vì + 動詞で選択肢の対比を表します。", answerLanguage: "vi" },
+          { id: "a2p1-06", type: "blank-input", sentence: "Tôi đến sớm ___ chuẩn bị phòng họp.", answers: ["để"], translation: "会議室を準備するため早く来ました。", explanation: "主節の行動目的を để 以下で説明します。", answerLanguage: "vi" },
+          { id: "a2p1-07", type: "blank-input", sentence: "___ có bản đồ, chúng tôi tìm được đường.", answers: ["Nhờ", "nhờ"], translation: "地図のおかげで道を見つけられました。", explanation: "nhờ は好ましい結果につながった手段・原因を示します。", answerLanguage: "vi" },
+          { id: "a2p1-08", type: "translation", direction: "vi-ja", prompt: "Tôi luyện nghe bằng cách xem video ngắn.", answers: ["短い動画を見ることでリスニングを練習します", "短い動画を見て聞き取りを練習します"], modelAnswer: "短い動画を見ることでリスニングを練習します。", grading: "accepted", explanation: "bằng cách は具体的な方法を導きます。" },
+          { id: "a2p1-09", type: "translation", direction: "ja-vi", prompt: "健康のために、私は毎朝歩きます。", answers: ["Để khỏe mạnh, tôi đi bộ mỗi sáng.", "Tôi đi bộ mỗi sáng để khỏe mạnh."], modelAnswer: "Tôi đi bộ mỗi sáng để khỏe mạnh.", grading: "accepted", answerLanguage: "vi", explanation: "để khỏe mạnh は「健康でいるために」です。" },
+          { id: "a2p1-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "thay vì chờ đợi", answers: ["待つ代わりに", "待っている代わりに"], modelAnswer: "待つ代わりに", grading: "accepted", explanation: "thay vì は代替を表します。" }
+        ]
+      },
+      {
+        id: "a2-plus-2", title: "GROUP 02", description: "伝聞・質問・情報を伝える",
+        questions: [
+          { id: "a2p2-01", type: "meaning-choice", direction: "vi-ja", prompt: "nói rằng", choices: ["〜と言う", "〜と尋ねる", "〜と約束する", "〜と反対する"], answers: ["〜と言う"], explanation: "nói rằng の後ろに発言内容を続けます。" },
+          { id: "a2p2-02", type: "meaning-choice", direction: "vi-ja", prompt: "cho biết", choices: ["知らせる・明らかにする", "隠す", "繰り返す", "翻訳する"], answers: ["知らせる・明らかにする"], explanation: "cho biết は情報を「知らせる」です。" },
+          { id: "a2p2-03", type: "blank-choice", sentence: "Lan nói ___ cô ấy sẽ đến muộn.", choices: ["rằng", "nếu", "nên", "dù"], answers: ["rằng"], translation: "ランは遅れて来ると言いました。", explanation: "rằng は発言や考えの内容を導きます。", answerLanguage: "vi" },
+          { id: "a2p2-04", type: "blank-input", sentence: "Tôi hỏi ___ anh ấy có rảnh không.", answers: ["xem"], translation: "私は彼が空いているか尋ねました。", explanation: "hỏi xem ... có ... không で間接的な質問を表します。", answerLanguage: "vi" },
+          { id: "a2p2-05", type: "blank-input", sentence: "Bạn có biết cuộc họp bắt đầu lúc ___ không?", answers: ["mấy giờ", "bao nhiêu giờ"], translation: "会議が何時に始まるか知っていますか。", explanation: "có biết ... không? の中に疑問内容を入れられます。", answerLanguage: "vi" },
+          { id: "a2p2-06", type: "blank-input", sentence: "Xin ___ tôi biết khi bạn đến nơi.", answers: ["cho"], translation: "到着したら知らせてください。", explanation: "cho tôi biết は「私に知らせる」です。", answerLanguage: "vi" },
+          { id: "a2p2-07", type: "blank-input", sentence: "Theo dự báo, ngày mai trời sẽ ___.", answers: ["mưa"], translation: "予報によると、明日は雨が降るでしょう。", explanation: "theo + 情報源で「〜によると」です。", answerLanguage: "vi" },
+          { id: "a2p2-08", type: "translation", direction: "vi-ja", prompt: "Cô ấy cho biết chuyến bay đã bị hoãn.", answers: ["彼女は便が延期されたと知らせました", "彼女は飛行機が遅れたと伝えました"], modelAnswer: "彼女は便が延期されたと知らせました。", grading: "accepted", explanation: "cho biết の後ろが伝えた情報です。" },
+          { id: "a2p2-09", type: "translation", direction: "ja-vi", prompt: "彼がどこに住んでいるか知っていますか。", answers: ["Bạn có biết anh ấy sống ở đâu không?", "Bạn biết anh ấy sống ở đâu không?"], modelAnswer: "Bạn có biết anh ấy sống ở đâu không?", grading: "accepted", answerLanguage: "vi", explanation: "疑問詞 ở đâu は内容節の中でも使えます。" },
+          { id: "a2p2-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "hỏi xem có thể đổi vé không", answers: ["切符を変更できるか尋ねる", "チケットを変更できるか聞く"], modelAnswer: "切符を変更できるか尋ねる", grading: "accepted", explanation: "hỏi xem ... không は「〜かどうか尋ねる」です。" }
+        ]
+      },
+      {
+        id: "a2-plus-3", title: "GROUP 03", description: "継続・変化・以前との違い",
+        questions: [
+          { id: "a2p3-01", type: "meaning-choice", direction: "vi-ja", prompt: "trở nên", choices: ["〜になる", "〜のままである", "〜を始める", "〜をやめる"], answers: ["〜になる"], explanation: "trở nên + 状態で変化を表します。" },
+          { id: "a2p3-02", type: "meaning-choice", direction: "vi-ja", prompt: "không còn", choices: ["もう〜ない", "まだ〜ない", "決して〜ない", "〜だけではない"], answers: ["もう〜ない"], explanation: "không còn は以前はあった状態が今はないことを表します。" },
+          { id: "a2p3-03", type: "blank-choice", sentence: "Tiếng Việt của tôi ngày càng ___.", choices: ["tốt hơn", "đã", "vừa", "xong"], answers: ["tốt hơn"], translation: "私のベトナム語はだんだん上達しています。", explanation: "ngày càng + 比較表現で変化の進行を示します。", answerLanguage: "vi" },
+          { id: "a2p3-04", type: "blank-input", sentence: "Thời tiết đang dần dần trở ___ lạnh hơn.", answers: ["nên"], translation: "天気は徐々に寒くなっています。", explanation: "trở nên は状態の変化を表します。", answerLanguage: "vi" },
+          { id: "a2p3-05", type: "blank-input", sentence: "Tôi không ___ sống ở đó nữa.", answers: ["còn"], translation: "私はもうそこには住んでいません。", explanation: "không còn ... nữa で「もう〜ない」です。", answerLanguage: "vi" },
+          { id: "a2p3-06", type: "blank-input", sentence: "Dù bận, cô ấy ___ học mỗi ngày.", answers: ["vẫn"], translation: "忙しくても、彼女は毎日勉強を続けています。", explanation: "dù ... vẫn ... で状況に反して続くことを表します。", answerLanguage: "vi" },
+          { id: "a2p3-07", type: "blank-input", sentence: "Thành phố đã thay đổi rất nhiều ___ năm ngoái.", answers: ["từ"], translation: "町は昨年から大きく変わりました。", explanation: "từ + 時点で変化の起点を示します。", answerLanguage: "vi" },
+          { id: "a2p3-08", type: "translation", direction: "vi-ja", prompt: "Cuộc sống ở đây trở nên thuận tiện hơn.", answers: ["ここの生活はより便利になりました", "ここでの暮らしは以前より便利になりました"], modelAnswer: "ここの生活はより便利になりました。", grading: "accepted", explanation: "trở nên thuận tiện hơn は「より便利になる」です。" },
+          { id: "a2p3-09", type: "translation", direction: "ja-vi", prompt: "私はもうその会社では働いていません。", answers: ["Tôi không còn làm việc ở công ty đó nữa.", "Tôi không làm việc ở công ty đó nữa."], modelAnswer: "Tôi không còn làm việc ở công ty đó nữa.", grading: "accepted", answerLanguage: "vi", explanation: "không còn ... nữa で過去との違いを明確にします。" },
+          { id: "a2p3-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "ngày càng quan trọng", answers: ["ますます重要になる", "ますます重要な"], modelAnswer: "ますます重要になる", grading: "accepted", explanation: "ngày càng は変化が進む「ますます」です。" }
+        ]
+      }
+    ]
+  };
+  a2Plus.groups.push(
+    {
+      id: "a2-plus-4", title: "GROUP 04", description: "予定・決定・期待",
+      questions: [
+        { id: "a2p4-01", type: "meaning-choice", direction: "vi-ja", prompt: "dự định", choices: ["予定する", "中止する", "忘れる", "繰り返す"], answers: ["予定する"], explanation: "dự định は少し先の計画や意図を表します。" },
+        { id: "a2p4-02", type: "meaning-choice", direction: "vi-ja", prompt: "hy vọng", choices: ["期待する・願う", "心配する", "反対する", "疑う"], answers: ["期待する・願う"], explanation: "hy vọng は実現を願う気持ちを表します。" },
+        { id: "a2p4-03", type: "blank-choice", sentence: "Tôi ___ đi Đà Nẵng vào tháng tới.", choices: ["dự định", "đã", "vừa", "bị"], answers: ["dự định"], translation: "私は来月ダナンへ行く予定です。", explanation: "dự định + 動詞で予定を述べます。", answerLanguage: "vi" },
+        { id: "a2p4-04", type: "blank-input", sentence: "Chúng tôi đã quyết ___ đổi kế hoạch.", answers: ["định"], translation: "私たちは計画を変更することに決めました。", explanation: "quyết định + 動詞で「〜することに決める」です。", answerLanguage: "vi" },
+        { id: "a2p4-05", type: "blank-input", sentence: "Tôi hy ___ mọi việc sẽ tốt đẹp.", answers: ["vọng"], translation: "すべてうまくいくことを願っています。", explanation: "hy vọng + 節で期待する内容を続けます。", answerLanguage: "vi" },
+        { id: "a2p4-06", type: "blank-input", sentence: "Anh ấy định ___ việc vào cuối năm.", answers: ["nghỉ"], translation: "彼は年末に退職するつもりです。", explanation: "định + 動詞は会話でよく使う「〜するつもり」です。", answerLanguage: "vi" },
+        { id: "a2p4-07", type: "blank-input", sentence: "Cuộc họp được ___ vào sáng thứ Hai.", answers: ["tổ chức"], translation: "会議は月曜日の朝に開催される予定です。", explanation: "được tổ chức は「開催される」です。", answerLanguage: "vi" },
+        { id: "a2p4-08", type: "translation", direction: "vi-ja", prompt: "Chúng tôi dự định chuyển nhà vào mùa hè.", answers: ["私たちは夏に引っ越す予定です", "夏に引っ越すつもりです"], modelAnswer: "私たちは夏に引っ越す予定です。", grading: "accepted", explanation: "dự định chuyển nhà は「引っ越す予定」です。" },
+        { id: "a2p4-09", type: "translation", direction: "ja-vi", prompt: "旅行が順調に進むことを願っています。", answers: ["Tôi hy vọng chuyến đi sẽ diễn ra suôn sẻ.", "Hy vọng chuyến đi sẽ diễn ra suôn sẻ."], modelAnswer: "Tôi hy vọng chuyến đi sẽ diễn ra suôn sẻ.", grading: "accepted", answerLanguage: "vi", explanation: "hy vọng ... sẽ ... で将来への期待を表します。" },
+        { id: "a2p4-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "quyết định ở lại", answers: ["残ることに決める", "滞在することに決める"], modelAnswer: "残ることに決める", grading: "accepted", explanation: "quyết định + 動詞は決定を示します。" }
+      ]
+    },
+    {
+      id: "a2-plus-5", title: "GROUP 05", description: "mà・việc・điều の基礎",
+      questions: [
+        { id: "a2p5-01", type: "meaning-choice", direction: "vi-ja", prompt: "người mà tôi gặp", choices: ["私が会った人", "私に会った人", "人に会うこと", "会う場所"], answers: ["私が会った人"], explanation: "mà 以下が前の名詞 người を説明します。" },
+        { id: "a2p5-02", type: "meaning-choice", direction: "vi-ja", prompt: "việc học tiếng Việt", choices: ["ベトナム語を学ぶこと", "ベトナム語を学ぶ人", "ベトナム語の教室", "ベトナム語の先生"], answers: ["ベトナム語を学ぶこと"], explanation: "việc は動作を「〜すること」として扱います。" },
+        { id: "a2p5-03", type: "blank-choice", sentence: "Đây là nhà hàng ___ tôi thích.", choices: ["mà", "nên", "nếu", "do"], answers: ["mà"], translation: "ここは私が好きなレストランです。", explanation: "mà 以下が nhà hàng を説明します。", answerLanguage: "vi" },
+        { id: "a2p5-04", type: "blank-input", sentence: "Người ___ gọi cho tôi là Lan.", answers: ["mà"], translation: "私に電話した人はランです。", explanation: "người mà ... で「〜する人」です。", answerLanguage: "vi" },
+        { id: "a2p5-05", type: "blank-input", sentence: "___ tập thể dục mỗi ngày rất tốt.", answers: ["Việc", "việc"], translation: "毎日運動することはとても良いです。", explanation: "việc + 動詞句を主語にできます。", answerLanguage: "vi" },
+        { id: "a2p5-06", type: "blank-input", sentence: "Đó là ___ tôi muốn nói.", answers: ["điều"], translation: "それが私の言いたいことです。", explanation: "điều + 節で「〜すること・もの」を表します。", answerLanguage: "vi" },
+        { id: "a2p5-07", type: "blank-input", sentence: "Cuốn sách ___ bạn cho tôi rất thú vị.", answers: ["mà"], translation: "あなたがくれた本はとても面白いです。", explanation: "mà を使って本を後ろから説明します。", answerLanguage: "vi" },
+        { id: "a2p5-08", type: "translation", direction: "vi-ja", prompt: "Người đang nói chuyện với Mai là anh tôi.", answers: ["マイと話している人は私の兄です", "マイと話しているのは私の兄です"], modelAnswer: "マイと話している人は私の兄です。", grading: "accepted", explanation: "người の後ろの動作が人を説明します。" },
+        { id: "a2p5-09", type: "translation", direction: "ja-vi", prompt: "これは私が探していた本です。", answers: ["Đây là cuốn sách mà tôi đang tìm.", "Đây là quyển sách mà tôi đang tìm."], modelAnswer: "Đây là cuốn sách mà tôi đang tìm.", grading: "accepted", answerLanguage: "vi", explanation: "mà 以下で本について説明します。" },
+        { id: "a2p5-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "điều quan trọng nhất", answers: ["最も大切なこと", "一番重要なこと"], modelAnswer: "最も大切なこと", grading: "accepted", explanation: "điều は抽象的な「こと・もの」に使います。" }
+      ]
+    },
+    {
+      id: "a2-plus-6", title: "GROUP 06", description: "意見・賛成・説明",
+      questions: [
+        { id: "a2p6-01", type: "meaning-choice", direction: "vi-ja", prompt: "theo tôi", choices: ["私の考えでは", "彼によると", "その結果", "例えば"], answers: ["私の考えでは"], explanation: "theo tôi は自分の意見を始める表現です。" },
+        { id: "a2p6-02", type: "meaning-choice", direction: "vi-ja", prompt: "đồng ý với", choices: ["〜に賛成する", "〜に反対する", "〜を説明する", "〜を比較する"], answers: ["〜に賛成する"], explanation: "đồng ý với + 人・意見で「〜に賛成する」です。" },
+        { id: "a2p6-03", type: "blank-choice", sentence: "Theo ___, học mỗi ngày hiệu quả hơn.", choices: ["tôi", "vì", "nếu", "nên"], answers: ["tôi"], translation: "私の考えでは、毎日学ぶ方が効果的です。", explanation: "theo tôi の後に自分の判断を続けます。", answerLanguage: "vi" },
+        { id: "a2p6-04", type: "blank-input", sentence: "Tôi đồng ___ với ý kiến của bạn.", answers: ["ý"], translation: "私はあなたの意見に賛成です。", explanation: "đồng ý với ý kiến で「意見に賛成する」です。", answerLanguage: "vi" },
+        { id: "a2p6-05", type: "blank-input", sentence: "Tôi không ___ cách này phù hợp.", answers: ["nghĩ"], translation: "私はこの方法が適切だとは思いません。", explanation: "không nghĩ + 節で否定的な意見を述べます。", answerLanguage: "vi" },
+        { id: "a2p6-06", type: "blank-input", sentence: "Bạn có thể giải ___ rõ hơn không?", answers: ["thích"], translation: "もう少し詳しく説明してもらえますか。", explanation: "giải thích は「説明する」です。", answerLanguage: "vi" },
+        { id: "a2p6-07", type: "blank-input", sentence: "Tôi không chắc ___ điều đó đúng.", answers: ["là", "rằng"], translation: "それが正しいか確信がありません。", explanation: "không chắc là／rằng ... で確信のなさを示します。", answerLanguage: "vi" },
+        { id: "a2p6-08", type: "translation", direction: "vi-ja", prompt: "Theo tôi, phương án thứ hai đơn giản hơn.", answers: ["私の考えでは、二つ目の案の方が簡単です", "私は二番目の方法の方が簡単だと思います"], modelAnswer: "私の考えでは、二つ目の案の方が簡単です。", grading: "accepted", explanation: "theo tôi は意見の導入です。" },
+        { id: "a2p6-09", type: "translation", direction: "ja-vi", prompt: "私はその意見に賛成ですが、少し心配です。", answers: ["Tôi đồng ý với ý kiến đó nhưng hơi lo.", "Tôi đồng ý với ý kiến đó, nhưng tôi hơi lo."], modelAnswer: "Tôi đồng ý với ý kiến đó nhưng hơi lo.", grading: "accepted", answerLanguage: "vi", explanation: "nhưng で賛成と懸念を対比します。" },
+        { id: "a2p6-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "giải thích lý do", answers: ["理由を説明する", "その理由を説明する"], modelAnswer: "理由を説明する", grading: "accepted", explanation: "giải thích は内容を分かるように述べることです。" }
+      ]
+    },
+    {
+      id: "a2-plus-7", title: "GROUP 07", description: "原因・結果・影響",
+      questions: [
+        { id: "a2p7-01", type: "meaning-choice", direction: "vi-ja", prompt: "do", choices: ["〜が原因で", "〜の代わりに", "〜に比べて", "〜について"], answers: ["〜が原因で"], explanation: "do は原因を表し、名詞の前にも置けます。" },
+        { id: "a2p7-02", type: "meaning-choice", direction: "vi-ja", prompt: "ảnh hưởng đến", choices: ["〜に影響する", "〜を避ける", "〜を解決する", "〜に参加する"], answers: ["〜に影響する"], explanation: "ảnh hưởng đến + 対象で影響の及ぶ先を示します。" },
+        { id: "a2p7-03", type: "blank-choice", sentence: "Chuyến bay bị hoãn ___ thời tiết xấu.", choices: ["do", "mặc dù", "thay vì", "sau khi"], answers: ["do"], translation: "便は悪天候のため延期されました。", explanation: "do + 名詞句で原因を示します。", answerLanguage: "vi" },
+        { id: "a2p7-04", type: "blank-input", sentence: "Vì đường đông ___ chúng tôi đến muộn.", answers: ["nên"], translation: "道が混んでいたので、私たちは遅れました。", explanation: "vì ... nên ... で原因と結果を結びます。", answerLanguage: "vi" },
+        { id: "a2p7-05", type: "blank-input", sentence: "Tiếng ồn ảnh hưởng ___ giấc ngủ của tôi.", answers: ["đến", "tới"], translation: "騒音は私の睡眠に影響します。", explanation: "ảnh hưởng đến／tới は「〜に影響する」です。", answerLanguage: "vi" },
+        { id: "a2p7-06", type: "blank-input", sentence: "Nhờ luyện tập, tôi đã tiến bộ rất ___.", answers: ["nhiều"], translation: "練習のおかげで、私は大きく上達しました。", explanation: "nhờ は好ましい原因を示します。", answerLanguage: "vi" },
+        { id: "a2p7-07", type: "blank-input", sentence: "Mưa lớn làm ___ đường bị ngập.", answers: ["cho"], translation: "大雨によって道路が冠水しました。", explanation: "làm cho + 節で結果を生じさせることを表します。", answerLanguage: "vi" },
+        { id: "a2p7-08", type: "translation", direction: "vi-ja", prompt: "Việc thiếu ngủ ảnh hưởng đến sức khỏe.", answers: ["睡眠不足は健康に影響します", "寝不足は健康に影響を与えます"], modelAnswer: "睡眠不足は健康に影響します。", grading: "accepted", explanation: "việc thiếu ngủ は「睡眠が不足すること」です。" },
+        { id: "a2p7-09", type: "translation", direction: "ja-vi", prompt: "雨のおかげで、空気が涼しくなりました。", answers: ["Nhờ trời mưa, không khí trở nên mát hơn.", "Nhờ mưa, không khí trở nên mát hơn."], modelAnswer: "Nhờ trời mưa, không khí trở nên mát hơn.", grading: "accepted", answerLanguage: "vi", explanation: "nhờ は好ましい結果の原因を示します。" },
+        { id: "a2p7-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "do thiếu thời gian", answers: ["時間不足のため", "時間が足りないため"], modelAnswer: "時間不足のため", grading: "accepted", explanation: "do は客観的な原因を簡潔に示します。" }
+      ]
+    },
+    {
+      id: "a2-plus-8", title: "GROUP 08", description: "A2＋総合練習",
+      questions: [
+        { id: "a2p8-01", type: "meaning-choice", direction: "vi-ja", prompt: "trong khi", choices: ["〜している間・一方で", "〜した後で", "〜するために", "〜でない限り"], answers: ["〜している間・一方で"], explanation: "trong khi は同時進行や対比を表します。" },
+        { id: "a2p8-02", type: "meaning-choice", direction: "vi-ja", prompt: "cho đến khi", choices: ["〜するまで", "〜して以来", "〜した途端", "〜する代わりに"], answers: ["〜するまで"], explanation: "cho đến khi は継続の終点を示します。" },
+        { id: "a2p8-03", type: "blank-choice", sentence: "Tôi sẽ đợi ở đây ___ khi bạn đến.", choices: ["cho đến", "thay vì", "mặc dù", "do"], answers: ["cho đến"], translation: "あなたが来るまでここで待ちます。", explanation: "cho đến khi で時間の終点を表します。", answerLanguage: "vi" },
+        { id: "a2p8-04", type: "blank-input", sentence: "___ đang nấu ăn, tôi nghe nhạc.", answers: ["Trong khi", "Trong lúc", "Khi"], translation: "料理をしながら、私は音楽を聴きます。", explanation: "trong khi／trong lúc で同時の動作を示します。", answerLanguage: "vi" },
+        { id: "a2p8-05", type: "blank-input", sentence: "Đây là món ăn ngon nhất ___ tôi từng thử.", answers: ["mà"], translation: "これは私が今まで食べた中で最もおいしい料理です。", explanation: "mà 以下が món ăn を説明します。", answerLanguage: "vi" },
+        { id: "a2p8-06", type: "blank-input", sentence: "Tôi học mỗi ngày để có thể nói tốt ___.", answers: ["hơn"], translation: "もっと上手に話せるよう、毎日勉強しています。", explanation: "tốt hơn は「より上手に」です。", answerLanguage: "vi" },
+        { id: "a2p8-07", type: "blank-input", sentence: "Nếu không hiểu, hãy hỏi ___ giáo viên.", answers: ["lại"], translation: "分からなければ、先生にもう一度聞いてください。", explanation: "hỏi lại は「もう一度尋ねる・聞き返す」です。", answerLanguage: "vi" },
+        { id: "a2p8-08", type: "translation", direction: "vi-ja", prompt: "Mặc dù mới học được một năm, cô ấy đã nói khá tốt.", modelAnswer: "学び始めてまだ1年ですが、彼女はかなり上手に話します。", grading: "self", explanation: "mặc dù で譲歩、mới ... được で短い期間を示します。" },
+        { id: "a2p8-09", type: "translation", direction: "ja-vi", prompt: "予定が変わったら、できるだけ早く知らせてください。", modelAnswer: "Nếu kế hoạch thay đổi, hãy cho tôi biết càng sớm càng tốt.", grading: "self", answerLanguage: "vi", explanation: "càng sớm càng tốt は「できるだけ早く」です。" },
+        { id: "a2p8-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "bằng cách luyện tập thường xuyên", modelAnswer: "定期的に練習することによって", grading: "self", explanation: "bằng cách で方法を示します。" }
+      ]
+    }
+  );
+  levels.splice(levels.indexOf(bVocabulary), 0, a2Plus);
+  bVocabulary.requires = "a2-plus-8";
+
+  const b1Plus = {
+    id: "b1-plus", label: "B1+", name: "中級", description: "推測・議論・要約", requires: "b1-5",
+    groups: [
+      {
+        id: "b1-plus-1", title: "GROUP 01", description: "推測・可能性・仮定",
+        questions: [
+          { id: "b1p1-01", type: "meaning-choice", direction: "vi-ja", prompt: "có lẽ", choices: ["おそらく", "必ず", "決して", "すでに"], answers: ["おそらく"], explanation: "có lẽ は確実ではない推測を表します。" },
+          { id: "b1p1-02", type: "meaning-choice", direction: "vi-ja", prompt: "dường như", choices: ["〜のようだ", "〜に違いない", "〜する必要がある", "〜するつもりだ"], answers: ["〜のようだ"], explanation: "dường như は観察に基づく控えめな推測です。" },
+          { id: "b1p1-03", type: "blank-choice", sentence: "___ sử kế hoạch thất bại, chúng ta sẽ làm gì?", choices: ["Giả", "Do", "Mặc", "Sau"], answers: ["Giả"], translation: "仮に計画が失敗したら、私たちはどうしますか。", explanation: "giả sử は仮定の状況を導きます。", answerLanguage: "vi" },
+          { id: "b1p1-04", type: "blank-input", sentence: "Trời nhiều mây; có ___ sắp mưa.", answers: ["lẽ"], translation: "曇っているので、おそらくもうすぐ雨が降ります。", explanation: "có lẽ は可能性を述べます。", answerLanguage: "vi" },
+          { id: "b1p1-05", type: "blank-input", sentence: "Anh ấy ___ như không đồng ý.", answers: ["dường"], translation: "彼は同意していないようです。", explanation: "dường như + 節で「〜のようだ」です。", answerLanguage: "vi" },
+          { id: "b1p1-06", type: "blank-input", sentence: "Hãy đi ngay, nếu ___ chúng ta sẽ muộn.", answers: ["không"], translation: "すぐ行きましょう。そうでなければ遅れます。", explanation: "nếu không は「そうでなければ」です。", answerLanguage: "vi" },
+          { id: "b1p1-07", type: "blank-input", sentence: "Chưa ___ anh ấy đã nhận được tin nhắn.", answers: ["chắc"], translation: "彼がすでにメッセージを受け取ったとは限りません。", explanation: "chưa chắc は「必ずしも〜とは限らない」です。", answerLanguage: "vi" },
+          { id: "b1p1-08", type: "translation", direction: "vi-ja", prompt: "Dường như vấn đề phức tạp hơn chúng ta nghĩ.", modelAnswer: "問題は私たちが考えていたより複雑なようです。", grading: "self", explanation: "dường như で断定を避けて推測を述べます。" },
+          { id: "b1p1-09", type: "translation", direction: "ja-vi", prompt: "時間どおりに終わらない可能性があります。", modelAnswer: "Có khả năng chúng ta sẽ không hoàn thành đúng hạn.", grading: "self", answerLanguage: "vi", explanation: "có khả năng ... は「〜する可能性がある」です。" },
+          { id: "b1p1-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "trong trường hợp kế hoạch thay đổi", modelAnswer: "計画が変更された場合には", grading: "self", explanation: "trong trường hợp は「〜の場合には」です。" }
+        ]
+      },
+      {
+        id: "b1-plus-2", title: "GROUP 02", description: "対比しながら意見を組み立てる",
+        questions: [
+          { id: "b1p2-01", type: "meaning-choice", direction: "vi-ja", prompt: "một mặt ... mặt khác ...", choices: ["一方では〜、他方では…", "〜なので…", "〜だけでなく…", "〜するほど…"], answers: ["一方では〜、他方では…"], explanation: "二つの側面を対比して示す表現です。" },
+          { id: "b1p2-02", type: "meaning-choice", direction: "vi-ja", prompt: "trái lại", choices: ["反対に", "そのため", "例えば", "つまり"], answers: ["反対に"], explanation: "trái lại は前の内容と反対の事実を導きます。" },
+          { id: "b1p2-03", type: "blank-choice", sentence: "Một mặt, làm việc ở nhà rất tiện; mặt ___, đôi khi khó tập trung.", choices: ["khác", "nữa", "sau", "trên"], answers: ["khác"], translation: "在宅勤務は便利な一方、集中しにくいこともあります。", explanation: "một mặt ... mặt khác ... で両面を示します。", answerLanguage: "vi" },
+          { id: "b1p2-04", type: "blank-input", sentence: "Thành phố rất đông. ___ lại, vùng quê khá yên tĩnh.", answers: ["Trái", "trái"], translation: "都市はとても混雑しています。反対に田舎はかなり静かです。", explanation: "trái lại は対照的な内容を続けます。", answerLanguage: "vi" },
+          { id: "b1p2-05", type: "blank-input", sentence: "Công việc này không chỉ thú vị mà ___ có ý nghĩa.", answers: ["còn"], translation: "この仕事は面白いだけでなく、意義もあります。", explanation: "không chỉ ... mà còn ... は要素を追加して強調します。", answerLanguage: "vi" },
+          { id: "b1p2-06", type: "blank-input", sentence: "Một số người thích thành phố, ___ khi người khác thích nông thôn.", answers: ["trong"], translation: "都市を好む人がいる一方、田舎を好む人もいます。", explanation: "trong khi は同時性だけでなく対比も表します。", answerLanguage: "vi" },
+          { id: "b1p2-07", type: "blank-input", sentence: "Xét ___ chi phí, phương án này hợp lý hơn.", answers: ["về"], translation: "費用の面で見ると、この案の方が合理的です。", explanation: "xét về ... は評価する観点を示します。", answerLanguage: "vi" },
+          { id: "b1p2-08", type: "translation", direction: "vi-ja", prompt: "Một mặt, công nghệ giúp tiết kiệm thời gian; mặt khác, nó có thể gây ra sự phụ thuộc.", modelAnswer: "技術は時間を節約する一方、依存を引き起こす可能性もあります。", grading: "self", explanation: "二つの側面を公平に示す構成です。" },
+          { id: "b1p2-09", type: "translation", direction: "ja-vi", prompt: "この方法は安いだけでなく、効果的でもあります。", modelAnswer: "Phương pháp này không chỉ rẻ mà còn hiệu quả.", grading: "self", answerLanguage: "vi", explanation: "không chỉ ... mà còn ... で二つの長所を結びます。" },
+          { id: "b1p2-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "xét về mặt lâu dài", modelAnswer: "長期的な面で考えると", grading: "self", explanation: "xét về mặt ... は評価の観点を示します。" }
+        ]
+      },
+      {
+        id: "b1-plus-3", title: "GROUP 03", description: "要約・言い換え・結論",
+        questions: [
+          { id: "b1p3-01", type: "meaning-choice", direction: "vi-ja", prompt: "tóm lại", choices: ["要するに・まとめると", "その一方で", "具体的には", "それにもかかわらず"], answers: ["要するに・まとめると"], explanation: "tóm lại は説明をまとめて結論へ導きます。" },
+          { id: "b1p3-02", type: "meaning-choice", direction: "vi-ja", prompt: "nhìn chung", choices: ["全体として", "個別には", "突然", "以前は"], answers: ["全体として"], explanation: "nhìn chung は全体的な評価を述べます。" },
+          { id: "b1p3-03", type: "blank-choice", sentence: "___ lại, kế hoạch đã đạt được mục tiêu chính.", choices: ["Tóm", "Trái", "Mặt", "Dường"], answers: ["Tóm"], translation: "まとめると、計画は主な目標を達成しました。", explanation: "tóm lại を文頭に置いて結論を示します。", answerLanguage: "vi" },
+          { id: "b1p3-04", type: "blank-input", sentence: "Nói cách ___, chúng ta cần bắt đầu lại.", answers: ["khác"], translation: "言い換えれば、私たちはやり直す必要があります。", explanation: "nói cách khác は前の内容の言い換えです。", answerLanguage: "vi" },
+          { id: "b1p3-05", type: "blank-input", sentence: "Nhìn ___, kết quả khá tích cực.", answers: ["chung"], translation: "全体として、結果はかなり良好です。", explanation: "nhìn chung は細部を除いた全体評価です。", answerLanguage: "vi" },
+          { id: "b1p3-06", type: "blank-input", sentence: "Điều này cho ___ rằng cách mới có hiệu quả.", answers: ["thấy"], translation: "これは新しい方法が効果的だということを示しています。", explanation: "cho thấy rằng ... は「〜ということを示す」です。", answerLanguage: "vi" },
+          { id: "b1p3-07", type: "blank-input", sentence: "Vấn đề quan trọng ___ làm thế nào để duy trì kết quả.", answers: ["là"], translation: "重要な問題は、結果をどう維持するかです。", explanation: "vấn đề ... là ... で中心的な問題を提示します。", answerLanguage: "vi" },
+          { id: "b1p3-08", type: "translation", direction: "vi-ja", prompt: "Nhìn chung, lợi ích của dự án lớn hơn những hạn chế của nó.", modelAnswer: "全体として、この計画の利点は欠点より大きいです。", grading: "self", explanation: "nhìn chung で総合的な判断を示します。" },
+          { id: "b1p3-09", type: "translation", direction: "ja-vi", prompt: "要するに、成功するには時間と継続的な努力が必要です。", modelAnswer: "Tóm lại, để thành công, chúng ta cần thời gian và nỗ lực liên tục.", grading: "self", answerLanguage: "vi", explanation: "tóm lại で結論を導き、để で目的を示します。" },
+          { id: "b1p3-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "điều này cho thấy rằng", modelAnswer: "これは〜ということを示している", grading: "self", explanation: "根拠から判断を導くときの表現です。" }
+        ]
+      }
+    ]
+  };
+  b1Plus.groups.push(
+    {
+      id: "b1-plus-4", title: "GROUP 04", description: "提案・交渉・調整",
+      questions: [
+        { id: "b1p4-01", type: "meaning-choice", direction: "vi-ja", prompt: "đề nghị", choices: ["提案する", "拒否する", "報告する", "証明する"], answers: ["提案する"], explanation: "đề nghị は案や対応を提案する語です。" },
+        { id: "b1p4-02", type: "meaning-choice", direction: "vi-ja", prompt: "cân nhắc", choices: ["よく検討する", "すぐ決定する", "取り消す", "無視する"], answers: ["よく検討する"], explanation: "cân nhắc は複数の要素を考慮して検討することです。" },
+        { id: "b1p4-03", type: "blank-choice", sentence: "Tôi đề ___ dời cuộc họp sang thứ Sáu.", choices: ["nghị", "cầu", "định", "báo"], answers: ["nghị"], translation: "会議を金曜日へ延期することを提案します。", explanation: "đề nghị + 動詞で提案を述べます。", answerLanguage: "vi" },
+        { id: "b1p4-04", type: "blank-input", sentence: "Chúng ta cần cân ___ cả chi phí lẫn thời gian.", answers: ["nhắc"], translation: "費用と時間の両方を考慮する必要があります。", explanation: "cân nhắc は慎重な検討を表します。", answerLanguage: "vi" },
+        { id: "b1p4-05", type: "blank-input", sentence: "Hai bên đã đạt được thỏa ___.", answers: ["thuận"], translation: "双方は合意に達しました。", explanation: "đạt được thỏa thuận は「合意に達する」です。", answerLanguage: "vi" },
+        { id: "b1p4-06", type: "blank-input", sentence: "Xin vui lòng xác ___ thời gian họp.", answers: ["nhận"], translation: "会議の時間をご確認ください。", explanation: "xác nhận は「確認する・確定する」です。", answerLanguage: "vi" },
+        { id: "b1p4-07", type: "blank-input", sentence: "Chúng tôi có thể điều ___ lịch trình nếu cần.", answers: ["chỉnh"], translation: "必要なら日程を調整できます。", explanation: "điều chỉnh lịch trình は「日程を調整する」です。", answerLanguage: "vi" },
+        { id: "b1p4-08", type: "translation", direction: "vi-ja", prompt: "Tôi đề nghị chúng ta xem xét một giải pháp khác.", modelAnswer: "別の解決策を検討することを提案します。", grading: "self", explanation: "đề nghị ... xem xét ... は丁寧に検討を促します。" },
+        { id: "b1p4-09", type: "translation", direction: "ja-vi", prompt: "条件についてもう一度話し合う必要があります。", modelAnswer: "Chúng ta cần thảo luận lại về các điều kiện.", grading: "self", answerLanguage: "vi", explanation: "thảo luận lại về ... は「〜について再び話し合う」です。" },
+        { id: "b1p4-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "đạt được thỏa thuận", modelAnswer: "合意に達する", grading: "self", explanation: "交渉がまとまったことを表します。" }
+      ]
+    },
+    {
+      id: "b1-plus-5", title: "GROUP 05", description: "資料・傾向・根拠",
+      questions: [
+        { id: "b1p5-01", type: "meaning-choice", direction: "vi-ja", prompt: "xu hướng", choices: ["傾向", "原因", "基準", "手順"], answers: ["傾向"], explanation: "xu hướng は変化の方向や社会的な傾向です。" },
+        { id: "b1p5-02", type: "meaning-choice", direction: "vi-ja", prompt: "dựa trên", choices: ["〜に基づいて", "〜に反して", "〜を通じて", "〜の代わりに"], answers: ["〜に基づいて"], explanation: "dựa trên は判断の根拠を示します。" },
+        { id: "b1p5-03", type: "blank-choice", sentence: "Theo báo cáo, tỷ lệ này đang ___.", choices: ["tăng", "gây", "đạt", "dựa"], answers: ["tăng"], translation: "報告によると、この割合は増加しています。", explanation: "tỷ lệ tăng は「割合が増える」です。", answerLanguage: "vi" },
+        { id: "b1p5-04", type: "blank-input", sentence: "Kết quả này cho ___ một xu hướng tích cực.", answers: ["thấy"], translation: "この結果は好ましい傾向を示しています。", explanation: "cho thấy はデータなどが事実を示す表現です。", answerLanguage: "vi" },
+        { id: "b1p5-05", type: "blank-input", sentence: "Phân tích được thực hiện dựa ___ dữ liệu mới.", answers: ["trên"], translation: "分析は新しいデータに基づいて行われました。", explanation: "dựa trên + 根拠で「〜に基づいて」です。", answerLanguage: "vi" },
+        { id: "b1p5-06", type: "blank-input", sentence: "Số người sử dụng dịch vụ đã tăng đáng ___.", answers: ["kể"], translation: "サービス利用者数は大幅に増加しました。", explanation: "đáng kể は「著しく・かなり」です。", answerLanguage: "vi" },
+        { id: "b1p5-07", type: "blank-input", sentence: "So với năm trước, chi phí đã giảm mười phần ___.", answers: ["trăm"], translation: "前年と比べ、費用は10パーセント減りました。", explanation: "phần trăm は「パーセント」です。", answerLanguage: "vi" },
+        { id: "b1p5-08", type: "translation", direction: "vi-ja", prompt: "Dữ liệu cho thấy nhu cầu đang tăng dần.", modelAnswer: "データは需要が徐々に増えていることを示しています。", grading: "self", explanation: "cho thấy でデータから読み取れる内容を述べます。" },
+        { id: "b1p5-09", type: "translation", direction: "ja-vi", prompt: "調査結果に基づくと、この方法が最も効果的です。", modelAnswer: "Dựa trên kết quả khảo sát, phương pháp này hiệu quả nhất.", grading: "self", answerLanguage: "vi", explanation: "dựa trên で判断の根拠を示します。" },
+        { id: "b1p5-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "một xu hướng đáng chú ý", modelAnswer: "注目すべき傾向", grading: "self", explanation: "đáng chú ý は「注目に値する」です。" }
+      ]
+    },
+    {
+      id: "b1-plus-6", title: "GROUP 06", description: "仮定・後悔・別の可能性",
+      questions: [
+        { id: "b1p6-01", type: "meaning-choice", direction: "vi-ja", prompt: "giá mà", choices: ["〜だったらよかったのに", "〜である限り", "〜するとすぐ", "〜だからこそ"], answers: ["〜だったらよかったのに"], explanation: "giá mà は現実と異なる願いや後悔を表します。" },
+        { id: "b1p6-02", type: "meaning-choice", direction: "vi-ja", prompt: "nếu không thì", choices: ["そうでなければ", "たとえそうでも", "そのおかげで", "その一方で"], answers: ["そうでなければ"], explanation: "nếu không thì は条件が満たされない場合の結果を示します。" },
+        { id: "b1p6-03", type: "blank-choice", sentence: "Giá ___ tôi biết điều đó sớm hơn.", choices: ["mà", "nên", "do", "vẫn"], answers: ["mà"], translation: "もっと早くそれを知っていたらよかったのに。", explanation: "giá mà で後悔や実現しにくい願いを示します。", answerLanguage: "vi" },
+        { id: "b1p6-04", type: "blank-input", sentence: "Nếu tôi có nhiều thời gian hơn, tôi ___ học thêm.", answers: ["sẽ"], translation: "もっと時間があれば、さらに勉強します。", explanation: "nếu ... sẽ ... で仮定と結果を述べます。", answerLanguage: "vi" },
+        { id: "b1p6-05", type: "blank-input", sentence: "Hãy kiểm tra kỹ, nếu không ___ sẽ mắc lỗi.", answers: ["thì"], translation: "よく確認してください。そうでなければ間違えます。", explanation: "nếu không thì で別の結果を警告します。", answerLanguage: "vi" },
+        { id: "b1p6-06", type: "blank-input", sentence: "Giả sử ngân sách bị giảm, chúng ta sẽ xử lý thế ___?", answers: ["nào"], translation: "仮に予算が減ったら、どう対処しますか。", explanation: "giả sử で検討用の仮定を提示します。", answerLanguage: "vi" },
+        { id: "b1p6-07", type: "blank-input", sentence: "Nếu không có sự giúp đỡ của bạn, tôi đã không hoàn thành ___ .", answers: ["được"], translation: "あなたの助けがなければ、私は完了できませんでした。", explanation: "đã không ... được で過去に不可能だった結果を示します。", answerLanguage: "vi" },
+        { id: "b1p6-08", type: "translation", direction: "vi-ja", prompt: "Giá mà chúng ta đã chuẩn bị kỹ hơn.", modelAnswer: "私たちがもっと十分に準備していたらよかったのに。", grading: "self", explanation: "giá mà + 完了した事柄で過去への後悔を表します。" },
+        { id: "b1p6-09", type: "translation", direction: "ja-vi", prompt: "もし予定を知っていたら、もっと早く来ていました。", modelAnswer: "Nếu biết lịch trình, tôi đã đến sớm hơn.", grading: "self", answerLanguage: "vi", explanation: "nếu ... đã ... で現実と異なる過去を述べます。" },
+        { id: "b1p6-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "nếu không có sự hỗ trợ", modelAnswer: "支援がなければ", grading: "self", explanation: "nếu không có ... は「〜がなければ」です。" }
+      ]
+    },
+    {
+      id: "b1-plus-7", title: "GROUP 07", description: "課題・対策・評価",
+      questions: [
+        { id: "b1p7-01", type: "meaning-choice", direction: "vi-ja", prompt: "biện pháp", choices: ["対策・措置", "原因", "傾向", "証拠"], answers: ["対策・措置"], explanation: "biện pháp は問題に対して取る具体的な対策です。" },
+        { id: "b1p7-02", type: "meaning-choice", direction: "vi-ja", prompt: "góp phần", choices: ["貢献する・一因となる", "妨げる", "置き換える", "否定する"], answers: ["貢献する・一因となる"], explanation: "góp phần + 動詞で結果への貢献を表します。" },
+        { id: "b1p7-03", type: "blank-choice", sentence: "Cần có biện ___ để giảm ô nhiễm.", choices: ["pháp", "quả", "kiện", "hướng"], answers: ["pháp"], translation: "汚染を減らすための対策が必要です。", explanation: "biện pháp は「対策・措置」です。", answerLanguage: "vi" },
+        { id: "b1p7-04", type: "blank-input", sentence: "Việc đi xe buýt góp phần ___ khí thải.", answers: ["giảm"], translation: "バス利用は排出ガス削減に役立ちます。", explanation: "góp phần + 動詞で貢献する結果を続けます。", answerLanguage: "vi" },
+        { id: "b1p7-05", type: "blank-input", sentence: "Kết quả phụ thuộc ___ cách thực hiện.", answers: ["vào"], translation: "結果は実施方法によって決まります。", explanation: "phụ thuộc vào は「〜に依存する・〜次第である」です。", answerLanguage: "vi" },
+        { id: "b1p7-06", type: "blank-input", sentence: "Chính sách mới nhằm ___ chất lượng dịch vụ.", answers: ["nâng cao", "cải thiện"], translation: "新しい政策はサービス品質の向上を目指しています。", explanation: "nhằm + 動詞で目的を示します。", answerLanguage: "vi" },
+        { id: "b1p7-07", type: "blank-input", sentence: "Chúng ta cần đánh ___ hiệu quả của giải pháp.", answers: ["giá"], translation: "解決策の効果を評価する必要があります。", explanation: "đánh giá は「評価する」です。", answerLanguage: "vi" },
+        { id: "b1p7-08", type: "translation", direction: "vi-ja", prompt: "Biện pháp này có thể góp phần giải quyết vấn đề lâu dài.", modelAnswer: "この対策は長期的な問題の解決に役立つ可能性があります。", grading: "self", explanation: "góp phần giải quyết は「解決に寄与する」です。" },
+        { id: "b1p7-09", type: "translation", direction: "ja-vi", prompt: "結果は私たちがどのように実行するかによって決まります。", modelAnswer: "Kết quả phụ thuộc vào cách chúng ta thực hiện.", grading: "self", answerLanguage: "vi", explanation: "phụ thuộc vào cách ... で方法への依存を述べます。" },
+        { id: "b1p7-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "đánh giá tính hiệu quả", modelAnswer: "有効性を評価する", grading: "self", explanation: "tính hiệu quả は「有効性・効率性」です。" }
+      ]
+    },
+    {
+      id: "b1-plus-8", title: "GROUP 08", description: "B1＋長文総合",
+      questions: [
+        { id: "b1p8-01", type: "meaning-choice", direction: "vi-ja", prompt: "xét về lâu dài", choices: ["長期的に見れば", "すぐに", "過去と比べて", "例外として"], answers: ["長期的に見れば"], explanation: "xét về lâu dài は長期的な観点を示します。" },
+        { id: "b1p8-02", type: "meaning-choice", direction: "vi-ja", prompt: "điều đó có nghĩa là", choices: ["それは〜を意味する", "それは〜と反対だ", "それは〜の原因だ", "それは〜と同時だ"], answers: ["それは〜を意味する"], explanation: "前の内容の意味や帰結を説明する表現です。" },
+        { id: "b1p8-03", type: "blank-choice", sentence: "Xét về lâu ___, đầu tư vào giáo dục rất cần thiết.", choices: ["dài", "rộng", "cao", "sâu"], answers: ["dài"], translation: "長期的に見れば、教育への投資は非常に必要です。", explanation: "về lâu dài は「長期的には」です。", answerLanguage: "vi" },
+        { id: "b1p8-04", type: "blank-input", sentence: "Kết quả không như mong đợi; điều đó có nghĩa ___ chúng ta phải điều chỉnh.", answers: ["là"], translation: "結果は期待どおりではなく、調整が必要だということです。", explanation: "có nghĩa là の後ろに意味・帰結を続けます。", answerLanguage: "vi" },
+        { id: "b1p8-05", type: "blank-input", sentence: "Mặc dù có nhiều khó khăn, dự án vẫn đạt được mục ___ chính.", answers: ["tiêu"], translation: "多くの困難がありましたが、計画は主な目標を達成しました。", explanation: "đạt được mục tiêu は「目標を達成する」です。", answerLanguage: "vi" },
+        { id: "b1p8-06", type: "blank-input", sentence: "Dựa trên dữ liệu hiện có, chưa thể đưa ra kết ___.", answers: ["luận"], translation: "現在のデータだけでは、まだ結論を出せません。", explanation: "đưa ra kết luận は「結論を出す」です。", answerLanguage: "vi" },
+        { id: "b1p8-07", type: "blank-input", sentence: "Không chỉ chi phí giảm mà chất lượng cũng được cải ___.", answers: ["thiện"], translation: "費用が減っただけでなく、品質も改善されました。", explanation: "không chỉ ... mà ... cũng ... で二つの結果を示します。", answerLanguage: "vi" },
+        { id: "b1p8-08", type: "translation", direction: "vi-ja", prompt: "Nếu được thực hiện đúng cách, giải pháp này không chỉ tiết kiệm chi phí mà còn nâng cao chất lượng dịch vụ.", modelAnswer: "適切に実施されれば、この解決策は費用を節約するだけでなく、サービスの質も高めます。", grading: "self", explanation: "条件と二つの効果を一文でまとめています。" },
+        { id: "b1p8-09", type: "translation", direction: "ja-vi", prompt: "調査結果は改善を示していますが、結論を出すにはさらに多くのデータが必要です。", modelAnswer: "Kết quả khảo sát cho thấy sự cải thiện, nhưng cần thêm dữ liệu để đưa ra kết luận.", grading: "self", answerLanguage: "vi", explanation: "cho thấy、nhưng、để を使って根拠・対比・目的を結びます。" },
+        { id: "b1p8-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "dựa trên những thông tin hiện có", modelAnswer: "現在得られている情報に基づいて", grading: "self", explanation: "判断に利用できる情報の範囲を示します。" }
+      ]
+    }
+  );
+  levels.splice(levels.indexOf(b1) + 1, 0, b1Plus);
 })();
