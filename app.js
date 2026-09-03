@@ -4,12 +4,13 @@
   const BANK_KEY = "vietnamese-step-bank-v6";
   const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
+  const LAST_LEVEL_KEY = "vietnamese-step-last-level-v1";
   const app = document.querySelector("#app");
 
   let bank = loadBank();
   let progress = load(PROGRESS_KEY, {});
   let screen = "home";
-  let levelId = bank.levels[0]?.id || "";
+  let levelId = load(LAST_LEVEL_KEY, bank.levels[0]?.id || "");
   let activeLevel = null;
   let activeGroup = null;
   let quizQuestions = [];
@@ -56,6 +57,12 @@
   function save() {
     localStorage.setItem(BANK_KEY, JSON.stringify(bank));
     localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+  }
+
+  function rememberLevel(level) {
+    if (!level?.id) return;
+    levelId = level.id;
+    localStorage.setItem(LAST_LEVEL_KEY, level.id);
   }
 
   function esc(value) {
@@ -182,7 +189,12 @@
     const groups = allGroups();
     const completed = groups.filter((group) => progress[group.id]?.completed).length;
     const attempts = Object.values(progress).reduce((sum, item) => sum + Number(item.attempts || 0), 0);
-    const level = bank.levels.find((item) => item.id === levelId) || bank.levels[0];
+    const rememberedLevel = bank.levels.find((item) => item.id === levelId);
+    const level = rememberedLevel && isLevelUnlocked(rememberedLevel) ? rememberedLevel : bank.levels[0];
+    levelId = level.id;
+    const nextGroupIndex = level.groups.findIndex((group, index) =>
+      isUnlocked(level, index) && !progress[group.id]?.completed
+    );
 
     app.innerHTML = `
       <main class="shell">
@@ -225,14 +237,15 @@
               const pendingCount = !result?.completed && Array.isArray(result?.pendingQuestionIds)
                 ? result.pendingQuestionIds.length
                 : 0;
+              const isNext = index === nextGroupIndex;
               const formats = [...new Set(group.questions.map(typeLabel))].join("・");
               return `
-                <article class="group ${result?.completed ? "clear" : ""} ${unlocked ? "" : "locked"}">
+                <article class="group ${result?.completed ? "clear" : ""} ${unlocked ? "" : "locked"} ${isNext ? "next" : ""}">
                   <div class="group-num">${String(index + 1).padStart(2, "0")}</div>
                   <div class="group-body">
                     <div class="group-top">
                       <div class="group-title"><small>${esc(group.title)}</small><h3>${esc(group.description)}</h3></div>
-                      ${result?.completed ? `<span class="badge">✓ CLEAR</span>` : pendingCount ? `<span class="badge progress">↻ 続きから</span>` : !unlocked ? `<span class="badge lock">🔒 LOCKED</span>` : ""}
+                      ${result?.completed ? `<span class="badge">✓ CLEAR</span>` : pendingCount ? `<span class="badge progress">↻ 次はここ・続きから</span>` : !unlocked ? `<span class="badge lock">🔒 LOCKED</span>` : isNext ? `<span class="badge progress">→ 次はここ</span>` : ""}
                     </div>
                     <div class="group-bottom">
                       <div class="details">
@@ -472,6 +485,7 @@
   }
 
   function startGroup(level, group) {
+    rememberLevel(level);
     activeLevel = level;
     activeGroup = group;
     const saved = progress[group.id];
@@ -576,6 +590,7 @@
           if (!validateBank(value)) throw new Error("問題データの形式が違います。");
           bank = value;
           levelId = bank.levels[0].id;
+          localStorage.setItem(LAST_LEVEL_KEY, levelId);
           notice = "問題データを読み込みました。";
         } else {
           if (!value || Array.isArray(value) || typeof value !== "object") throw new Error("学習記録の形式が違います。");
@@ -637,7 +652,7 @@
     notice = "";
 
     if (button.dataset.level) {
-      levelId = button.dataset.level;
+      rememberLevel(bank.levels.find((item) => item.id === button.dataset.level));
       renderHome();
       return;
     }
@@ -713,6 +728,7 @@
       if (window.confirm("問題集を最初の内容に戻しますか？ 学習記録は残ります。")) {
         bank = window.defaultQuestionBank;
         levelId = bank.levels[0]?.id || "";
+        localStorage.setItem(LAST_LEVEL_KEY, levelId);
         notice = "最初の問題集に戻しました。";
         save();
         renderData();

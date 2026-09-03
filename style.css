@@ -96,6 +96,8 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
 .group.locked { opacity: .66; background: #efede7; }
 .group-num { display: grid; place-items: center; border-right: 1px solid var(--line); background: #eeece4; color: #a5a69f; font: 2rem Georgia,serif; }
 .group.clear .group-num { background: #dbe9e2; color: var(--jade); }
+.group.next { border-color: rgba(123,45,54,.55); box-shadow: 0 8px 24px rgba(123,45,54,.08); }
+.group.next .group-num { background: #f4e7e5; color: var(--forest); }
 .group-body { display: grid; gap: 24px; padding: 23px 26px 20px; }
 .group-top, .group-bottom { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .group-title small { color: var(--muted); font-size: .69rem; letter-spacing: .09em; }
