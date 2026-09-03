@@ -1,5 +1,5 @@
 window.defaultQuestionBank = {
-  version: 6,
+  version: 7,
   language: "vi",
   title: "Vietnamese Step",
   levels: [
@@ -614,4 +614,202 @@ window.defaultQuestionBank = {
   };
   levels.splice(levels.indexOf(b1), 0, bVocabulary);
   b1.requires = "vocabulary-10";
+
+  // 各レベルに橋渡しとなる3グループを追加し、文法を使う前に段階練習できる順に並べます。
+  const insertAfter = (level, afterId, groups) => {
+    const index = level.groups.findIndex((group) => group.id === afterId);
+    level.groups.splice(index + 1, 0, ...groups);
+  };
+  const renumber = (level) => level.groups.forEach((group, index) => {
+    group.title = `GROUP ${String(index + 1).padStart(2, "0")}`;
+  });
+
+  insertAfter(starter, "starter-2", [{
+    id: "starter-6", title: "", description: "所有の của と指示語",
+    questions: [
+      { id: "s6-01", type: "meaning-choice", direction: "vi-ja", prompt: "của", choices: ["〜の・〜のもの", "〜と一緒に", "〜から", "〜の前に"], answers: ["〜の・〜のもの"], explanation: "của は所有者を示し、「〜の・〜のもの」を表します。" },
+      { id: "s6-02", type: "meaning-choice", direction: "vi-ja", prompt: "này", choices: ["この", "その", "あの遠くの", "どの"], answers: ["この"], explanation: "này は名詞の後ろに置き、近くの「この」を表します。" },
+      { id: "s6-03", type: "blank-choice", sentence: "Đây là sách ___ tôi.", choices: ["của", "với", "cho", "từ"], answers: ["của"], translation: "これは私の本です。", explanation: "名詞 + của + 所有者で「所有者の名詞」です。", answerLanguage: "vi" },
+      { id: "s6-04", type: "blank-input", sentence: "Cái ___ là của bạn?", answers: ["này"], translation: "これはあなたのものですか。", explanation: "cái này は「これ・この物」です。", answerLanguage: "vi" },
+      { id: "s6-05", type: "blank-input", sentence: "Người ___ là giáo viên của tôi.", answers: ["đó", "kia"], translation: "その人は私の先生です。", explanation: "đó／kia は人や物を指すとき、名詞の後ろに置きます。", answerLanguage: "vi" },
+      { id: "s6-06", type: "blank-input", sentence: "Đây là nhà ___ Lan.", answers: ["của"], translation: "これはランの家です。", explanation: "nhà của Lan で「ランの家」です。", answerLanguage: "vi" },
+      { id: "s6-07", type: "blank-input", sentence: "Quyển sách kia là ___ ai?", answers: ["của"], translation: "あの本は誰のものですか。", explanation: "của ai? で「誰のものですか」と尋ねます。", answerLanguage: "vi" },
+      { id: "s6-08", type: "translation", direction: "vi-ja", prompt: "Đây là bạn của tôi.", answers: ["こちらは私の友達です", "これは私の友達です"], modelAnswer: "こちらは私の友達です。", grading: "accepted", explanation: "bạn của tôi は「私の友達」です。" },
+      { id: "s6-09", type: "translation", direction: "ja-vi", prompt: "これは私の本です。", answers: ["Đây là sách của tôi.", "Đây là quyển sách của tôi."], modelAnswer: "Đây là sách của tôi.", grading: "accepted", answerLanguage: "vi", explanation: "所有者は của の後ろに置きます。" },
+      { id: "s6-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "cái này của ai", answers: ["これは誰のものですか", "これは誰のですか"], modelAnswer: "これは誰のものですか", grading: "accepted", explanation: "cái này は「これ」、của ai は「誰のもの」です。" }
+    ]
+  }]);
+  insertAfter(starter, "starter-3", [{
+    id: "starter-7", title: "", description: "数え方と基本の類別詞",
+    questions: [
+      { id: "s7-01", type: "meaning-choice", direction: "vi-ja", prompt: "con（類別詞）", choices: ["動物などを数える", "本を数える", "飲み物を数える", "家を数える"], answers: ["動物などを数える"], explanation: "con は主に動物を数える類別詞です。" },
+      { id: "s7-02", type: "meaning-choice", direction: "ja-vi", prompt: "本を数える類別詞", choices: ["quyển / cuốn", "con", "ly / cốc", "quả / trái"], answers: ["quyển / cuốn"], explanation: "quyển と cuốn は本のような物を数える類別詞です。", answerLanguage: "vi" },
+      { id: "s7-03", type: "blank-choice", sentence: "Tôi có hai ___ chó.", choices: ["con", "quyển", "ly", "quả"], answers: ["con"], translation: "私は犬を2匹飼っています。", explanation: "犬などの動物は con で数えます。", answerLanguage: "vi" },
+      { id: "s7-04", type: "blank-input", sentence: "Tôi có ba ___ sách.", answers: ["quyển", "cuốn"], translation: "私は本を3冊持っています。", explanation: "本は quyển／cuốn で数えます。", answerLanguage: "vi" },
+      { id: "s7-05", type: "blank-input", sentence: "Cho tôi một ___ nước.", answers: ["chai"], translation: "水を1本ください。", explanation: "chai は瓶・ボトルを数える語です。", answerLanguage: "vi" },
+      { id: "s7-06", type: "blank-input", sentence: "Tôi mua hai ___ táo.", answers: ["quả", "trái"], translation: "私はリンゴを2個買います。", explanation: "果物は北部で quả、南部で trái がよく使われます。", answerLanguage: "vi" },
+      { id: "s7-07", type: "blank-input", sentence: "Tôi uống một ___ cà phê.", answers: ["cốc", "ly"], translation: "私はコーヒーを1杯飲みます。", explanation: "飲み物の一杯には cốc／ly を使えます。", answerLanguage: "vi" },
+      { id: "s7-08", type: "translation", direction: "vi-ja", prompt: "Tôi có hai con mèo.", answers: ["私は猫を2匹飼っています", "私は猫を二匹飼っています", "私は猫を2匹持っています"], modelAnswer: "私は猫を2匹飼っています。", grading: "accepted", explanation: "hai con mèo は「猫2匹」です。" },
+      { id: "s7-09", type: "translation", direction: "ja-vi", prompt: "私は本を3冊持っています。", answers: ["Tôi có ba quyển sách.", "Tôi có ba cuốn sách."], modelAnswer: "Tôi có ba quyển sách.", grading: "accepted", answerLanguage: "vi", explanation: "数 + 類別詞 + 名詞の順に並べます。" },
+      { id: "s7-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "một chiếc xe đạp", answers: ["自転車1台", "一台の自転車", "1台の自転車"], modelAnswer: "自転車1台", grading: "accepted", explanation: "chiếc は乗り物などを数える類別詞です。" }
+    ]
+  }]);
+  insertAfter(starter, "starter-4", [{
+    id: "starter-8", title: "", description: "疑問詞・否定・基本の質問",
+    questions: [
+      { id: "s8-01", type: "meaning-choice", direction: "vi-ja", prompt: "ai", choices: ["誰", "何", "どこ", "いつ"], answers: ["誰"], explanation: "ai は人について尋ねる「誰」です。" },
+      { id: "s8-02", type: "meaning-choice", direction: "vi-ja", prompt: "bao nhiêu", choices: ["いくつ・いくら", "どこ", "なぜ", "どのように"], answers: ["いくつ・いくら"], explanation: "bao nhiêu は数や値段を尋ねます。" },
+      { id: "s8-03", type: "blank-choice", sentence: "Bạn muốn ăn ___?", choices: ["gì", "ai", "đâu", "khi nào"], answers: ["gì"], translation: "何を食べたいですか。", explanation: "gì は物事を尋ねる「何」です。", answerLanguage: "vi" },
+      { id: "s8-04", type: "blank-input", sentence: "Người đó là ___?", answers: ["ai"], translation: "その人は誰ですか。", explanation: "人を尋ねるときは ai を使います。", answerLanguage: "vi" },
+      { id: "s8-05", type: "blank-input", sentence: "Bạn sống ở ___?", answers: ["đâu"], translation: "どこに住んでいますか。", explanation: "ở đâu? は場所を尋ねます。", answerLanguage: "vi" },
+      { id: "s8-06", type: "blank-input", sentence: "Bạn có anh chị em ___?", answers: ["không"], translation: "兄弟姉妹はいますか。", explanation: "có ... không? で有無を尋ねます。", answerLanguage: "vi" },
+      { id: "s8-07", type: "blank-input", sentence: "Tôi ___ uống cà phê.", answers: ["không"], translation: "私はコーヒーを飲みません。", explanation: "không は動詞の前に置いて否定します。", answerLanguage: "vi" },
+      { id: "s8-08", type: "translation", direction: "vi-ja", prompt: "Bạn có mấy quyển sách?", answers: ["本を何冊持っていますか", "あなたは本を何冊持っていますか"], modelAnswer: "本を何冊持っていますか？", grading: "accepted", explanation: "mấy + 類別詞で少数の個数を尋ねます。" },
+      { id: "s8-09", type: "translation", direction: "ja-vi", prompt: "これはいくらですか。", answers: ["Cái này bao nhiêu tiền?", "Cái này giá bao nhiêu?"], modelAnswer: "Cái này bao nhiêu tiền?", grading: "accepted", answerLanguage: "vi", explanation: "bao nhiêu tiền? は値段を尋ねる基本表現です。" },
+      { id: "s8-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "chưa ăn sáng", answers: ["まだ朝食を食べていない", "まだ朝ごはんを食べていない"], modelAnswer: "まだ朝食を食べていない", grading: "accepted", explanation: "chưa は「まだ〜していない」です。" }
+    ]
+  }]);
+  renumber(starter);
+
+  insertAfter(elementary, "elementary-1", [{
+    id: "elementary-6", title: "", description: "đã・đang・sẽ と動作の時",
+    questions: [
+      { id: "e6-01", type: "meaning-choice", direction: "vi-ja", prompt: "đang + 動詞", choices: ["今〜している", "もう〜した", "これから〜する", "まだ〜していない"], answers: ["今〜している"], explanation: "đang は進行中の動作を示します。" },
+      { id: "e6-02", type: "meaning-choice", direction: "ja-vi", prompt: "もう〜した", choices: ["đã ... rồi", "đang ...", "sắp ...", "chưa ..."], answers: ["đã ... rồi"], explanation: "đã ... rồi は動作がすでに完了したことを明確にします。", answerLanguage: "vi" },
+      { id: "e6-03", type: "blank-choice", sentence: "Tôi ___ đọc sách.", choices: ["đang", "đã", "sẽ", "chưa"], answers: ["đang"], translation: "私はいま本を読んでいます。", explanation: "いま進行中なので đang を使います。", answerLanguage: "vi" },
+      { id: "e6-04", type: "blank-input", sentence: "Hôm qua tôi ___ gặp Lan.", answers: ["đã"], translation: "昨日、私はランに会いました。", explanation: "hôm qua とともに完了を明示するとき đã を使えます。", answerLanguage: "vi" },
+      { id: "e6-05", type: "blank-input", sentence: "Ngày mai tôi ___ đi làm.", answers: ["sẽ"], translation: "明日、私は仕事へ行きます。", explanation: "sẽ はこれからの予定・未来を表します。", answerLanguage: "vi" },
+      { id: "e6-06", type: "blank-input", sentence: "Tôi ___ làm xong bài tập.", answers: ["chưa"], translation: "私はまだ宿題を終えていません。", explanation: "chưa は未完了を表します。", answerLanguage: "vi" },
+      { id: "e6-07", type: "blank-input", sentence: "Anh ấy vừa ___ nhà.", answers: ["về"], translation: "彼はたったいま帰宅しました。", explanation: "vừa + 動詞で「たったいま〜した」です。", answerLanguage: "vi" },
+      { id: "e6-08", type: "translation", direction: "vi-ja", prompt: "Tôi đã ăn cơm rồi.", answers: ["私はもうご飯を食べました", "私はすでに食事をしました"], modelAnswer: "私はもうご飯を食べました。", grading: "accepted", explanation: "đã ... rồi は完了を強調します。" },
+      { id: "e6-09", type: "translation", direction: "ja-vi", prompt: "彼女はいま電話で話しています。", answers: ["Cô ấy đang nói chuyện điện thoại.", "Chị ấy đang nói chuyện điện thoại."], modelAnswer: "Cô ấy đang nói chuyện điện thoại.", grading: "accepted", answerLanguage: "vi", explanation: "đang は動詞の前に置きます。" },
+      { id: "e6-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "sắp bắt đầu", answers: ["もうすぐ始まる", "まもなく始まる"], modelAnswer: "もうすぐ始まる", grading: "accepted", explanation: "sắp + 動詞で「もうすぐ〜する」です。" }
+    ]
+  }]);
+  insertAfter(elementary, "elementary-2", [{
+    id: "elementary-7", title: "", description: "頻度・程度・語順",
+    questions: [
+      { id: "e7-01", type: "meaning-choice", direction: "vi-ja", prompt: "thường", choices: ["よく・普段", "決して〜ない", "たった今", "もうすぐ"], answers: ["よく・普段"], explanation: "thường は習慣的な頻度を表します。" },
+      { id: "e7-02", type: "meaning-choice", direction: "ja-vi", prompt: "時々", choices: ["thỉnh thoảng", "luôn luôn", "không bao giờ", "hầu hết"], answers: ["thỉnh thoảng"], explanation: "thỉnh thoảng は「時々」です。", answerLanguage: "vi" },
+      { id: "e7-03", type: "blank-choice", sentence: "Tôi ___ đi bộ đến chợ.", choices: ["thường", "đã", "sắp", "vừa"], answers: ["thường"], translation: "私はよく歩いて市場へ行きます。", explanation: "頻度を表す thường は通常、動詞の前に置きます。", answerLanguage: "vi" },
+      { id: "e7-04", type: "blank-input", sentence: "Cô ấy nói tiếng Việt rất ___.", answers: ["tốt"], translation: "彼女はベトナム語をとても上手に話します。", explanation: "rất + 形容詞で程度を表します。", answerLanguage: "vi" },
+      { id: "e7-05", type: "blank-input", sentence: "Tôi chỉ uống ___ cốc cà phê.", answers: ["một"], translation: "私はコーヒーを1杯だけ飲みます。", explanation: "chỉ は限定する語の前に置き「〜だけ」を表します。", answerLanguage: "vi" },
+      { id: "e7-06", type: "blank-input", sentence: "Anh ấy cũng ___ tiếng Nhật.", answers: ["học"], translation: "彼も日本語を勉強しています。", explanation: "cũng は主語の後、動詞の前に置くのが基本です。", answerLanguage: "vi" },
+      { id: "e7-07", type: "blank-input", sentence: "Chúng tôi không ___ đi ăn ngoài.", answers: ["thường"], translation: "私たちはあまり外食しません。", explanation: "không thường + 動詞で「頻繁には〜しない」です。", answerLanguage: "vi" },
+      { id: "e7-08", type: "translation", direction: "vi-ja", prompt: "Mỗi tuần tôi học tiếng Việt ba lần.", answers: ["私は毎週ベトナム語を3回勉強します", "毎週3回ベトナム語を勉強します"], modelAnswer: "私は毎週ベトナム語を3回勉強します。", grading: "accepted", explanation: "mỗi tuần は「毎週」、ba lần は「3回」です。" },
+      { id: "e7-09", type: "translation", direction: "ja-vi", prompt: "私は時々、友達と映画を見ます。", answers: ["Thỉnh thoảng tôi xem phim với bạn.", "Tôi thỉnh thoảng xem phim với bạn."], modelAnswer: "Thỉnh thoảng tôi xem phim với bạn.", grading: "accepted", answerLanguage: "vi", explanation: "thỉnh thoảng は文頭にも動詞の前にも置けます。" },
+      { id: "e7-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "không bao giờ hút thuốc", answers: ["決してたばこを吸わない", "一度もたばこを吸わない"], modelAnswer: "決してたばこを吸わない", grading: "accepted", explanation: "không bao giờ は「決して〜ない」です。" }
+    ]
+  }]);
+  insertAfter(elementary, "elementary-4", [{
+    id: "elementary-8", title: "", description: "cho・với・cùng の使い分け",
+    questions: [
+      { id: "e8-01", type: "meaning-choice", direction: "vi-ja", prompt: "cho", choices: ["〜に・〜のために", "〜から", "〜より", "〜まで"], answers: ["〜に・〜のために"], explanation: "cho は受け手や利益を受ける人を示します。" },
+      { id: "e8-02", type: "meaning-choice", direction: "vi-ja", prompt: "với", choices: ["〜と・〜に対して", "〜の中で", "〜の後で", "〜のために"], answers: ["〜と・〜に対して"], explanation: "với は相手や共同する対象を示します。" },
+      { id: "e8-03", type: "blank-choice", sentence: "Tôi mua hoa ___ mẹ.", choices: ["cho", "từ", "bằng", "ở"], answers: ["cho"], translation: "私は母のために花を買います。", explanation: "受益者を示すとき cho を使います。", answerLanguage: "vi" },
+      { id: "e8-04", type: "blank-input", sentence: "Tôi nói chuyện ___ bạn.", answers: ["với"], translation: "私は友達と話します。", explanation: "nói chuyện với + 人で「人と話す」です。", answerLanguage: "vi" },
+      { id: "e8-05", type: "blank-input", sentence: "Bạn có thể giúp ___ không?", answers: ["tôi", "mình"], translation: "私を手伝ってもらえますか。", explanation: "giúp + 人で「人を助ける」です。", answerLanguage: "vi" },
+      { id: "e8-06", type: "blank-input", sentence: "Cô ấy đưa quyển sách ___ tôi.", answers: ["cho"], translation: "彼女は私に本を渡します。", explanation: "đưa物 cho人 で「物を人に渡す」です。", answerLanguage: "vi" },
+      { id: "e8-07", type: "blank-input", sentence: "Tôi đi chợ ___ chị gái.", answers: ["cùng", "với", "cùng với"], translation: "私は姉と一緒に市場へ行きます。", explanation: "cùng／với は共同する相手を示します。", answerLanguage: "vi" },
+      { id: "e8-08", type: "translation", direction: "vi-ja", prompt: "Lan gửi tin nhắn cho tôi.", answers: ["ランは私にメッセージを送ります", "ランが私にメッセージを送りました"], modelAnswer: "ランは私にメッセージを送ります。", grading: "accepted", explanation: "gửi A cho B は「AをBに送る」です。" },
+      { id: "e8-09", type: "translation", direction: "ja-vi", prompt: "私は友達と昼ご飯を食べます。", answers: ["Tôi ăn trưa với bạn.", "Tôi ăn trưa cùng bạn.", "Tôi ăn trưa cùng với bạn."], modelAnswer: "Tôi ăn trưa với bạn.", grading: "accepted", answerLanguage: "vi", explanation: "相手と一緒に行う動作には với／cùng を使えます。" },
+      { id: "e8-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "mua quà cho gia đình", answers: ["家族のためにお土産を買う", "家族に贈り物を買う", "家族のためにプレゼントを買う"], modelAnswer: "家族のためにお土産を買う", grading: "accepted", explanation: "cho gia đình は「家族のために・家族に」です。" }
+    ]
+  }]);
+  renumber(elementary);
+
+  const a2 = levels.find((level) => level.id === "a2");
+  insertAfter(a2, "a2-1", [{
+    id: "a2-6", title: "", description: "数量・範囲・全体",
+    questions: [
+      { id: "a26-01", type: "meaning-choice", direction: "vi-ja", prompt: "một vài", choices: ["いくつかの", "すべての", "一つも〜ない", "ほとんどの"], answers: ["いくつかの"], explanation: "một vài は不特定の少数を表します。" },
+      { id: "a26-02", type: "meaning-choice", direction: "vi-ja", prompt: "cả hai", choices: ["両方とも", "どちらか一方", "二つずつ", "二回"], answers: ["両方とも"], explanation: "cả hai は「二つ・二人とも」です。" },
+      { id: "a26-03", type: "blank-choice", sentence: "___ người đều có ý kiến riêng.", choices: ["Mỗi", "Một", "Ít", "Vài"], answers: ["Mỗi"], translation: "一人ひとりに自分の意見があります。", explanation: "mỗi + 単数名詞で「各〜」を表します。", answerLanguage: "vi" },
+      { id: "a26-04", type: "blank-input", sentence: "Tôi đã đọc ___ hai quyển sách.", answers: ["cả"], translation: "私は2冊の本を両方読みました。", explanation: "cả + 数量で全体を示します。", answerLanguage: "vi" },
+      { id: "a26-05", type: "blank-input", sentence: "Chỉ ___ người biết chuyện này.", answers: ["một vài", "vài"], translation: "このことを知っているのは数人だけです。", explanation: "một vài／vài は「数人・いくつか」です。", answerLanguage: "vi" },
+      { id: "a26-06", type: "blank-input", sentence: "Có khoảng hai ___ người tham gia.", answers: ["mươi"], translation: "約20人が参加します。", explanation: "khoảng は概数の「約」を表します。", answerLanguage: "vi" },
+      { id: "a26-07", type: "blank-input", sentence: "Phần ___ học sinh đã làm xong.", answers: ["lớn"], translation: "大部分の生徒は終えました。", explanation: "phần lớn は「大部分」です。", answerLanguage: "vi" },
+      { id: "a26-08", type: "translation", direction: "vi-ja", prompt: "Mỗi ngày tôi dành khoảng một giờ để học.", answers: ["私は毎日約1時間を勉強に使います", "毎日だいたい1時間勉強します"], modelAnswer: "私は毎日約1時間を勉強に使います。", grading: "accepted", explanation: "dành thời gian để ... は「〜するために時間を使う」です。" },
+      { id: "a26-09", type: "translation", direction: "ja-vi", prompt: "友達の何人かはハノイに住んでいます。", answers: ["Một vài người bạn của tôi sống ở Hà Nội.", "Vài người bạn của tôi sống ở Hà Nội."], modelAnswer: "Một vài người bạn của tôi sống ở Hà Nội.", grading: "accepted", answerLanguage: "vi", explanation: "một vài người bạn は「友達の何人か」です。" },
+      { id: "a26-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "hầu hết mọi người", answers: ["ほとんどの人", "大部分の人々"], modelAnswer: "ほとんどの人", grading: "accepted", explanation: "hầu hết は「ほとんどの」です。" }
+    ]
+  }]);
+  insertAfter(a2, "a2-3", [{
+    id: "a2-7", title: "", description: "xong・hết・mất と結果",
+    questions: [
+      { id: "a27-01", type: "meaning-choice", direction: "vi-ja", prompt: "xong", choices: ["終えて", "始めて", "続けて", "やめずに"], answers: ["終えて"], explanation: "動詞 + xong で動作の完了を表します。" },
+      { id: "a27-02", type: "meaning-choice", direction: "vi-ja", prompt: "hết", choices: ["全部・なくなるまで", "少しだけ", "もう一度", "ゆっくり"], answers: ["全部・なくなるまで"], explanation: "hết は物が尽きることや全部行うことを表します。" },
+      { id: "a27-03", type: "blank-choice", sentence: "Tôi đã đọc ___ quyển sách.", choices: ["xong", "sắp", "đang", "còn"], answers: ["xong"], translation: "私はその本を読み終えました。", explanation: "đọc xong は「読み終える」です。", answerLanguage: "vi" },
+      { id: "a27-04", type: "blank-input", sentence: "Chúng tôi đã ăn ___ đồ ăn.", answers: ["hết"], translation: "私たちは食べ物を全部食べました。", explanation: "ăn hết は「全部食べる」です。", answerLanguage: "vi" },
+      { id: "a27-05", type: "blank-input", sentence: "Tôi học tiếng Việt ___ hai năm rồi.", answers: ["được"], translation: "私はベトナム語を学んで2年になります。", explanation: "動作 + được + 期間で継続した期間を表します。", answerLanguage: "vi" },
+      { id: "a27-06", type: "blank-input", sentence: "Đi từ đây đến ga ___ hai mươi phút.", answers: ["mất"], translation: "ここから駅まで20分かかります。", explanation: "mất + 時間で所要時間を表します。", answerLanguage: "vi" },
+      { id: "a27-07", type: "blank-input", sentence: "Cửa hàng đã bán ___ loại bánh này.", answers: ["hết"], translation: "店ではこの菓子が売り切れました。", explanation: "bán hết は「売り切る・売り切れる」です。", answerLanguage: "vi" },
+      { id: "a27-08", type: "translation", direction: "vi-ja", prompt: "Tôi vừa làm xong bài tập.", answers: ["私はたったいま宿題を終えました", "ちょうど宿題を終えたところです"], modelAnswer: "私はたったいま宿題を終えました。", grading: "accepted", explanation: "vừa ... xong は直前に完了した動作を表します。" },
+      { id: "a27-09", type: "translation", direction: "ja-vi", prompt: "駅まで行くのに30分かかります。", answers: ["Đi đến nhà ga mất ba mươi phút.", "Đi đến ga mất ba mươi phút."], modelAnswer: "Đi đến nhà ga mất ba mươi phút.", grading: "accepted", answerLanguage: "vi", explanation: "mất ba mươi phút は「30分かかる」です。" },
+      { id: "a27-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "chưa dùng hết", answers: ["まだ使い切っていない", "まだ全部使っていない"], modelAnswer: "まだ使い切っていない", grading: "accepted", explanation: "chưa ... hết で「まだ全部は〜していない」です。" }
+    ]
+  }]);
+  insertAfter(a2, "a2-4", [{
+    id: "a2-8", title: "", description: "được・bị と受け身の表現",
+    questions: [
+      { id: "a28-01", type: "meaning-choice", direction: "vi-ja", prompt: "được + 動詞", choices: ["好ましいことを受ける", "好ましくないことを受ける", "自分で始める", "動作を禁止する"], answers: ["好ましいことを受ける"], explanation: "được は一般に好ましい出来事を受ける表現に使われます。" },
+      { id: "a28-02", type: "meaning-choice", direction: "vi-ja", prompt: "bị + 動詞", choices: ["好ましくないことを受ける", "許可される", "予定している", "能力がある"], answers: ["好ましくないことを受ける"], explanation: "bị は一般に不利益・不都合な出来事を受ける表現に使われます。" },
+      { id: "a28-03", type: "blank-choice", sentence: "Tôi được bạn ___ đỡ.", choices: ["giúp", "bị", "mất", "hết"], answers: ["giúp"], translation: "私は友達に助けてもらいました。", explanation: "được + 人 + 動詞で好ましい行為を受けたことを表せます。", answerLanguage: "vi" },
+      { id: "a28-04", type: "blank-input", sentence: "Xe của tôi bị ___.", answers: ["hỏng"], translation: "私の車が壊れました。", explanation: "bị hỏng は好ましくない状態「壊れる」を表します。", answerLanguage: "vi" },
+      { id: "a28-05", type: "blank-input", sentence: "Cô ấy được ___ vào trường đại học.", answers: ["nhận"], translation: "彼女は大学に合格しました。", explanation: "được nhận vào ... は「〜に受け入れられる」です。", answerLanguage: "vi" },
+      { id: "a28-06", type: "blank-input", sentence: "Chuyến bay bị ___.", answers: ["hủy", "hoãn"], translation: "便が欠航・延期になりました。", explanation: "bị hủy は「中止される」、bị hoãn は「延期される」です。", answerLanguage: "vi" },
+      { id: "a28-07", type: "blank-input", sentence: "Tôi được tặng ___ món quà.", answers: ["một"], translation: "私は贈り物を一つもらいました。", explanation: "được tặng は「贈られる・もらう」です。", answerLanguage: "vi" },
+      { id: "a28-08", type: "translation", direction: "vi-ja", prompt: "Anh ấy bị mất ví.", answers: ["彼は財布をなくしました", "彼は財布を失くしました"], modelAnswer: "彼は財布をなくしました。", grading: "accepted", explanation: "bị mất は「なくす・失う」という不利益を表します。" },
+      { id: "a28-09", type: "translation", direction: "ja-vi", prompt: "私は先生にほめられました。", answers: ["Tôi được giáo viên khen.", "Tôi được thầy giáo khen.", "Tôi được cô giáo khen."], modelAnswer: "Tôi được giáo viên khen.", grading: "accepted", answerLanguage: "vi", explanation: "ほめられるのは好ましいため được を使います。" },
+      { id: "a28-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "được mời đến dự tiệc", answers: ["パーティーに招待される", "宴会に招かれる"], modelAnswer: "パーティーに招待される", grading: "accepted", explanation: "được mời は「招待される」です。" }
+    ]
+  }]);
+  renumber(a2);
+
+  insertAfter(b1, "b1-1", [{
+    id: "b1-6", title: "", description: "mà・việc・điều で文をまとめる",
+    questions: [
+      { id: "b16-01", type: "meaning-choice", direction: "vi-ja", prompt: "người mà ...", choices: ["…する人", "…した理由", "…する場所", "…する時間"], answers: ["…する人"], explanation: "mà は前の名詞を後ろの節で説明するときに使えます。" },
+      { id: "b16-02", type: "meaning-choice", direction: "vi-ja", prompt: "việc + 動詞", choices: ["〜すること", "〜する人", "〜した場所", "〜する方法"], answers: ["〜すること"], explanation: "việc は動作を名詞化し「〜すること」を表します。" },
+      { id: "b16-03", type: "blank-choice", sentence: "Người ___ bạn vừa gặp là giáo viên của tôi.", choices: ["mà", "vì", "nếu", "nên"], answers: ["mà"], translation: "あなたが先ほど会った人は私の先生です。", explanation: "mà 以下が người を説明します。", answerLanguage: "vi" },
+      { id: "b16-04", type: "blank-input", sentence: "Đây là cuốn sách ___ tôi đã mua hôm qua.", answers: ["mà"], translation: "これは私が昨日買った本です。", explanation: "mà を使って cuốn sách を後ろから説明します。", answerLanguage: "vi" },
+      { id: "b16-05", type: "blank-input", sentence: "___ học đều đặn rất quan trọng.", answers: ["Việc", "việc"], translation: "規則的に学ぶことはとても重要です。", explanation: "việc + 動詞句を文の主語にできます。", answerLanguage: "vi" },
+      { id: "b16-06", type: "blank-input", sentence: "___ tôi quan tâm nhất là chất lượng.", answers: ["Điều", "điều"], translation: "私が最も重視するのは品質です。", explanation: "điều + 節で「〜すること・もの」を表します。", answerLanguage: "vi" },
+      { id: "b16-07", type: "blank-input", sentence: "Tôi không biết lý do ___ sao anh ấy nghỉ việc.", answers: ["tại", "vì"], translation: "私は彼が退職した理由を知りません。", explanation: "lý do tại sao／vì sao は「なぜ〜なのかという理由」です。", answerLanguage: "vi" },
+      { id: "b16-08", type: "translation", direction: "vi-ja", prompt: "Người đang đứng trước cửa là anh trai tôi.", modelAnswer: "ドアの前に立っている人は私の兄です。", grading: "self", explanation: "người の後ろの節が、その人を説明しています。" },
+      { id: "b16-09", type: "translation", direction: "ja-vi", prompt: "私が必要としているのは、もっと練習することです。", modelAnswer: "Điều tôi cần là luyện tập nhiều hơn.", grading: "self", answerLanguage: "vi", explanation: "Điều tôi cần là ... で「私が必要なのは…です」。" },
+      { id: "b16-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "việc sử dụng tiếng Việt hằng ngày", modelAnswer: "毎日ベトナム語を使うこと", grading: "self", explanation: "việc により動作全体を名詞として扱います。" }
+    ]
+  }]);
+  insertAfter(b1, "b1-3", [{
+    id: "b1-7", title: "", description: "原因・影響・変化を述べる",
+    questions: [
+      { id: "b17-01", type: "meaning-choice", direction: "vi-ja", prompt: "khiến", choices: ["〜させる・〜という結果にする", "〜を防ぐ", "〜に反対する", "〜と比較する"], answers: ["〜させる・〜という結果にする"], explanation: "khiến は原因が人や物に影響を与える表現です。" },
+      { id: "b17-02", type: "meaning-choice", direction: "vi-ja", prompt: "do", choices: ["〜が原因で", "〜にもかかわらず", "〜である限り", "〜する代わりに"], answers: ["〜が原因で"], explanation: "do は原因を示し、名詞句の前にも置けます。" },
+      { id: "b17-03", type: "blank-choice", sentence: "Tin đó ___ tôi lo lắng.", choices: ["khiến", "tránh", "giảm", "thay"], answers: ["khiến"], translation: "その知らせは私を不安にさせました。", explanation: "khiến + 人 + 状態で「人を〜の状態にさせる」です。", answerLanguage: "vi" },
+      { id: "b17-04", type: "blank-input", sentence: "Mưa lớn làm ___ nhiều con đường ngập.", answers: ["cho"], translation: "大雨によって多くの道路が冠水しました。", explanation: "làm cho + 節で「〜という結果をもたらす」です。", answerLanguage: "vi" },
+      { id: "b17-05", type: "blank-input", sentence: "Cuộc họp bị hoãn ___ thời tiết xấu.", answers: ["do", "vì"], translation: "会議は悪天候のため延期されました。", explanation: "do／vì + 原因で理由を示します。", answerLanguage: "vi" },
+      { id: "b17-06", type: "blank-input", sentence: "Nhờ bạn giúp, tôi đã hoàn thành đúng ___.", answers: ["hạn"], translation: "あなたのおかげで、期限どおりに終えられました。", explanation: "nhờ は好ましい結果の原因、đúng hạn は「期限どおり」です。", answerLanguage: "vi" },
+      { id: "b17-07", type: "blank-input", sentence: "Vấn đề này gây ___ nhiều khó khăn.", answers: ["ra"], translation: "この問題は多くの困難を引き起こしました。", explanation: "gây ra は「引き起こす」です。", answerLanguage: "vi" },
+      { id: "b17-08", type: "translation", direction: "vi-ja", prompt: "Sự thay đổi này khiến công việc trở nên dễ dàng hơn.", modelAnswer: "この変化によって仕事がより簡単になりました。", grading: "self", explanation: "khiến ... trở nên ... は「〜を…の状態にする」です。" },
+      { id: "b17-09", type: "translation", direction: "ja-vi", prompt: "雨のため、交通渋滞がさらにひどくなりました。", modelAnswer: "Do trời mưa, tình trạng tắc đường trở nên nghiêm trọng hơn.", grading: "self", answerLanguage: "vi", explanation: "do で原因、trở nên で状態の変化を表します。" },
+      { id: "b17-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "gây ảnh hưởng đến cuộc sống", modelAnswer: "生活に影響を与える", grading: "self", explanation: "gây ảnh hưởng đến は「〜に影響を与える」です。" }
+    ]
+  }]);
+  insertAfter(b1, "b1-4", [{
+    id: "b1-8", title: "", description: "文章をつなぐ表現",
+    questions: [
+      { id: "b18-01", type: "meaning-choice", direction: "vi-ja", prompt: "mặt khác", choices: ["一方で・別の面では", "したがって", "例えば", "要するに"], answers: ["一方で・別の面では"], explanation: "mặt khác は別の観点を加える接続表現です。" },
+      { id: "b18-02", type: "meaning-choice", direction: "vi-ja", prompt: "hơn nữa", choices: ["そのうえ・さらに", "しかし", "その代わり", "そうでなければ"], answers: ["そのうえ・さらに"], explanation: "hơn nữa は情報や根拠を追加します。" },
+      { id: "b18-03", type: "blank-choice", sentence: "Trước hết, hãy đọc đề. ___ theo, hãy trả lời câu hỏi.", choices: ["Tiếp", "Tuy", "Do", "Mặt"], answers: ["Tiếp"], translation: "まず問題文を読み、次に質問に答えてください。", explanation: "tiếp theo は順序を示す「次に」です。", answerLanguage: "vi" },
+      { id: "b18-04", type: "blank-input", sentence: "Giá hơi cao. ___, chất lượng rất tốt.", answers: ["Tuy nhiên", "tuy nhiên"], translation: "値段は少し高いです。しかし品質はとても良いです。", explanation: "tuy nhiên は前文と対照的な内容をつなぎます。", answerLanguage: "vi" },
+      { id: "b18-05", type: "blank-input", sentence: "Xe bị hỏng. ___ đó, tôi đến muộn.", answers: ["Do", "do"], translation: "車が壊れました。そのため私は遅刻しました。", explanation: "do đó は前の内容を原因として結果を導きます。", answerLanguage: "vi" },
+      { id: "b18-06", type: "blank-input", sentence: "___ cách khác, chúng ta cần thay đổi kế hoạch.", answers: ["Nói", "nói"], translation: "言い換えれば、計画を変更する必要があります。", explanation: "nói cách khác は「言い換えれば」です。", answerLanguage: "vi" },
+      { id: "b18-07", type: "blank-input", sentence: "Cô ấy không những chăm chỉ mà ___ rất kiên nhẫn.", answers: ["còn"], translation: "彼女は勤勉なだけでなく、とても忍耐強いです。", explanation: "không những ... mà còn ... は「〜だけでなく…も」です。", answerLanguage: "vi" },
+      { id: "b18-08", type: "translation", direction: "vi-ja", prompt: "Kế hoạch này tiết kiệm thời gian; hơn nữa, nó còn giảm chi phí.", modelAnswer: "この計画は時間を節約し、そのうえ費用も削減します。", grading: "self", explanation: "hơn nữa は利点などを追加するときに使えます。" },
+      { id: "b18-09", type: "translation", direction: "ja-vi", prompt: "まず原因を確認し、その後で解決方法を考えましょう。", modelAnswer: "Trước hết, hãy xác định nguyên nhân; sau đó, chúng ta sẽ nghĩ cách giải quyết.", grading: "self", answerLanguage: "vi", explanation: "trước hết ... sau đó ... で説明の順序を示します。" },
+      { id: "b18-10", type: "translation", direction: "vi-ja", partial: "部分訳", prompt: "nói cách khác", modelAnswer: "言い換えれば", grading: "self", explanation: "前の内容を別の表現で説明するときに使います。" }
+    ]
+  }]);
+  renumber(b1);
 })();
