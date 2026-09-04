@@ -1,5 +1,5 @@
 window.defaultQuestionBank = {
-  version: 8,
+  version: 9,
   language: "vi",
   title: "Vietnamese Step",
   levels: [
@@ -1106,4 +1106,231 @@ window.defaultQuestionBank = {
     }
   );
   levels.splice(levels.indexOf(b1) + 1, 0, b1Plus);
+})();
+
+// B2・B2＋。短い選択問題から記入、翻訳へ段階的に進みます。
+(() => {
+  const bank = window.defaultQuestionBank;
+  const levels = bank.levels;
+  const mc = (id, direction, prompt, choices, answer, explanation) => ({
+    id, type: "meaning-choice", direction, prompt, choices, answers: [answer], explanation
+  });
+  const bc = (id, sentence, choices, answer, translation, explanation) => ({
+    id, type: "blank-choice", sentence, choices, answers: [answer], translation, explanation, answerLanguage: "vi"
+  });
+  const bi = (id, sentence, answer, translation, explanation) => ({
+    id, type: "blank-input", sentence, answers: Array.isArray(answer) ? answer : [answer], translation, explanation, answerLanguage: "vi"
+  });
+  const tr = (id, direction, prompt, modelAnswer, explanation, partial = false) => ({
+    id, type: "translation", direction, prompt, modelAnswer, grading: "self", explanation,
+    ...(direction === "ja-vi" ? { answerLanguage: "vi" } : {}),
+    ...(partial ? { partial: "部分訳" } : {})
+  });
+  const group = (id, title, description, questions) => ({ id, title, description, questions });
+
+  const b2 = {
+    id: "b2", label: "B2", name: "中上級", description: "抽象的な説明・社会・交渉", requires: "b1-plus-8",
+    groups: [
+      group("b2-1", "GROUP 01", "断定を避け、意味を限定する", [
+        mc("b2g1-01", "vi-ja", "không hẳn", ["必ずしも〜ではない", "絶対に〜だ", "〜だけである", "〜かもしれない"], "必ずしも〜ではない", "強い断定を避ける表現です。"),
+        mc("b2g1-02", "ja-vi", "〜というわけではない", ["không có nghĩa là", "có thể nói là", "chắc chắn là", "miễn là"], "không có nghĩa là", "前の事実から単純な結論を出せないことを示します。"),
+        bc("b2g1-03", "Đắt hơn không có nghĩa ___ tốt hơn.", ["là", "vì", "nếu", "để"], "là", "値段が高いからといって、より良いというわけではありません。", "có nghĩa là で「〜を意味する」です。"),
+        bi("b2g1-04", "Ý kiến đó không ___ sai, nhưng cần xem xét thêm.", "hẳn", "その意見は必ずしも間違いではありませんが、さらに検討が必要です。", "không hẳn で断定を弱めます。"),
+        bi("b2g1-05", "Không phải ai cũng ___ với cách làm này.", "đồng ý", "全員がこの方法に賛成しているわけではありません。", "không phải ai cũng ... は部分否定です。"),
+        bi("b2g1-06", "Kết quả này chưa chắc đã phản ___ đúng thực tế.", "ánh", "この結果が実態を正確に反映しているとは限りません。", "phản ánh thực tế は「実態を反映する」です。"),
+        bi("b2g1-07", "Điều quan trọng không chỉ là tốc độ ___ còn là độ chính xác.", "mà", "重要なのは速さだけでなく正確さでもあります。", "không chỉ ... mà còn ... の形です。"),
+        tr("b2g1-08", "vi-ja", "Không hẳn cứ làm việc lâu là đạt hiệu quả cao.", "長く働けば必ず高い成果が出るというわけではありません。", "cứ ... là ... を không hẳn で限定しています。"),
+        tr("b2g1-09", "ja-vi", "便利だからといって、すべての人に適しているわけではありません。", "Tiện không có nghĩa là phù hợp với tất cả mọi người.", "không có nghĩa là で安易な結論を避けます。"),
+        tr("b2g1-10", "vi-ja", "chưa chắc đã phản ánh đúng thực tế", "実態を正確に反映しているとは限らない", "chưa chắc đã は確実ではないという判断です。", true)
+      ]),
+      group("b2-2", "GROUP 02", "原因・結果・連鎖を説明する", [
+        mc("b2g2-01", "vi-ja", "bắt nguồn từ", ["〜に由来する", "〜を防ぐ", "〜と一致する", "〜を補う"], "〜に由来する", "原因や起源を示す表現です。"),
+        mc("b2g2-02", "vi-ja", "kéo theo", ["〜を伴って引き起こす", "〜を切り離す", "〜を予測する", "〜を隠す"], "〜を伴って引き起こす", "一つの変化が別の結果を連鎖的に生むときに使います。"),
+        bc("b2g2-03", "Sự chậm trễ này bắt nguồn ___ việc thiếu nhân lực.", ["từ", "với", "cho", "bằng"], "từ", "この遅れは人手不足に起因します。", "bắt nguồn từ の組み合わせです。"),
+        bi("b2g2-04", "Giá tăng có thể kéo ___ nhiều vấn đề khác.", "theo", "価格上昇はほかの多くの問題を引き起こす可能性があります。", "kéo theo で連鎖的な結果を示します。"),
+        bi("b2g2-05", "Thiếu thông tin dẫn ___ quyết định sai.", "đến", "情報不足は誤った決定につながります。", "dẫn đến は「〜につながる」です。"),
+        bi("b2g2-06", "Nhờ thay đổi quy trình, thời gian xử lý đã được rút ___.", "ngắn", "工程を変えたおかげで、処理時間が短縮されました。", "rút ngắn は時間や距離を短くする表現です。"),
+        bi("b2g2-07", "Vấn đề trở nên nghiêm trọng chủ yếu ___ không được xử lý sớm.", "do", "問題が深刻化したのは、主に早く対処されなかったためです。", "do は原因を簡潔に示します。"),
+        tr("b2g2-08", "vi-ja", "Việc thiếu kế hoạch rõ ràng đã dẫn đến nhiều thay đổi không cần thiết.", "明確な計画がなかったため、不必要な変更が数多く生じました。", "đã dẫn đến で実際に生じた結果を述べています。"),
+        tr("b2g2-09", "ja-vi", "人口の増加に伴って、住宅需要も高まりました。", "Sự gia tăng dân số kéo theo nhu cầu nhà ở cao hơn.", "kéo theo で変化の連鎖を表します。"),
+        tr("b2g2-10", "vi-ja", "chủ yếu bắt nguồn từ sự thiếu chuẩn bị", "主として準備不足に起因する", "chủ yếu で主因であることを示します。", true)
+      ]),
+      group("b2-3", "GROUP 03", "仕事での正式な説明と調整", [
+        mc("b2g3-01", "vi-ja", "tiến hành", ["実施する", "延期する", "中止する", "要約する"], "実施する", "調査・会議・作業などを正式に実施する語です。"),
+        mc("b2g3-02", "ja-vi", "要件を満たす", ["đáp ứng yêu cầu", "đặt ra yêu cầu", "thay đổi yêu cầu", "từ chối yêu cầu"], "đáp ứng yêu cầu", "đáp ứng は必要や条件を満たすことです。"),
+        bc("b2g3-03", "Chúng tôi sẽ tiến ___ đánh giá vào tuần tới.", ["hành", "bộ", "trình", "động"], "hành", "来週、評価を実施します。", "tiến hành + 活動名の形です。"),
+        bi("b2g3-04", "Kế hoạch mới chưa đáp ___ đầy đủ các yêu cầu.", "ứng", "新しい計画はまだすべての要件を満たしていません。", "đáp ứng yêu cầu の組み合わせです。"),
+        bi("b2g3-05", "Dự án sẽ được triển ___ theo ba giai đoạn.", "khai", "プロジェクトは3段階で展開されます。", "triển khai は計画を実行に移す語です。"),
+        bi("b2g3-06", "Chúng ta cần cân ___ cả chi phí lẫn thời gian.", "nhắc", "費用と時間の両方を考慮する必要があります。", "cân nhắc は慎重に検討することです。"),
+        bi("b2g3-07", "Hai bên đã thống nhất ___ thời hạn mới.", "về", "双方は新しい期限について合意しました。", "thống nhất về ... で合意内容を示します。"),
+        tr("b2g3-08", "vi-ja", "Sau khi cân nhắc các phương án, chúng tôi quyết định điều chỉnh tiến độ.", "各案を検討した後、私たちは日程を調整することに決めました。", "cân nhắc、quyết định、điều chỉnh の流れを確認します。"),
+        tr("b2g3-09", "ja-vi", "この案が要件を満たすかどうか、改めて評価する必要があります。", "Cần đánh giá lại xem phương án này có đáp ứng yêu cầu hay không.", "xem ... có ... hay không で間接疑問を作ります。"),
+        tr("b2g3-10", "vi-ja", "được triển khai theo từng giai đoạn", "段階ごとに実施される", "受け身と theo を組み合わせています。", true)
+      ]),
+      group("b2-4", "GROUP 04", "社会・情報・メディアを論じる", [
+        mc("b2g4-01", "vi-ja", "độ tin cậy", ["信頼性", "知名度", "利用率", "影響力"], "信頼性", "情報がどの程度信頼できるかを表す名詞です。"),
+        mc("b2g4-02", "vi-ja", "tiếp cận thông tin", ["情報にアクセスする", "情報を削除する", "情報を隠す", "情報を翻訳する"], "情報にアクセスする", "tiếp cận は情報や機会に近づき利用することです。"),
+        bc("b2g4-03", "Tin giả có thể lan ___ rất nhanh trên mạng xã hội.", ["truyền", "đổi", "giảm", "chọn"], "truyền", "偽情報はSNS上で非常に速く拡散することがあります。", "lan truyền は情報などが広がることです。"),
+        bi("b2g4-04", "Người đọc cần kiểm tra độ tin ___ của nguồn tin.", "cậy", "読者は情報源の信頼性を確認する必要があります。", "độ tin cậy は「信頼性」です。"),
+        bi("b2g4-05", "Internet giúp nhiều người tiếp ___ kiến thức dễ dàng hơn.", "cận", "インターネットによって、多くの人が知識にアクセスしやすくなりました。", "tiếp cận + 対象の形です。"),
+        bi("b2g4-06", "Ý kiến trên mạng không phải lúc nào cũng đại ___ cho dư luận.", "diện", "ネット上の意見が常に世論を代表するとは限りません。", "đại diện cho は「〜を代表する」です。"),
+        bi("b2g4-07", "Cần phân biệt sự thật ___ ý kiến cá nhân.", "với", "事実と個人の意見を区別する必要があります。", "phân biệt A với B の形です。"),
+        tr("b2g4-08", "vi-ja", "Khả năng tiếp cận thông tin tăng lên, nhưng việc đánh giá nguồn tin cũng trở nên quan trọng hơn.", "情報にアクセスしやすくなりましたが、情報源を評価することもより重要になりました。", "利点と新しい課題を対比しています。"),
+        tr("b2g4-09", "ja-vi", "広く共有されている情報でも、信頼できるとは限りません。", "Ngay cả thông tin được chia sẻ rộng rãi cũng chưa chắc đáng tin cậy.", "ngay cả ... cũng ... と chưa chắc を使います。"),
+        tr("b2g4-10", "vi-ja", "phân biệt sự thật với ý kiến cá nhân", "事実と個人の意見を区別する", "二つの情報の性質を分ける表現です。", true)
+      ]),
+      group("b2-5", "GROUP 05", "人間関係と感情を詳しく表す", [
+        mc("b2g5-01", "vi-ja", "đặt mình vào vị trí của người khác", ["相手の立場に立つ", "相手を避ける", "相手を説得する", "相手と競争する"], "相手の立場に立つ", "相手の視点から考える表現です。"),
+        mc("b2g5-02", "vi-ja", "thẳng thắn", ["率直な", "消極的な", "曖昧な", "無関心な"], "率直な", "考えや気持ちを遠回しにせず伝える様子です。"),
+        bc("b2g5-03", "Hãy thử đặt mình vào vị ___ của cô ấy.", ["trí", "điểm", "phần", "mặt"], "trí", "彼女の立場に立って考えてみてください。", "vị trí はここでは立場を意味します。"),
+        bi("b2g5-04", "Anh ấy luôn cư xử khéo ___ để không làm ai mất mặt.", "léo", "彼は誰の面目も失わせないよう、いつも上手に振る舞います。", "khéo léo は人との接し方が巧みな様子です。"),
+        bi("b2g5-05", "Chúng ta nên trao đổi thẳng ___ nhưng vẫn tôn trọng nhau.", "thắn", "率直に話し合うべきですが、互いの尊重は保つべきです。", "thẳng thắn と tôn trọng の両立を表します。"),
+        bi("b2g5-06", "Sự hiểu lầm đã được giải ___ sau cuộc nói chuyện.", "tỏa", "話し合いの後、誤解が解けました。", "giải tỏa は不安や誤解などを和らげる語です。"),
+        bi("b2g5-07", "Tôi rất ấn tượng ___ cách cô ấy xử lý tình huống.", "với", "彼女の状況への対処の仕方にとても感心しました。", "ấn tượng với ... の形です。"),
+        tr("b2g5-08", "vi-ja", "Nếu biết lắng nghe và đặt mình vào vị trí của nhau, nhiều mâu thuẫn có thể được giải quyết.", "互いに耳を傾け、相手の立場に立てば、多くの対立は解決できます。", "条件と可能な結果を述べています。"),
+        tr("b2g5-09", "ja-vi", "率直に意見を述べることと、相手を傷つけることは違います。", "Bày tỏ ý kiến một cách thẳng thắn khác với làm tổn thương người khác.", "khác với で二つを区別します。"),
+        tr("b2g5-10", "vi-ja", "cư xử khéo léo để giữ thể diện cho nhau", "互いの面目を保つよう上手に振る舞う", "để で行動の目的を示しています。", true)
+      ]),
+      group("b2-6", "GROUP 06", "数値・傾向・比較を説明する", [
+        mc("b2g6-01", "vi-ja", "chiếm", ["〜を占める", "〜を超える", "〜を減らす", "〜を測る"], "〜を占める", "割合や位置を示すときに使います。"),
+        mc("b2g6-02", "vi-ja", "dao động", ["変動する", "安定する", "急減する", "一致する"], "変動する", "数値が一定の範囲で上下することです。"),
+        bc("b2g6-03", "Nhóm này chiếm ___ 40% tổng số người tham gia.", ["khoảng", "khỏi", "suốt", "riêng"], "khoảng", "このグループは参加者全体のおよそ40％を占めます。", "khoảng は概数を示します。"),
+        bi("b2g6-04", "Doanh số có xu ___ tăng vào cuối năm.", "hướng", "売上は年末に増える傾向があります。", "có xu hướng + 動詞の形です。"),
+        bi("b2g6-05", "Tỷ lệ này dao ___ từ 15% đến 20%.", "động", "この割合は15％から20％の間で変動します。", "dao động từ A đến B で範囲を示します。"),
+        bi("b2g6-06", "Mức tăng năm nay đáng ___ hơn năm ngoái.", "kể", "今年の増加幅は昨年より顕著です。", "đáng kể は無視できない大きさを表します。"),
+        bi("b2g6-07", "Số người sử dụng đã tăng gấp ___ trong năm năm.", "đôi", "利用者数は5年間で2倍になりました。", "gấp đôi は「2倍」です。"),
+        tr("b2g6-08", "vi-ja", "Mặc dù có dao động nhẹ, xu hướng chung vẫn là tăng đều.", "わずかな変動はあるものの、全体的な傾向は引き続き安定した増加です。", "細かな変化と全体傾向を分けて述べています。"),
+        tr("b2g6-09", "ja-vi", "若者は回答者全体の約3分の1を占めています。", "Người trẻ chiếm khoảng một phần ba tổng số người trả lời.", "chiếm khoảng một phần ba で概算の割合を表します。"),
+        tr("b2g6-10", "vi-ja", "tăng đáng kể so với cùng kỳ năm trước", "前年同期と比べて大幅に増加する", "so với cùng kỳ で同じ期間同士を比較します。", true)
+      ]),
+      group("b2-7", "GROUP 07", "交渉・合意・問題解決", [
+        mc("b2g7-01", "vi-ja", "đi đến thống nhất", ["合意に達する", "議論を避ける", "契約を破る", "結論を疑う"], "合意に達する", "話し合いを経て同じ結論になる表現です。"),
+        mc("b2g7-02", "vi-ja", "nhượng bộ", ["譲歩する", "反対する", "要求する", "延期する"], "譲歩する", "合意のために自分の条件を一部緩めることです。"),
+        bc("b2g7-03", "Sau nhiều lần thảo luận, hai bên đã đi đến thống ___.", ["nhất", "kê", "qua", "báo"], "nhất", "何度も話し合った後、双方は合意に達しました。", "đi đến thống nhất は決まった表現です。"),
+        bi("b2g7-04", "Mỗi bên cần nhượng ___ một chút để tìm tiếng nói chung.", "bộ", "共通の理解を得るには、双方が少しずつ譲歩する必要があります。", "nhượng bộ は交渉で譲ることです。"),
+        bi("b2g7-05", "Chúng ta nên ưu ___ những vấn đề cấp bách trước.", "tiên", "まず緊急の問題を優先すべきです。", "ưu tiên は優先順位を上げることです。"),
+        bi("b2g7-06", "Giải pháp này giúp dung ___ lợi ích của cả hai bên.", "hòa", "この解決策は双方の利益を両立させます。", "dung hòa は異なるものを調和させる語です。"),
+        bi("b2g7-07", "Cuộc họp chưa đạt được kết quả như mong ___.", "đợi", "会議は期待した結果にまだ達していません。", "như mong đợi は「期待どおりに」です。"),
+        tr("b2g7-08", "vi-ja", "Muốn đạt được thỏa thuận, hai bên đều phải sẵn sàng điều chỉnh yêu cầu.", "合意に達するには、双方が要求を調整する用意をしなければなりません。", "muốn ... と phải ... で必要条件を述べます。"),
+        tr("b2g7-09", "ja-vi", "目先の利益より、長期的な協力を優先するべきです。", "Nên ưu tiên sự hợp tác lâu dài hơn lợi ích trước mắt.", "ưu tiên A hơn B で優先関係を示します。"),
+        tr("b2g7-10", "vi-ja", "tìm một giải pháp có thể chấp nhận được", "受け入れ可能な解決策を見つける", "có thể chấp nhận được は妥協案の評価に使えます。", true)
+      ]),
+      group("b2-8", "GROUP 08", "B2総合練習", [
+        mc("b2g8-01", "vi-ja", "xét trên nhiều phương diện", ["多面的に考えると", "短期的に見ると", "個人的に言えば", "例外を除けば"], "多面的に考えると", "一つの観点だけで判断しないことを示します。"),
+        mc("b2g8-02", "ja-vi", "共通認識を得る", ["tìm được tiếng nói chung", "đưa ra bằng chứng", "thay đổi dư luận", "giữ nguyên quan điểm"], "tìm được tiếng nói chung", "意見の異なる人々が共通点を見つける表現です。"),
+        bc("b2g8-03", "Xét trên nhiều phương ___, phương án này vẫn khả thi.", ["diện", "tiện", "hướng", "cách"], "diện", "多面的に検討しても、この案は実行可能です。", "phương diện は観点・側面です。"),
+        bi("b2g8-04", "Kết quả khảo sát phần nào phản ___ nhu cầu thực tế.", "ánh", "調査結果は実際の需要をある程度反映しています。", "phần nào で程度を限定しています。"),
+        bi("b2g8-05", "Không thể đưa ra kết luận nếu thiếu bằng chứng thuyết ___.", "phục", "説得力のある証拠がなければ結論は出せません。", "bằng chứng thuyết phục は説得力のある証拠です。"),
+        bi("b2g8-06", "Các bên cần trao đổi để tìm được tiếng nói ___.", "chung", "関係者は共通認識を得るために話し合う必要があります。", "tiếng nói chung は共通の立場・理解です。"),
+        bi("b2g8-07", "Giải pháp lâu dài phải vừa hiệu quả ___ vừa bền vững.", "vừa", "長期的な解決策は、効果的で持続可能でなければなりません。", "vừa A vừa B で二つの条件を並べます。"),
+        tr("b2g8-08", "vi-ja", "Dù chưa giải quyết được toàn bộ vấn đề, biện pháp mới đã tạo ra những thay đổi đáng kể.", "すべての問題を解決したわけではありませんが、新しい施策は大きな変化をもたらしました。", "譲歩と成果を一文でまとめています。"),
+        tr("b2g8-09", "ja-vi", "長期的な影響を考慮したうえで、実行可能な案を選ぶ必要があります。", "Cần lựa chọn phương án khả thi sau khi cân nhắc ảnh hưởng lâu dài.", "cân nhắc と khả thi を使った総合表現です。"),
+        tr("b2g8-10", "vi-ja", "không chỉ đáp ứng nhu cầu trước mắt mà còn tạo nền tảng cho tương lai", "目先の需要を満たすだけでなく、将来の基盤も築く", "không chỉ ... mà còn ... で二つの価値を示します。", true)
+      ])
+    ]
+  };
+
+  const b2Plus = {
+    id: "b2-plus", label: "B2+", name: "上級", description: "精密な判断・論証・正式表現", requires: "b2-8",
+    groups: [
+      group("b2-plus-1", "GROUP 01", "推測と話し手の立場を精密に示す", [
+        mc("b2p1-01", "vi-ja", "dường như", ["〜のように見える", "〜に違いない", "〜であっても", "〜の代わりに"], "〜のように見える", "観察に基づく控えめな推測です。"),
+        mc("b2p1-02", "vi-ja", "e rằng", ["残念ながら〜ではないかと思う", "確実に〜だ", "喜んで〜する", "〜のふりをする"], "残念ながら〜ではないかと思う", "好ましくない可能性を丁寧に示します。"),
+        bc("b2p1-03", "Theo tôi được ___, kế hoạch vẫn chưa được phê duyệt.", ["biết", "thấy", "nghe", "nhớ"], "biết", "私の知る限り、その計画はまだ承認されていません。", "theo tôi được biết は情報範囲を限定します。"),
+        bi("b2p1-04", "Dường ___ hai bên vẫn chưa hiểu rõ quan điểm của nhau.", "như", "双方はまだ互いの見解を十分理解していないようです。", "dường như は断定を避けた観察です。"),
+        bi("b2p1-05", "Tôi e ___ thời gian còn lại không đủ.", "rằng", "残り時間では足りないのではないかと心配しています。", "e rằng は懸念を丁寧に述べます。"),
+        bi("b2p1-06", "Có khả ___ kết quả sẽ thay đổi sau khi cập nhật dữ liệu.", "năng", "データ更新後に結果が変わる可能性があります。", "có khả năng は客観的な可能性を示します。"),
+        bi("b2p1-07", "Nhận định này có vẻ chưa thật sự thuyết ___.", "phục", "この見解は十分に説得力があるとは思えません。", "có vẻ と chưa thật sự で評価を和らげています。"),
+        tr("b2p1-08", "vi-ja", "Theo tôi được biết, chưa có bằng chứng nào đủ để khẳng định điều đó.", "私の知る限り、それを断定するのに十分な証拠はまだありません。", "情報範囲を限定してから判断を述べています。"),
+        tr("b2p1-09", "ja-vi", "状況を見る限り、予定を変更する必要がありそうです。", "Xét tình hình hiện tại, dường như cần phải thay đổi kế hoạch.", "xét ... と dường như で慎重な判断を作ります。"),
+        tr("b2p1-10", "vi-ja", "khó có thể khẳng định một cách chắc chắn", "確実に断定することは難しい", "khó có thể で可能性の低さを示します。", true)
+      ]),
+      group("b2-plus-2", "GROUP 02", "譲歩・転換・結論を組み立てる", [
+        mc("b2p2-01", "vi-ja", "dù vậy", ["それでも", "したがって", "たとえば", "一方では"], "それでも", "前の内容を認めつつ逆方向の内容を続けます。"),
+        mc("b2p2-02", "vi-ja", "xét cho cùng", ["結局のところ", "それに加えて", "念のため", "言い換えれば"], "結局のところ", "検討を重ねた後の本質的な結論を示します。"),
+        bc("b2p2-03", "Phương án này còn hạn chế; ___ vậy, nó vẫn đáng được thử nghiệm.", ["dù", "do", "vì", "nếu"], "dù", "この案には限界があります。それでも試す価値はあります。", "dù vậy は独立した接続表現です。"),
+        bi("b2p2-04", "Xét cho ___, con người vẫn là yếu tố quyết định.", "cùng", "結局のところ、決定的な要素はやはり人です。", "xét cho cùng で本質的な結論を導きます。"),
+        bi("b2p2-05", "Tuy có tiến bộ, ___ kết quả vẫn chưa đạt mục tiêu.", "song", "進歩はあったものの、結果はまだ目標に達していません。", "tuy ... song ... はやや書き言葉的な譲歩です。"),
+        bi("b2p2-06", "Một mặt cần tiết kiệm; mặt ___ phải bảo đảm chất lượng.", "khác", "一方で節約が必要ですが、他方で品質を保証しなければなりません。", "một mặt ... mặt khác ... で二面を示します。"),
+        bi("b2p2-07", "Nói cách ___, chúng ta cần thay đổi cách tiếp cận.", "khác", "言い換えれば、取り組み方を変える必要があります。", "nói cách khác は言い換えの標識です。"),
+        tr("b2p2-08", "vi-ja", "Tuy giải pháp này không hoàn hảo, song trong hoàn cảnh hiện nay, nó vẫn là lựa chọn hợp lý nhất.", "この解決策は完璧ではありませんが、現在の状況では最も合理的な選択です。", "譲歩の後に条件付き評価を述べています。"),
+        tr("b2p2-09", "ja-vi", "一方では効率が上がりますが、他方では新たな負担も生じます。", "Một mặt hiệu quả được nâng cao, mặt khác cũng phát sinh thêm gánh nặng.", "một mặt ... mặt khác ... で対照的な影響を示します。"),
+        tr("b2p2-10", "vi-ja", "xét cho cùng, điều quan trọng nhất vẫn là tính bền vững", "結局のところ、最も重要なのは依然として持続可能性である", "議論の最終的な重点を示します。", true)
+      ]),
+      group("b2-plus-3", "GROUP 03", "通知・依頼・報告を正式に書く", [
+        mc("b2p3-01", "vi-ja", "căn cứ vào", ["〜に基づいて", "〜に反して", "〜に加えて", "〜を除いて"], "〜に基づいて", "規則・資料・事実を根拠として示す正式表現です。"),
+        mc("b2p3-02", "vi-ja", "xin lưu ý rằng", ["〜にご留意ください", "〜をお詫びします", "〜を保証します", "〜をご提出ください"], "〜にご留意ください", "通知文で注意点を丁寧に示します。"),
+        bc("b2p3-03", "Căn cứ ___ kết quả đánh giá, thời hạn sẽ được điều chỉnh.", ["vào", "ra", "qua", "đến"], "vào", "評価結果に基づき、期限を調整します。", "căn cứ vào + 根拠の形です。"),
+        bi("b2p3-04", "Xin lưu ___ rằng lịch làm việc có thể thay đổi.", "ý", "勤務予定は変更される場合があることにご留意ください。", "xin lưu ý rằng は正式な注意喚起です。"),
+        bi("b2p3-05", "Đề nghị các bộ phận liên ___ gửi báo cáo đúng hạn.", "quan", "関係部署は期限どおりに報告書を提出してください。", "các bộ phận liên quan は関係部署です。"),
+        bi("b2p3-06", "Mọi thắc mắc xin vui lòng liên ___ với ban tổ chức.", "hệ", "ご不明点は主催者までお問い合わせください。", "liên hệ với は連絡先を示します。"),
+        bi("b2p3-07", "Báo cáo này được lập nhằm cung cấp thông tin tổng ___.", "quan", "本報告書は概要情報を提供する目的で作成されました。", "nhằm は正式な目的表現です。"),
+        tr("b2p3-08", "vi-ja", "Căn cứ vào tình hình thực tế, chúng tôi đề nghị kéo dài thời gian thực hiện thêm hai tuần.", "実際の状況に基づき、実施期間をさらに2週間延長することを提案します。", "根拠を先に示す正式な提案文です。"),
+        tr("b2p3-09", "ja-vi", "必要書類は9月30日までに提出してください。", "Đề nghị nộp các tài liệu cần thiết chậm nhất vào ngày 30 tháng 9.", "chậm nhất vào ngày ... で締切日を明確に示します。"),
+        tr("b2p3-10", "vi-ja", "các cá nhân và đơn vị có liên quan", "関係する個人および組織", "公的・業務的な文章で関係者を表します。", true)
+      ]),
+      group("b2-plus-4", "GROUP 04", "根拠を評価し、議論を検証する", [
+        mc("b2p4-01", "vi-ja", "thiếu căn cứ", ["根拠に欠ける", "例外が多い", "説明が長い", "条件を満たす"], "根拠に欠ける", "主張を支える証拠が不足している評価です。"),
+        mc("b2p4-02", "vi-ja", "kiểm chứng", ["検証する", "推測する", "要約する", "公表する"], "検証する", "情報や主張が正しいか確かめる語です。"),
+        bc("b2p4-03", "Lập luận này chưa thuyết phục vì thiếu bằng ___ cụ thể.", ["chứng", "cấp", "cách", "pháp"], "chứng", "この議論は具体的な証拠がなく、まだ説得力に欠けます。", "bằng chứng は証拠です。"),
+        bi("b2p4-04", "Thông tin cần được kiểm ___ trước khi công bố.", "chứng", "情報は公表前に検証される必要があります。", "được kiểm chứng は受け身の検証です。"),
+        bi("b2p4-05", "Đánh giá khách quan phải dựa ___ nhiều nguồn dữ liệu.", "trên", "客観的な評価は複数のデータ源に基づく必要があります。", "dựa trên は根拠を示します。"),
+        bi("b2p4-06", "Ví dụ này không đủ để chứng ___ cho kết luận chung.", "minh", "この例だけでは一般的な結論を証明するのに不十分です。", "chứng minh cho は主張を証明する表現です。"),
+        bi("b2p4-07", "Cần phân tích cả những dữ liệu trái ___ giả thuyết ban đầu.", "với", "当初の仮説に反するデータも分析する必要があります。", "trái với は反対・矛盾を示します。"),
+        tr("b2p4-08", "vi-ja", "Một vài trường hợp riêng lẻ không đủ để chứng minh rằng xu hướng này đúng trong mọi hoàn cảnh.", "少数の個別事例だけでは、この傾向があらゆる状況で正しいとは証明できません。", "個別例と一般化の区別を確認します。"),
+        tr("b2p4-09", "ja-vi", "結論を受け入れる前に、データの出所と調査方法を検証すべきです。", "Trước khi chấp nhận kết luận, nên kiểm chứng nguồn dữ liệu và phương pháp khảo sát.", "trước khi と nên で検証手順を提案します。"),
+        tr("b2p4-10", "vi-ja", "một nhận định còn thiếu căn cứ thuyết phục", "説得力のある根拠を欠いた見解", "nhận định と căn cứ は論証でよく使います。", true)
+      ]),
+      group("b2-plus-5", "GROUP 05", "文化・多様性・社会変化", [
+        mc("b2p5-01", "vi-ja", "bản sắc", ["アイデンティティー・独自性", "社会的地位", "生活水準", "共通規則"], "アイデンティティー・独自性", "文化や集団の固有性を表します。"),
+        mc("b2p5-02", "vi-ja", "định kiến", ["偏見・固定観念", "伝統行事", "社会保障", "多数意見"], "偏見・固定観念", "十分な理解なしに作られた先入観です。"),
+        bc("b2p5-03", "Hội nhập không có nghĩa là đánh mất bản ___.", ["sắc", "chất", "thân", "quyền"], "sắc", "社会に溶け込むことは、自らの独自性を失うことではありません。", "bản sắc は文化的な独自性です。"),
+        bi("b2p5-04", "Cần loại bỏ định ___ đối với những nhóm thiểu số.", "kiến", "少数派への偏見をなくす必要があります。", "định kiến đối với ... の形です。"),
+        bi("b2p5-05", "Sự đa ___ văn hóa làm cho xã hội phong phú hơn.", "dạng", "文化的多様性は社会をより豊かにします。", "đa dạng văn hóa は文化の多様性です。"),
+        bi("b2p5-06", "Người nhập cư cần thời gian để hòa ___ với cộng đồng mới.", "nhập", "移住者には新しい地域社会に溶け込む時間が必要です。", "hòa nhập với は共同体への適応です。"),
+        bi("b2p5-07", "Truyền thống có thể được duy trì đồng ___ với sự đổi mới.", "thời", "伝統は革新と同時に維持することができます。", "đồng thời với は両立・同時性を表します。"),
+        tr("b2p5-08", "vi-ja", "Tôn trọng sự khác biệt không chỉ giúp giảm định kiến mà còn tạo điều kiện cho đối thoại.", "違いを尊重することは、偏見を減らすだけでなく対話の条件も整えます。", "社会的効果を二つ並べています。"),
+        tr("b2p5-09", "ja-vi", "社会に溶け込みながら、自分の文化的アイデンティティーを保つことは可能です。", "Có thể hòa nhập vào xã hội mà vẫn giữ được bản sắc văn hóa của mình.", "mà vẫn で両立を表します。"),
+        tr("b2p5-10", "vi-ja", "nhìn nhận sự đa dạng như một nguồn lực", "多様性を一つの資源として捉える", "nhìn nhận A như B で見方を示します。", true)
+      ]),
+      group("b2-plus-6", "GROUP 06", "慣用表現を文脈で理解する", [
+        mc("b2p6-01", "vi-ja", "nước đến chân mới nhảy", ["切羽詰まってから動く", "慎重に準備する", "流れに逆らう", "失敗から学ぶ"], "切羽詰まってから動く", "直前になるまで行動しないことを批判する慣用句です。"),
+        mc("b2p6-02", "vi-ja", "một công đôi việc", ["一石二鳥", "二度手間", "役割分担", "試行錯誤"], "一石二鳥", "一つの行動で二つの目的を達成する表現です。"),
+        bc("b2p6-03", "Đừng để nước đến chân mới ___.", ["nhảy", "chạy", "bơi", "đi"], "nhảy", "切羽詰まってから慌てないでください。", "慣用句は nước đến chân mới nhảy です。"),
+        bi("b2p6-04", "Đi xe đạp vừa tập thể dục vừa đi làm, đúng là một công đôi ___.", "việc", "自転車なら運動と通勤が同時にでき、まさに一石二鳥です。", "một công đôi việc の形を確認します。"),
+        bi("b2p6-05", "Có công mài sắt, có ngày nên ___.", "kim", "根気よく努力すれば、いつか成果が出ます。", "努力の継続を表すことわざです。"),
+        bi("b2p6-06", "Anh ấy hay đứng núi này trông núi ___.", "nọ", "彼はいつも他人の状況のほうがよく見えてしまいます。", "今あるものに満足せず他を羨む慣用句です。"),
+        bi("b2p6-07", "Dù bận đến đâu, cô ấy vẫn giữ lời đã ___.", "hứa", "どんなに忙しくても、彼女は約束を守ります。", "giữ lời đã hứa は約束を守ることです。"),
+        tr("b2p6-08", "vi-ja", "Nếu cứ nước đến chân mới nhảy thì khó có thể bảo đảm chất lượng công việc.", "いつも直前になってから動くようでは、仕事の質を保証するのは難しいです。", "慣用句を条件文の中で使っています。"),
+        tr("b2p6-09", "ja-vi", "この方法なら費用を節約でき、時間も短縮できるので一石二鳥です。", "Cách này vừa tiết kiệm chi phí vừa rút ngắn thời gian, đúng là một công đôi việc.", "vừa ... vừa ... と慣用句を組み合わせます。"),
+        tr("b2p6-10", "vi-ja", "có công mài sắt, có ngày nên kim", "根気よく努力すれば、いつか成し遂げられる", "文字どおりの意味より継続努力の教訓を捉えます。", true)
+      ]),
+      group("b2-plus-7", "GROUP 07", "複数の観点を統合し、批評する", [
+        mc("b2p7-01", "vi-ja", "khía cạnh", ["側面・観点", "原因・起源", "範囲・限界", "目的・意図"], "側面・観点", "対象を構成する一つの面を表します。"),
+        mc("b2p7-02", "vi-ja", "làm sáng tỏ", ["明らかにする", "複雑にする", "簡略化する", "隠蔽する"], "明らかにする", "不明点を説明や証拠によって明確にします。"),
+        bc("b2p7-03", "Vấn đề cần được nhìn nhận từ nhiều khía ___.", ["cạnh", "hướng", "diện", "phần"], "cạnh", "問題は複数の側面から捉える必要があります。", "khía cạnh は側面・観点です。"),
+        bi("b2p7-04", "Nghiên cứu này đã làm sáng ___ mối liên hệ giữa hai yếu tố.", "tỏ", "この研究は二つの要因の関係を明らかにしました。", "làm sáng tỏ は明確化を示します。"),
+        bi("b2p7-05", "Bên cạnh ưu điểm, phương pháp này cũng bộc ___ một số hạn chế.", "lộ", "利点に加え、この方法はいくつかの限界も露呈しました。", "bộc lộ は内在する性質が現れることです。"),
+        bi("b2p7-06", "Cần đặt kết quả này trong bối ___ rộng hơn.", "cảnh", "この結果をより広い文脈に置く必要があります。", "đặt ... trong bối cảnh ... で解釈範囲を示します。"),
+        bi("b2p7-07", "Tác giả chưa đề ___ đầy đủ đến ảnh hưởng lâu dài.", "cập", "筆者は長期的影響を十分に取り上げていません。", "đề cập đến は話題として取り上げることです。"),
+        tr("b2p7-08", "vi-ja", "Nghiên cứu đã cung cấp nhiều thông tin hữu ích, tuy nhiên vẫn chưa làm sáng tỏ nguyên nhân cốt lõi.", "この研究は多くの有用な情報を提供しましたが、根本原因はまだ明らかにしていません。", "成果を認めたうえで限界を指摘しています。"),
+        tr("b2p7-09", "ja-vi", "この主張を評価するには、より広い社会的背景を考慮する必要があります。", "Để đánh giá nhận định này, cần xem xét bối cảnh xã hội rộng hơn.", "để と cần で評価に必要な条件を述べます。"),
+        tr("b2p7-10", "vi-ja", "nhìn nhận vấn đề từ góc độ của những người chịu ảnh hưởng", "影響を受ける人々の視点から問題を捉える", "góc độ của ... で視点の主体を示します。", true)
+      ]),
+      group("b2-plus-8", "GROUP 08", "B2＋総合練習", [
+        mc("b2p8-01", "vi-ja", "về bản chất", ["本質的には", "表面的には", "具体的には", "結果として"], "本質的には", "細部ではなく中心的な性質を述べます。"),
+        mc("b2p8-02", "ja-vi", "慎重に検討する価値がある", ["đáng được cân nhắc kỹ", "khó có thể chấp nhận", "không cần kiểm chứng", "nên được loại bỏ"], "đáng được cân nhắc kỹ", "đáng được + 動詞で評価を示します。"),
+        bc("b2p8-03", "Về bản ___, đây không chỉ là vấn đề kỹ thuật.", ["chất", "sắc", "thân", "lĩnh"], "chất", "本質的には、これは単なる技術的問題ではありません。", "về bản chất は本質を示す定型表現です。"),
+        bi("b2p8-04", "Mọi chính sách đều cần được đánh giá dựa trên tác động thực ___.", "tế", "あらゆる政策は実際の影響に基づいて評価される必要があります。", "tác động thực tế は現実に生じる影響です。"),
+        bi("b2p8-05", "Giải pháp trước mắt không nên làm ảnh hưởng ___ mục tiêu lâu dài.", "đến", "当面の解決策が長期目標に影響してはいけません。", "ảnh hưởng đến + 対象の形です。"),
+        bi("b2p8-06", "Đề xuất này đáng được cân ___ kỹ trước khi bác bỏ.", "nhắc", "この提案は退ける前に慎重に検討する価値があります。", "đáng được cân nhắc は検討価値を示します。"),
+        bi("b2p8-07", "Một quyết định hợp lý phải tính đến cả lợi ích lẫn rủi ___.", "ro", "合理的な決定では利益とリスクの両方を考慮すべきです。", "tính đến は判断材料に含めることです。"),
+        tr("b2p8-08", "vi-ja", "Về bản chất, phát triển bền vững đòi hỏi phải cân bằng lợi ích kinh tế, xã hội và môi trường.", "本質的に、持続可能な発展には経済・社会・環境の利益の均衡が必要です。", "抽象的な定義を三つの要素で説明しています。"),
+        tr("b2p8-09", "ja-vi", "十分な根拠がない以上、この結果だけで政策の有効性を断定することはできません。", "Khi chưa có đủ căn cứ, không thể chỉ dựa vào kết quả này để khẳng định hiệu quả của chính sách.", "根拠不足と断定不可の関係を示します。"),
+        tr("b2p8-10", "vi-ja", "một cách tiếp cận toàn diện, có tính đến cả lợi ích trước mắt lẫn ảnh hưởng lâu dài", "目先の利益と長期的影響の両方を考慮した包括的な取り組み方", "toàn diện と cả ... lẫn ... を組み合わせた総合表現です。", true)
+      ])
+    ]
+  };
+
+  levels.push(b2, b2Plus);
 })();

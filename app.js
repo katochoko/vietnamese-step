@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v8";
-  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v7", "vietnamese-step-bank-v6", "vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
+  const BANK_KEY = "vietnamese-step-bank-v9";
+  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v8", "vietnamese-step-bank-v7", "vietnamese-step-bank-v6", "vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const LAST_LEVEL_KEY = "vietnamese-step-last-level-v1";
   const app = document.querySelector("#app");
@@ -174,7 +174,7 @@
   }
 
   function requiresVietnameseLetters() {
-    return ["vocabulary-b", "b1", "b1-plus"].includes(activeLevel?.id);
+    return ["vocabulary-b", "b1", "b1-plus", "b2", "b2-plus"].includes(activeLevel?.id);
   }
 
   function allGroups() {
@@ -274,7 +274,7 @@
           <div>
             <span class="eyebrow">VIỆT NGỮ · MỖI NGÀY MỘT CHÚT</span>
             <h1>今日も、<br><em>10問</em>だけ進もう。</h1>
-            <p>タイピングのあとにAレベルの語彙を学び、A1〜A2＋へ進みます。Bレベルの語彙を終えるとB1・B1＋へ進めます。</p>
+            <p>タイピングのあとにAレベルの語彙を学び、A1〜A2＋へ進みます。Bレベルの語彙を終えるとB1〜B2＋へ進めます。</p>
           </div>
           <div class="stats" aria-label="学習状況">
             <div><strong>${completed}</strong><span>クリア</span></div>
