@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v9";
-  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v8", "vietnamese-step-bank-v7", "vietnamese-step-bank-v6", "vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
+  const BANK_KEY = "vietnamese-step-bank-v10";
+  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v9", "vietnamese-step-bank-v8", "vietnamese-step-bank-v7", "vietnamese-step-bank-v6", "vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const LAST_LEVEL_KEY = "vietnamese-step-last-level-v1";
   const app = document.querySelector("#app");
@@ -193,6 +193,7 @@
   }
 
   function typeLabel(question) {
+    if (question.type === "pronunciation-choice") return "発音・選択";
     if (question.type === "typing") return "タイピング";
     if (question.type === "meaning-choice") return "単語・選択";
     if (question.type === "meaning-input") return "単語・入力";
@@ -202,6 +203,7 @@
   }
 
   function instruction(question) {
+    if (question.type === "pronunciation-choice") return "文字・単語に合う読み方を選んでください。";
     if (question.type === "typing") return "表示されたベトナム語を、そのまま入力してください。";
     if (question.type === "meaning-choice") {
       return question.direction === "vi-ja" ? "ベトナム語の意味を選んでください。" : "日本語に合うベトナム語を選んでください。";
@@ -216,6 +218,7 @@
 
   function hasVietnamesePrompt(question) {
     return (
+      question.type === "pronunciation-choice" ||
       question.type === "typing" ||
       question.type.startsWith("blank-") ||
       (question.type === "meaning-choice" && question.direction === "vi-ja") ||
@@ -274,7 +277,7 @@
           <div>
             <span class="eyebrow">VIỆT NGỮ · MỖI NGÀY MỘT CHÚT</span>
             <h1>今日も、<br><em>10問</em>だけ進もう。</h1>
-            <p>タイピングのあとにAレベルの語彙を学び、A1〜A2＋へ進みます。Bレベルの語彙を終えるとB1〜B2＋へ進めます。</p>
+            <p>発音入門から始め、タイピング、Aレベル、Bレベルへ順番に進みます。最後はB2＋です。</p>
           </div>
           <div class="stats" aria-label="学習状況">
             <div><strong>${completed}</strong><span>クリア</span></div>
@@ -298,6 +301,7 @@
             `;
             }).join("")}
           </div>
+          ${level.id === "pronunciation" ? `<div class="course-note"><strong>北部標準発音を基本に、IPAと日本語の説明で学びます。</strong><span>カタカナは補助です。音声は端末のベトナム語音声による参考用で、正誤判定には使いません。</span></div>` : ""}
           ${level.id === "typing" ? `<div class="course-note"><strong>スマホではベトナム語キーボードを使います。</strong><span>このコースは練習のため、文字と声調記号まで正しく入力すると正解になります。</span></div>` : ""}
           ${level.id === "vocabulary" ? `<div class="course-note"><strong>Aレベルの語彙を選択式で練習します。</strong><span>10問すべて選択式です。タイピング修了後、A1と同時に開きます。</span></div>` : ""}
           ${level.id === "vocabulary-b" ? `<div class="course-note"><strong>Bレベルの語彙と表現を選択式で練習します。</strong><span>10問すべて選択式です。A2＋修了後に開き、この6グループを終えるとB1へ進めます。</span></div>` : ""}
