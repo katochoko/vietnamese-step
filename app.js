@@ -15,6 +15,7 @@
   let activeLevel = null;
   let activeGroup = null;
   let quizQuestions = [];
+  let choiceOrders = new Map();
   let remainingQuestions = new Set();
   let roundNumber = 1;
   let questionIndex = 0;
@@ -94,6 +95,14 @@
       [result[index], result[swapIndex]] = [result[swapIndex], result[index]];
     }
     return result;
+  }
+
+  function prepareChoiceOrders(questions) {
+    choiceOrders = new Map(
+      questions
+        .filter((question) => Array.isArray(question.choices))
+        .map((question) => [question, shuffle(question.choices)])
+    );
   }
 
   function questionStage(question) {
@@ -361,7 +370,7 @@
   }
 
   function answerArea(question) {
-    const choices = question.choices;
+    const choices = choiceOrders.get(question) || question.choices;
     if (Array.isArray(choices)) {
       return `
         <div class="choices">
@@ -633,6 +642,7 @@
     quizQuestions = savedQuestions.length
       ? orderQuestions(savedQuestions, false)
       : orderQuestions(group.questions, activeLevel.id !== "typing");
+    prepareChoiceOrders(quizQuestions);
     remainingQuestions = new Set(quizQuestions);
     roundNumber = 1;
     questionIndex = 0;
@@ -697,6 +707,7 @@
       activeGroup.questions.filter((question) => remainingQuestions.has(question)),
       false
     );
+    prepareChoiceOrders(quizQuestions);
     roundNumber += 1;
     questionIndex = 0;
     resetQuestion();
