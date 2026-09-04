@@ -569,7 +569,9 @@
               <div class="data-actions">
                 <button class="primary" data-action="import-progress">記録を読み込む</button>
                 <button class="secondary" data-action="export-progress">書き出す</button>
+                <button class="danger-button" data-action="reset-progress">学習記録をリセット</button>
               </div>
+              <p class="data-warning">リセットすると、このブラウザに保存されているクリア状況、挑戦回数、途中の復習記録がすべて消えます。問題データは消えません。</p>
               <input id="progress-file" type="file" accept=".json,application/json" hidden>
             </article>
           </div>
@@ -869,6 +871,19 @@
       document.querySelector("#progress-file")?.click();
     } else if (action === "export-progress") {
       download("vietnamese-step-progress.json", progress);
+    } else if (action === "reset-progress") {
+      if (window.confirm("このブラウザの学習記録をすべて消しますか？ この操作は元に戻せません。問題データは残ります。")) {
+        progress = {};
+        levelId = bank.levels[0]?.id || "";
+        activeLevel = null;
+        activeGroup = null;
+        quizQuestions = [];
+        remainingQuestions = new Set();
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+        localStorage.setItem(LAST_LEVEL_KEY, levelId);
+        notice = "学習記録をすべてリセットしました。";
+        renderData();
+      }
     } else if (action === "reset-defaults") {
       if (window.confirm("問題集を最初の内容に戻しますか？ 学習記録は残ります。")) {
         bank = window.defaultQuestionBank;
