@@ -1,8 +1,8 @@
 (() => {
   "use strict";
 
-  const BANK_KEY = "vietnamese-step-bank-v10";
-  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v9", "vietnamese-step-bank-v8", "vietnamese-step-bank-v7", "vietnamese-step-bank-v6", "vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
+  const BANK_KEY = "vietnamese-step-bank-v11";
+  const PREVIOUS_BANK_KEYS = ["vietnamese-step-bank-v10", "vietnamese-step-bank-v9", "vietnamese-step-bank-v8", "vietnamese-step-bank-v7", "vietnamese-step-bank-v6", "vietnamese-step-bank-v5", "vietnamese-step-bank-v4"];
   const PROGRESS_KEY = "vietnamese-step-progress-v1";
   const LAST_LEVEL_KEY = "vietnamese-step-last-level-v1";
   const app = document.querySelector("#app");
