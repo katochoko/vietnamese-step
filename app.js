@@ -259,6 +259,17 @@
     return `<footer><strong>Vietnamese Step</strong><span>進捗はこのブラウザに保存されます。</span></footer>`;
   }
 
+  function certificateUnlocked() {
+    return Boolean(progress["b2-plus-8"]?.completed);
+  }
+
+  function certificateDate() {
+    const value = progress["b2-plus-8"]?.lastPlayedAt;
+    const date = value ? new Date(value) : new Date();
+    if (Number.isNaN(date.getTime())) return "";
+    return new Intl.DateTimeFormat("ja-JP", { year: "numeric", month: "long", day: "numeric" }).format(date);
+  }
+
   function renderHome() {
     const groups = allGroups();
     const completed = groups.filter((group) => progress[group.id]?.completed).length;
@@ -300,6 +311,10 @@
               </button>
             `;
             }).join("")}
+            <button class="tab certificate-tab ${certificateUnlocked() ? "" : "locked"}" data-action="certificate" ${certificateUnlocked() ? "" : "disabled"}>
+              <span class="tab-code">✓</span>
+              <span class="tab-copy"><strong>修了証</strong><small>${certificateUnlocked() ? "全課程の修了記録" : "B2＋修了で解放"}</small></span>
+            </button>
           </div>
           ${level.id === "pronunciation" ? `<div class="course-note"><strong>北部標準発音を基本に、IPAと日本語の説明で学びます。</strong><span>カタカナは補助です。音声は端末のベトナム語音声による参考用で、正誤判定には使いません。</span></div>` : ""}
           ${level.id === "typing" ? `<div class="course-note"><strong>スマホではベトナム語キーボードを使います。</strong><span>このコースは練習のため、文字と声調記号まで正しく入力すると正解になります。</span></div>` : ""}
@@ -474,9 +489,52 @@
           <p>${passed ? "すべての問題を正解しました。次のグループがある場合は解放されました。" : `次は間違えた ${remaining} 問だけを出題します。正解済みの問題をやり直す必要はありません。`}</p>
           <div class="result-actions">
             ${passed ? "" : `<button class="primary" data-action="retry-missed">間違えた ${remaining} 問に再挑戦</button>`}
-            <button class="${passed ? "primary" : "secondary"}" data-action="home">学習一覧へ</button>
+            ${passed && activeGroup.id === "b2-plus-8" ? `<button class="primary" data-action="certificate">修了証を見る</button>` : ""}
+            <button class="${passed && activeGroup.id !== "b2-plus-8" ? "primary" : "secondary"}" data-action="home">学習一覧へ</button>
           </div>
         </section>
+      </main>
+    `;
+  }
+
+  function renderCertificate() {
+    if (!certificateUnlocked()) {
+      screen = "home";
+      renderHome();
+      return;
+    }
+    const groups = allGroups();
+    const total = groups.reduce((sum, item) => sum + item.questions.length, 0);
+    app.innerHTML = `
+      <main class="shell certificate-page">
+        ${header("certificate")}
+        <section class="certificate-wrap">
+          <article class="certificate" aria-label="Vietnamese Step 修了証明書">
+            <div class="certificate-corners" aria-hidden="true"></div>
+            <span class="certificate-brand">VIETNAMESE STEP</span>
+            <div class="certificate-seal">VS</div>
+            <p class="certificate-kicker">修了証明書</p>
+            <h1>GIẤY CHỨNG NHẬN<br>HOÀN THÀNH</h1>
+            <div class="certificate-rule"></div>
+            <h2>おめでとうございます</h2>
+            <h3 lang="vi">Chúc mừng bạn!</h3>
+            <p>Vietnamese Step の全課程を修了しました。</p>
+            <p lang="vi">Bạn đã hoàn thành toàn bộ chương trình Vietnamese Step.</p>
+            <strong class="certificate-range">発音入門から B2＋まで<br><span lang="vi">Từ phát âm cơ bản đến trình độ B2＋</span></strong>
+            <div class="certificate-facts">
+              <span><b>${groups.length}</b> グループ</span>
+              <span><b>${total}</b> 問</span>
+              <span><b>${esc(certificateDate())}</b> 修了</span>
+            </div>
+            <p class="certificate-sign">一歩ずつ積み重ねた学習の成果を称えます。<br><span lang="vi">Ghi nhận thành quả học tập mà bạn đã kiên trì tích lũy từng bước.</span></p>
+          </article>
+          <p class="certificate-hint">この枠全体をスマートフォンでスクリーンショットできます。学習記録は「データ管理」から書き出して保存しておくことをおすすめします。</p>
+          <div class="certificate-actions">
+            <button class="secondary" data-action="home">学習一覧へ</button>
+            <button class="primary" data-action="data">学習データを保存</button>
+          </div>
+        </section>
+        ${footer()}
       </main>
     `;
   }
@@ -529,6 +587,7 @@
     if (screen === "quiz") renderQuiz();
     else if (screen === "result") renderResult();
     else if (screen === "data") renderData();
+    else if (screen === "certificate") renderCertificate();
     else renderHome();
   }
 
@@ -757,6 +816,10 @@
       render();
     } else if (action === "data") {
       screen = "data";
+      render();
+    } else if (action === "certificate") {
+      if (!certificateUnlocked()) return;
+      screen = "certificate";
       render();
     } else if (action === "speak") {
       speakVietnamese(quizQuestions[questionIndex]);
