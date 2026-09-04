@@ -560,7 +560,9 @@
               <div class="data-actions">
                 <button class="primary" data-action="import-questions">JSONを読み込む</button>
                 <button class="secondary" data-action="export-questions">書き出す</button>
+                <button class="danger-button" data-action="reset-question-bank">問題集をリセット</button>
               </div>
+              <p class="data-warning">リセットすると、追加・編集した問題を破棄して、公開時の問題集に戻します。学習記録は残ります。</p>
               <input id="questions-file" type="file" accept=".json,application/json" hidden>
             </article>
             <article class="data-card">
@@ -578,7 +580,6 @@
           <div class="data-note">
             問題形式は <code>typing</code>、<code>meaning-choice</code>、<code>meaning-input</code>、<code>blank-choice</code>、<code>blank-input</code>、<code>translation</code> の6種類です。タイピングでは声調記号まで一致させ、語彙入力と翻訳では複数の正解候補を照合できます。
           </div>
-          <div class="reset-row"><button class="text-button" data-action="reset-defaults">最初の問題集に戻す</button></div>
         </section>
         ${footer()}
       </main>
@@ -884,13 +885,13 @@
         notice = "学習記録をすべてリセットしました。";
         renderData();
       }
-    } else if (action === "reset-defaults") {
-      if (window.confirm("問題集を最初の内容に戻しますか？ 学習記録は残ります。")) {
+    } else if (action === "reset-question-bank") {
+      if (window.confirm("問題集を公開時の内容にリセットしますか？ 追加・編集した問題は消えますが、学習記録は残ります。")) {
         bank = window.defaultQuestionBank;
         harmonizeQuestionMix(bank);
         levelId = bank.levels[0]?.id || "";
         localStorage.setItem(LAST_LEVEL_KEY, levelId);
-        notice = "最初の問題集に戻しました。";
+        notice = "問題集を公開時の内容にリセットしました。学習記録は残っています。";
         save();
         renderData();
       }
